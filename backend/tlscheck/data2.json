@@ -1,0 +1,135 @@
+{
+    "imap": {
+        "imap.eventim.bg": {
+            "993": {
+                "ssl": {
+                    "other_info": [
+                        {
+                            "orign": "autoconfig-url:http_get",
+                            "authentication": "password-cleartext"
+                        },
+                        {
+                            "verified": true,
+                            "orign": "autoconfig-url:https_get",
+                            "authentication": "password-cleartext"
+                        },
+                        {
+                            "verified": true,
+                            "orign": "ISPDB",
+                            "authentication": "password-cleartext"
+                        },
+                        {
+                            "verified": true,
+                            "orign": "register domain:https_get",
+                            "register domain": "onet.pl",
+                            "authentication": "password-cleartext"
+                        },
+                        {
+                            "verified": true,
+                            "orign": "register domain:ISPDB",
+                            "register domain": "onet.pl",
+                            "authentication": "password-cleartext"
+                        },
+                        {
+                            "verified": true,
+                            "orign": "parent domain:https_get",
+                            "parent domain": "poczta.onet.pl",
+                            "authentication": "password-cleartext"
+                        },
+                        {
+                            "verified": true,
+                            "orign": "parent domain:ISPDB",
+                            "parent domain": "poczta.onet.pl",
+                            "authentication": "password-cleartext"
+                        },
+                        {
+                            "redirect": {
+                                "http://onet.pl/autodiscover/autodiscover.xml": 301,
+                                "https://poczta.onet.pl/Autodiscover/Autodiscover.xml": 200
+                            },
+                            "orign": "autodis-origin:http_get",
+                            "spa": "off",
+                            "ttl": "1",
+                            "domainrequired": "on"
+                        },
+                        {
+                            "verified": true,
+                            "redirect": {
+                                "https://onet.pl/autodiscover/autodiscover.xml": 301,
+                                "https://poczta.onet.pl/Autodiscover/Autodiscover.xml": 200
+                            },
+                            "orign": "autodis-origin:https_get",
+                            "spa": "off",
+                            "ttl": "1",
+                            "domainrequired": "on"
+                        },
+                        {
+                            "redirect": {
+                                "http://onet.pl/autodiscover/autodiscover.xml": 301,
+                                "https://poczta.onet.pl/Autodiscover/Autodiscover.xml": 200
+                            },
+                            "orign": "autodis-origin:http_post",
+                            "spa": "off",
+                            "ttl": "1",
+                            "domainrequired": "on"
+                        },
+                        {
+                            "verified": true,
+                            "redirect": {
+                                "https://onet.pl/autodiscover/autodiscover.xml": 301,
+                                "https://poczta.onet.pl/Autodiscover/Autodiscover.xml": 200
+                            },
+                            "orign": "autodis-origin:https_post",
+                            "spa": "off",
+                            "ttl": "1",
+                            "domainrequired": "on"
+                        },
+                        {
+                            "orign": "autodis-prefix:http_get",
+                            "spa": "off",
+                            "ttl": "1",
+                            "domainrequired": "on"
+                        },
+                        {
+                            "verified": true,
+                            "orign": "autodis-prefix:https_get",
+                            "spa": "off",
+                            "ttl": "1",
+                            "domainrequired": "on"
+                        },
+                        {
+                            "orign": "autodis-prefix:http_post",
+                            "spa": "off",
+                            "ttl": "1",
+                            "domainrequired": "on"
+                        },
+                        {
+                            "verified": true,
+                            "orign": "autodis-prefix:https_post",
+                            "spa": "off",
+                            "ttl": "1",
+                            "domainrequired": "on"
+                        },
+                        {
+                            "verified": true,
+                            "orign": "autodis-srv",
+                            "spa": "off",
+                            "ttl": "1",
+                            "domainrequired": "on"
+                        }
+                    ]
+                }
+            },
+            "143": {
+                "starttls": {
+                    "other_info": [
+                        {
+                            "orign": "srv:imap",
+                            "is_dnssec": false
+                        }
+                    ]
+                }
+            }
+        }
+    }
+}
