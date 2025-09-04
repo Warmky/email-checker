@@ -2,6 +2,7 @@
   text-align: center;
 }
 
+/* Logo 动画（React 自带的那套可以保留） */
 .App-logo {
   height: 40vmin;
   pointer-events: none;
@@ -14,25 +15,61 @@
 }
 
 .App-header {
-  background-color: #282c34;
+  background-color: #f9fbfd; /* 浅灰背景，更清爽 */
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   font-size: calc(10px + 2vmin);
-  color: white;
+  color: #222;
 }
 
 .App-link {
-  color: #61dafb;
+  color: #1a73e8; /* Google 蓝 */
 }
 
+/* Logo 旋转动画 */
 @keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* ✅ 全局 body 设置 */
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #ffffff; /* 白色背景 */
+  color: #222; /* 深灰文本 */
+  font-size: 16px;
+  line-height: 1.6;
+  font-family: 
+    "Inter",              /* 现代无衬线字体 */
+    "PingFang SC",        /* macOS 中文 */
+    "Microsoft YaHei",    /* Windows 中文 */
+    "Noto Sans SC",       /* 跨平台中文 */
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Roboto,
+    "Helvetica Neue",
+    Arial,
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ✅ 代码块字体 */
+code {
+  font-family: "Fira Code", "Source Code Pro", Menlo, Monaco, Consolas, monospace;
+  font-size: 0.95rem;
+  background: #f5f7fa;
+  padding: 2px 4px;
+  border-radius: 4px;
+}
+
+/* ✅ 转圈动画（用于 spinner） */
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
