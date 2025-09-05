@@ -56,6 +56,11 @@ func CheckAllHandler(w http.ResponseWriter, r *http.Request) { //5.19新增以�
 				},
 				"cert_info": result.CertInfo,
 			})
+
+			if score["overall"] > bestScore {
+				bestScore = score["overall"]
+				bestGrade = connectScores["Connection_Grade"].(string)
+			}
 			// autodiscoverResp = map[string]interface{}{
 			// 	"config": result.Config,
 			// 	"score":  score,
@@ -122,10 +127,10 @@ func CheckAllHandler(w http.ResponseWriter, r *http.Request) { //5.19新增以�
 				"cert_info": result.CertInfo,
 			})
 
-			// if score["overall"] > bestScore {
-			// 	bestScore = score["overall"]
-			// 	bestGrade = connectScores["Connection_Grade"].(string)
-			// }
+			if score["overall"] > bestScore {
+				bestScore = score["overall"]
+				bestGrade = connectScores["Connection_Grade"].(string)
+			}
 			// break
 		}
 	}
@@ -210,6 +215,14 @@ func CheckAllHandler(w http.ResponseWriter, r *http.Request) { //5.19新增以�
 				"actualconnect_details": ConnectDetails,
 				"ports_usage":           PortsUsage,
 			},
+		}
+
+		if grade, ok := connectScores["Connection_Grade"].(string); ok {
+			// GUESS 没有 overall 分数，可以用 0 或不更新 score，只更新 grade
+			if bestScore < 0 {
+				bestScore = 0
+				bestGrade = grade
+			}
 		}
 
 		// if guessScore["overall"] > bestScore {

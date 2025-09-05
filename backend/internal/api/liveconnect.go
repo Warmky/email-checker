@@ -90,7 +90,7 @@ func RunZGrab2WithProgress(protocol, hostname, port, mode string, conn *websocke
 	SendLog(conn, "📦 正在执行 TLS 检测脚本...")
 
 	pythonPath := "python" // 视你的系统为 python 或 python3
-	scriptPath := "/var/home/wzq/projects/email-website/backend/tlscheck/test_tls.py"
+	scriptPath := "/home/wzq/email-checker/backend/tlscheck/test_tls.py"
 
 	cmd := exec.Command(pythonPath, scriptPath,
 		"--protocol", protocol,

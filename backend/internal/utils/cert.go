@@ -30,7 +30,7 @@ func VerifyCertificate(chain []*x509.Certificate, domain string) (bool, error) {
 	}
 
 	certPool := x509.NewCertPool()
-	pemFile := "IncludedRootsPEM313.txt" //修改获取roots的途径
+	pemFile := "/home/wzq/email-checker/backend/IncludedRootsPEM313.txt" //修改获取roots的途径
 	pem, err := os.ReadFile(pemFile)
 	if err != nil {
 		//log.Println("failed to read root certificate")

@@ -10,6 +10,10 @@ import (
 )
 
 func AddRecentScanWithScore(domain string, score int, grade string) {
+	if models.RecentScans == nil {
+		models.RecentScans = []models.ScanHistory{}
+	}
+
 	filtered := []models.ScanHistory{}
 	for _, item := range models.RecentScans {
 		if item.Domain != domain {

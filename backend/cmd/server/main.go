@@ -29,5 +29,5 @@ func main() {
 	corsHandler := cors.Default().Handler(http.DefaultServeMux)
 
 	log.Println("Server is running on :8081")
-	log.Fatal(http.ListenAndServe("0.0.0.0:8081", corsHandler))
+	log.Fatal(http.ListenAndServe("[::]:8081", corsHandler))
 }

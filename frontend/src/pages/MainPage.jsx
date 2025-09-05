@@ -95,7 +95,7 @@ function MainPage() {
     }, [results]);
 
     const fetchRecent = () => {
-        fetch("http://114.214.215.233:8081/api/recent")
+        fetch("http://localhost:8081/api/recent")
             .then((res) => res.json())
             .then((data) => setRecentlySeen(data))
             .catch((err) => console.error("Failed to fetch recent scans:", err));
@@ -814,100 +814,7 @@ function MainPage() {
                 )}
 
                 
-                {/* 连接详情跳转 */}
-                {/* {["srv", "guess"].map(type => (
-                    mech === type && result.score_detail?.actualconnect_details && (
-                        <button
-                            key={type}
-                            onClick={() => handleViewDetailsClick(type, result.score_detail.actualconnect_details)}
-                            style={viewButtonStyle}
-                        >
-                            查看连接详情({type.toUpperCase()})
-                        </button>
-                    )
-                ))} */}
-                
-                {/* {mech === "srv" && result.score_detail?.actualconnect_details && (
-                    <a
-                        href={`/config-view?uri=srv_records&config=${btoa("SRV_PLACEHOLDER")}&details=${btoa(JSON.stringify(result.score_detail.actualconnect_details))}`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        style={{
-                            display: "inline-block",
-                            marginTop: "1rem",
-                            backgroundColor: "#27ae60",
-                            color: "white",
-                            padding: "10px 15px",
-                            textDecoration: "none",
-                            borderRadius: "4px"
-                        }}
-                    >
-                        查看连接详情(SRV)
-                    </a>
-                )} */}
 
-                {/* GUESS 连接详情跳转 */}
-                {/* {mech === "guess" && result.score_detail?.actualconnect_details && (
-                    <a
-                        href={`/config-view?uri=guess&config=${btoa("GUESS_PLACEHOLDER")}&details=${btoa(JSON.stringify(result.score_detail.actualconnect_details))}`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        style={{
-                            display: "inline-block",
-                            marginTop: "1rem",
-                            backgroundColor: "#27ae60",
-                            color: "white",
-                            padding: "10px 15px",
-                            textDecoration: "none",
-                            borderRadius: "4px"
-                        }}
-                    >
-                        查看连接详情(GUESS)
-                    </a>
-                )} */}
-                {/* GUESS 连接详情跳转 */}
-                {/* {mech === "guess" && result.score_detail?.actualconnect_details && (
-                    <button
-                        onClick={async () => {
-                            try {
-                                const res = await fetch("http://localhost:8081/store-temp-data", {
-                                    method: "POST",
-                                    headers: { "Content-Type": "application/json" },
-                                    body: JSON.stringify({ details: result.score_detail.actualconnect_details }),
-                                });
-
-                                if (!res.ok) throw new Error("Failed to store data");
-
-                                const { id } = await res.json();
-                                const newTab = window.open(`/config-view?uri=guess_results&id=${id}`, "_blank");
-                                if (!newTab) alert("⚠️ 请允许浏览器弹出窗口。");
-                            } catch (err) {
-                                console.error("❌ Error storing GUESS detail:", err);
-                                alert("❌ 无法打开连接详情（GUESS）页面。");
-                            }
-                        }}
-                        style={{
-                            display: "inline-block",
-                            marginTop: "1rem",
-                            backgroundColor: "#27ae60",
-                            color: "white",
-                            padding: "10px 15px",
-                            textDecoration: "none",
-                            borderRadius: "4px",
-                            cursor: "pointer",
-                        }}
-                    >
-                        查看连接详情(GUESS)
-                    </button>
-                )} */}
-
-
-                {/* 8.12 TODO只是初步猜测成功的结果，涉及邮件协议实际连接的可以通过上面的查看连接详情实现*/}
-                {/* {mech === "guess" && result.score_detail?.ports_usage?.map((item, idx) => (
-                    <div key={idx}>
-                        {item.host}:{item.port} 
-                    </div>
-                ))} */}
                 {mech === "guess" && result.score_detail?.ports_usage?.length > 0 && (
                 <div className="guess-result-card">
                     <h3>猜测到的可用邮件服务器</h3>
@@ -960,25 +867,6 @@ function MainPage() {
                         </button>
                     )
                 ))}
-
-
-                
-                {/* 7.28 {mech === "guess" && result.score_detail?.actualconnect_details && (
-                    <button
-                        onClick={() => handleGuessViewClick(result.score_detail.actualconnect_details)}
-                        style={{
-                            marginTop: "1rem",
-                            backgroundColor: "#27ae60",
-                            color: "white",
-                            padding: "10px 15px",
-                            border: "none",
-                            borderRadius: "4px",
-                            cursor: "pointer"
-                        }}>
-                        查看连接详情(GUESS)
-                    </button>
-                )} */}
-
 
 
                 {/* 折叠主观分析 */}

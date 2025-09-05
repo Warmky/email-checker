@@ -16,7 +16,7 @@ func RunZGrab2WithResult(protocol, hostname, port, mode string) (bool, *models.C
 
 	// pythonPath := "python3" //linux
 	pythonPath := "python" //windows
-	scriptPath := "/var/home/wzq/projects/email-website/backend/tlscheck/test_tls.py"
+	scriptPath := "/home/wzq/email-checker/backend/tlscheck/test_tls.py"
 
 	cmd := exec.Command(pythonPath, scriptPath,
 		"--protocol", protocol,
@@ -163,7 +163,7 @@ func RunZGrab2(protocol, hostname, port, mode string) (bool, error) { //4.22pyth
 
 	// pythonPath := "python3" //linux
 	pythonPath := "python" //windows
-	scriptPath := "/var/home/wzq/projects/email-website/backend/tlscheck/test_tls.py"
+	scriptPath := "/home/wzq/email-checker/backend/tlscheck/test_tls.py"
 
 	cmd := exec.Command(pythonPath, scriptPath,
 		"--protocol", protocol,
