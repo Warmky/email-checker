@@ -95,7 +95,7 @@ function MainPage() {
     }, [results]);
 
     const fetchRecent = () => {
-        fetch("/api/recent")
+        fetch(`/api/recent`)
             .then((res) => res.json())
             .then((data) => setRecentlySeen(data))
             .catch((err) => console.error("Failed to fetch recent scans:", err));
@@ -1111,9 +1111,11 @@ function CSVUploadForm() {
         formData.append("file", file);
 
         try {
-            const res = await fetch("/api/uploadCsvAndExportJsonl", {
+            const res = await fetch(`/api/uploadCsvAndExportJsonl`, {
             method: "POST",
             body: formData,
+            mode: "cors",               // 显式允许跨域9.6
+            credentials: "omit",        // 如果不需要带 cookie
             });
 
 
