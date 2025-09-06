@@ -95,7 +95,7 @@ function MainPage() {
     }, [results]);
 
     const fetchRecent = () => {
-        fetch("http://localhost:8081/api/recent")
+        fetch("/api/recent")
             .then((res) => res.json())
             .then((data) => setRecentlySeen(data))
             .catch((err) => console.error("Failed to fetch recent scans:", err));
@@ -113,7 +113,10 @@ function MainPage() {
         setStage("开始检测");
         setProgressMessage("");
 
-        const ws = new WebSocket("ws://localhost:8081/ws/checkall-progress");
+        // const ws = new WebSocket("ws://localhost:8081/ws/checkall-progress");
+         // ✅ WebSocket 改成相对当前域名
+        const wsProtocol = window.location.protocol === "https:" ? "wss" : "ws";
+        const ws = new WebSocket(`${wsProtocol}://${window.location.host}/ws/checkall-progress`);
 
         ws.onmessage = (event) => {
             const data = JSON.parse(event.data);
@@ -138,7 +141,7 @@ function MainPage() {
         };
 
         try {
-            const response = await fetch(`http://localhost:8081/checkAll?email=${email}`);
+            const response = await fetch(`/checkAll?email=${email}`);
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
@@ -180,7 +183,7 @@ function MainPage() {
     // 在组件里定义一个通用函数
     const handleViewDetailsClick = async (mechType, details) => {
         try {
-            const res = await fetch("http://localhost:8081/store-temp-data", {
+            const res = await fetch("/store-temp-data", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ details }),
@@ -388,7 +391,7 @@ function MainPage() {
                                                     };
 
                                                     try {
-                                                    const res = await fetch("http://localhost:8081/store-temp-data", {
+                                                    const res = await fetch("/store-temp-data", {
                                                         method: "POST",
                                                         headers: { "Content-Type": "application/json" },
                                                         body: JSON.stringify(payload),
@@ -1108,7 +1111,7 @@ function CSVUploadForm() {
         formData.append("file", file);
 
         try {
-            const res = await fetch("http://localhost:8081/api/uploadCsvAndExportJsonl", {
+            const res = await fetch("/api/uploadCsvAndExportJsonl", {
             method: "POST",
             body: formData,
             });
@@ -1129,7 +1132,7 @@ function CSVUploadForm() {
 
     const handleDownload = async () => {
         try {
-            const res = await fetch(`http://localhost:8081${downloadUrl}`);
+            const res = await fetch(`${downloadUrl}`);
             if (!res.ok) {
                 throw new Error("下载失败");
             }

@@ -8,7 +8,8 @@ export default function useLiveTest({ host, port, protocol, onFinish }) {
         if (!host || !port || !protocol) return;
 
         // ✅ 注意这里用反引号和正确的后端路径
-        const wsUrl = `ws://localhost:8081/ws/testconnect?host=${host}&port=${port}&protocol=${protocol}`;
+        // const wsUrl = `ws://localhost:8081/ws/testconnect?host=${host}&port=${port}&protocol=${protocol}`;
+        const wsUrl = `${wsProtocol}://${window.location.host}/ws/testconnect?host=${host}&port=${port}&protocol=${protocol}`;
         console.log("🔌 Connecting WebSocket:", wsUrl);
 
         const ws = new WebSocket(wsUrl);

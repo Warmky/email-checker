@@ -36,7 +36,7 @@ function ConfigViewPage() {
   useEffect(() => {
     if (!tempId) return;
 
-    fetch(`http://localhost:8081/get-temp-data?id=${tempId}`)
+    fetch(`/get-temp-data?id=${tempId}`)
       .then(res => res.json())
       .then(data => {
         console.log("✅ 拉取详情数据:", data);
@@ -63,9 +63,15 @@ function ConfigViewPage() {
     setLiveResult(null);
     setTestingHost(`${type}://${host}:${port} [${type}, ${mode}]`); 
 
+    // const ws = new WebSocket(
+    //   `ws://localhost:8081/ws/testconnect?host=${item.host}&port=${item.port}&protocol=${item.type}&mode=${mode}`
+    // );
+
+    const wsProtocol = window.location.protocol === "https:" ? "wss" : "ws";
     const ws = new WebSocket(
-      `ws://localhost:8081/ws/testconnect?host=${item.host}&port=${item.port}&protocol=${item.type}&mode=${mode}`
+      `${wsProtocol}://${window.location.host}/ws/testconnect?host=${item.host}&port=${item.port}&protocol=${item.type}&mode=${mode}`
     );
+
 
     ws.onmessage = (event) => {
       const data = JSON.parse(event.data);

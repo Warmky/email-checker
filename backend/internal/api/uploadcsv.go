@@ -115,6 +115,124 @@ func UploadCsvAndExportJsonlHandler(w http.ResponseWriter, r *http.Request) {
 	})
 }
 
+// func UploadCsvAndExportJsonlHandler(w http.ResponseWriter, r *http.Request) {
+// 	// 打开日志文件
+// 	logDir := "/home/wzq/email-checker/backend/log"
+// 	os.MkdirAll(logDir, os.ModePerm)
+// 	logFile, err1 := os.OpenFile("log/upload_csv.log", os.O_CREATE|os.O_APPEND|os.O_WRONLY, 0644)
+// 	if err1 != nil {
+// 		log.Println("Failed to open log file:", err1)
+// 		http.Error(w, "Internal server error", http.StatusInternalServerError)
+// 		return
+// 	}
+// 	defer logFile.Close()
+
+// 	logger := log.New(logFile, "", log.LstdFlags)
+
+// 	if r.Method != http.MethodPost {
+// 		logger.Println("Method not allowed:", r.Method)
+// 		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
+// 		return
+// 	}
+
+// 	err := r.ParseMultipartForm(10 << 20) // 限制大小为10MB
+// 	if err != nil {
+// 		logger.Println("ParseMultipartForm failed:", err)
+// 		http.Error(w, "Failed to parse multipart form: "+err.Error(), http.StatusBadRequest)
+// 		return
+// 	}
+
+// 	file, handler, err := r.FormFile("file")
+// 	if err != nil {
+// 		logger.Println("FormFile failed:", err)
+// 		http.Error(w, "Failed to retrieve file: "+err.Error(), http.StatusBadRequest)
+// 		return
+// 	}
+// 	defer file.Close()
+
+// 	// 保存上传的文件到临时目录
+// 	os.MkdirAll("tmp", os.ModePerm)
+// 	tmpFilePath := filepath.Join("tmp", handler.Filename)
+// 	tmpFile, err := os.Create(tmpFilePath)
+// 	if err != nil {
+// 		logger.Println("Create temp file failed:", err)
+// 		http.Error(w, "Failed to create temp file: "+err.Error(), http.StatusInternalServerError)
+// 		return
+// 	}
+// 	defer tmpFile.Close()
+
+// 	if _, err := io.Copy(tmpFile, file); err != nil {
+// 		logger.Println("Copy file failed:", err)
+// 		http.Error(w, "Failed to save file: "+err.Error(), http.StatusInternalServerError)
+// 		return
+// 	}
+
+// 	logger.Println("Uploaded file successfully:", handler.Filename)
+
+// 	// 重新打开读取（确保读取内容）
+// 	tmpFile.Seek(0, 0)
+// 	reader := csv.NewReader(bufio.NewReader(tmpFile))
+
+// 	var domains []string
+// 	first := true
+// 	for {
+// 		record, err := reader.Read()
+// 		if err == io.EOF {
+// 			break
+// 		}
+// 		if err != nil || len(record) == 0 {
+// 			logger.Println("CSV read error:", err, "record:", record)
+// 			continue
+// 		}
+// 		domain := record[0]
+// 		if first {
+// 			domain = strings.TrimPrefix(domain, "\uFEFF")
+// 			first = false
+// 		}
+// 		domains = append(domains, domain)
+// 	}
+
+// 	// 创建输出目录
+// 	os.MkdirAll("downloads", os.ModePerm)
+// 	timestamp := time.Now().Format("20060102_150405")
+// 	outputFile := filepath.Join("downloads", fmt.Sprintf("result_%s.jsonl", timestamp))
+// 	out, err := os.Create(outputFile)
+// 	if err != nil {
+// 		logger.Println("Create output file failed:", err)
+// 		http.Error(w, "Failed to create result file: "+err.Error(), http.StatusInternalServerError)
+// 		return
+// 	}
+// 	defer out.Close()
+
+// 	// 并发处理每个域名
+// 	var wg sync.WaitGroup
+// 	var mu sync.Mutex
+// 	for _, domain := range domains {
+// 		wg.Add(1)
+// 		go func(domain string) {
+// 			defer wg.Done()
+// 			result := discover.ProcessDomain(domain)
+// 			bytes, err := json.Marshal(result)
+// 			if err != nil {
+// 				logger.Println("JSON marshal failed for domain:", domain, err)
+// 				return
+// 			}
+// 			mu.Lock()
+// 			out.Write(append(bytes, '\n'))
+// 			mu.Unlock()
+// 		}(domain)
+// 	}
+// 	wg.Wait()
+
+// 	// 返回结果文件路径
+// 	downloadURL := "/downloads/" + filepath.Base(outputFile)
+// 	w.Header().Set("Content-Type", "application/json")
+// 	json.NewEncoder(w).Encode(map[string]string{
+// 		"download_url": downloadURL,
+// 	})
+// 	logger.Println("Processed domains:", len(domains), "output:", downloadURL)
+// }
+
 func UploadCSVHandler(w http.ResponseWriter, r *http.Request) {
 	err := r.ParseMultipartForm(10 << 20) // 最大 10MB
 	if err != nil {

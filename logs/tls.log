@@ -1,8 +1,8 @@
  * Serving Flask app 'tls_analyzer'
  * Debug mode: on
-2025-09-05 16:24:28,247 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+2025-09-06 12:02:24,393 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
  * Running on http://127.0.0.1:5002
-2025-09-05 16:24:28,248 [INFO] [33mPress CTRL+C to quit[0m
-2025-09-05 16:24:28,248 [INFO]  * Restarting with stat
-2025-09-05 16:24:28,866 [WARNING]  * Debugger is active!
-2025-09-05 16:24:28,867 [INFO]  * Debugger PIN: 149-742-450
+2025-09-06 12:02:24,393 [INFO] [33mPress CTRL+C to quit[0m
+2025-09-06 12:02:24,394 [INFO]  * Restarting with stat
+2025-09-06 12:02:24,995 [WARNING]  * Debugger is active!
+2025-09-06 12:02:24,995 [INFO]  * Debugger PIN: 149-742-450
