@@ -12,8 +12,8 @@ export default function TlsAnalyzerPanel({ host, port }) {
         setAnalysis(null);
         try {
             const res = await axios.post(
-                // "http://localhost:5002/api/tls/deep-analyze",
-                "/api/tls/deep-analyze",
+                "http://127.0.0.1:5002/api/tls/deep-analyze",
+                // "/api/tls/deep-analyze",
                 { host, port },
                 { headers: { "Content-Type": "application/json" } }
             );

@@ -12,7 +12,7 @@ def kill_port(port):
 
 # 清理占用的端口
 print("🔧 清理旧进程...")
-for p in [5000, 8081, 3000]:
+for p in [5000, 5002, 8081, 3000]:
     kill_port(p)
 
 # 1. 激活 conda 并启动 tls_analyzer.py
