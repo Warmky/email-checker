@@ -191,7 +191,7 @@ def run_tls_scan(host: str, port: int):
         logging.exception(f"Error during scan for {host}:{port}: {e}")
         return {"success": False, "error": str(e), "debug_info": repr(e)}
 
-@app.route("/api/tls/deep-analyze", methods=["POST"])
+@app.route("/deep-analyze", methods=["POST"])
 def deep_analyze():
     data = request.get_json()
     host = data.get("host")

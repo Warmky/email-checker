@@ -11,14 +11,21 @@ export default function TlsAnalyzerPanel({ host, port }) {
         setLoading(true);
         setAnalysis(null);
         try {
-            const res = await axios.post(
-                "http://127.0.0.1:5002/api/tls/deep-analyze",
-                // "/api/tls/deep-analyze",
-                { host, port },
-                { headers: { "Content-Type": "application/json" } }
-            );
-            console.log("=== TLS Analysis Result ===", res.data);  // <-- 打印整个返回对象
-            setAnalysis(res.data);
+            // const res = await axios.post(
+            //     "http://127.0.0.1:5002/api/tls/deep-analyze",
+            //     // "/api/tls/deep-analyze",
+            //     { host, port },
+            //     { headers: { "Content-Type": "application/json" } }
+            // );
+            const res = await fetch("/tls-api/deep-analyze", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ host, port }),
+            });
+            const data = await res.json();
+            // console.log("=== TLS Analysis Result ===", res.data);  //可用 <-- 打印整个返回对象
+            console.log("=== TLS Analysis Result ===", data); 
+            setAnalysis(data);
         } catch (error) {
             if (error.response) {
                 setAnalysis({

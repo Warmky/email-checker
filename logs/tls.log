@@ -1,8 +1,29 @@
  * Serving Flask app 'tls_analyzer'
  * Debug mode: on
-2025-09-06 21:03:24,473 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+2025-09-06 21:59:28,008 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
  * Running on http://127.0.0.1:5002
-2025-09-06 21:03:24,473 [INFO] [33mPress CTRL+C to quit[0m
-2025-09-06 21:03:24,474 [INFO]  * Restarting with stat
-2025-09-06 21:03:25,081 [WARNING]  * Debugger is active!
-2025-09-06 21:03:25,082 [INFO]  * Debugger PIN: 149-742-450
+2025-09-06 21:59:28,009 [INFO] [33mPress CTRL+C to quit[0m
+2025-09-06 21:59:28,010 [INFO]  * Restarting with stat
+2025-09-06 21:59:28,617 [WARNING]  * Debugger is active!
+2025-09-06 21:59:28,617 [INFO]  * Debugger PIN: 149-742-450
+2025-09-06 22:00:59,820 [INFO] === Starting TLS scan for imap.qq.com:993 ===
+/home/wzq/.local/lib/python3.12/site-packages/sslyze/plugins/certificate_info/trust_stores/trust_store.py:55: CryptographyDeprecationWarning: Parsed a negative serial number, which is disallowed by RFC 5280. Loading this certificate will cause an exception in the next release of cryptography.
+  self._x509_store = Store(load_pem_x509_certificates(self.path.read_bytes()))
+2025-09-06 22:01:01,346 [INFO] Scan status: ServerScanStatusEnum.COMPLETED
+2025-09-06 22:01:01,346 [INFO] Connectivity: ServerTlsProbingResult(highest_tls_version_supported=<TlsVersionEnum.TLS_1_3: 6>, cipher_suite_supported='TLS_AES_256_GCM_SHA384', client_auth_requirement=<ClientAuthRequirementEnum.DISABLED: 'DISABLED'>, supports_ecdh_key_exchange=True)
+/home/wzq/email-checker/backend/tls_analyzer.py:124: CryptographyDeprecationWarning: Properties that return a naïve datetime object have been deprecated. Please switch to not_valid_before_utc.
+  "not_before": cert.not_valid_before.isoformat(),
+/home/wzq/email-checker/backend/tls_analyzer.py:125: CryptographyDeprecationWarning: Properties that return a naïve datetime object have been deprecated. Please switch to not_valid_after_utc.
+  "not_after": cert.not_valid_after.isoformat(),
+2025-09-06 22:01:01,350 [INFO] === Scan for imap.qq.com:993 completed ===
+2025-09-06 22:01:01,351 [INFO] 127.0.0.1 - - [06/Sep/2025 22:01:01] "POST /deep-analyze HTTP/1.0" 200 -
+2025-09-06 22:01:03,206 [INFO] === Starting TLS scan for imap.qq.com:993 ===
+2025-09-06 22:01:04,877 [INFO] Scan status: ServerScanStatusEnum.COMPLETED
+2025-09-06 22:01:04,877 [INFO] Connectivity: ServerTlsProbingResult(highest_tls_version_supported=<TlsVersionEnum.TLS_1_3: 6>, cipher_suite_supported='TLS_AES_256_GCM_SHA384', client_auth_requirement=<ClientAuthRequirementEnum.DISABLED: 'DISABLED'>, supports_ecdh_key_exchange=True)
+2025-09-06 22:01:04,881 [INFO] === Scan for imap.qq.com:993 completed ===
+2025-09-06 22:01:04,882 [INFO] 127.0.0.1 - - [06/Sep/2025 22:01:04] "POST /deep-analyze HTTP/1.0" 200 -
+2025-09-06 22:03:05,706 [INFO] === Starting TLS scan for imap.qq.com:993 ===
+2025-09-06 22:03:07,372 [INFO] Scan status: ServerScanStatusEnum.COMPLETED
+2025-09-06 22:03:07,373 [INFO] Connectivity: ServerTlsProbingResult(highest_tls_version_supported=<TlsVersionEnum.TLS_1_3: 6>, cipher_suite_supported='TLS_AES_256_GCM_SHA384', client_auth_requirement=<ClientAuthRequirementEnum.DISABLED: 'DISABLED'>, supports_ecdh_key_exchange=True)
+2025-09-06 22:03:07,376 [INFO] === Scan for imap.qq.com:993 completed ===
+2025-09-06 22:03:07,377 [INFO] 127.0.0.1 - - [06/Sep/2025 22:03:07] "POST /deep-analyze HTTP/1.0" 200 -
