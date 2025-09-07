@@ -20,6 +20,8 @@ logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(me
 
 def run_tls_scan(host: str, port: int):
     try:
+        findings = []      # 扫描结果//
+        debug_info = []    # 调试日志（字符串）//
         logging.info(f"=== Starting TLS scan for {host}:{port} ===")
 
         server_location = ServerNetworkLocation(hostname=host, port=port)
@@ -71,9 +73,13 @@ def run_tls_scan(host: str, port: int):
 
                     # ✅ Cipher Suites
                     if hasattr(result, "accepted_cipher_suites"):
+                        # suites = [{
+                        #     "name": s.cipher_suite.name,
+                        #     "key_size": getattr(getattr(s.cipher_suite, "encryption_algorithm", None), "key_size", "unknown")
+                        # } for s in result.accepted_cipher_suites]
                         suites = [{
                             "name": s.cipher_suite.name,
-                            "key_size": getattr(getattr(s.cipher_suite, "encryption_algorithm", None), "key_size", "unknown")
+                            "key_size": getattr(getattr(s.cipher_suite, "encryption_algorithm", None), "key_size", None) or "unknown"  # None 而不是 "unknown"
                         } for s in result.accepted_cipher_suites]
                         finding["accepted_cipher_suites"] = suites
 
@@ -175,6 +181,7 @@ def run_tls_scan(host: str, port: int):
                 "error": "没有扫描到任何结果（握手失败或命令未执行）",
                 "host": host,
                 "port": port,
+                "findings": [],
                 "debug_info": debug_info
             }
 
@@ -189,7 +196,7 @@ def run_tls_scan(host: str, port: int):
 
     except Exception as e:
         logging.exception(f"Error during scan for {host}:{port}: {e}")
-        return {"success": False, "error": str(e), "debug_info": repr(e)}
+        return {"success": False, "error": str(e), "host": host, "port": port, "findings": [],"debug_info": repr(e)}
 
 @app.route("/deep-analyze", methods=["POST"])
 def deep_analyze():
