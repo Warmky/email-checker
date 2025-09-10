@@ -34,41 +34,37 @@ function MainPage() {
     const [progressMessage, setProgressMessage] = useState("");
 
 
-    const mechanisms = ["autodiscover", "autoconfig", "srv", "guess"];
-    // 默认选中第一个有结果的机制
-    const firstAvailable = mechanisms.find(m => results[m]) || mechanisms[0];
+    const mechanisms = ["autodiscover", "autoconfig", "srv", "guess", "compare"];//9.10_2 新增加比较机制供管理者一眼看出不同机制得到的配置信息有何不同
+    // // 默认选中第一个有结果的机制
+    // const firstAvailable = mechanisms.find(m => results[m]) || mechanisms[0];
+    // const [currentMech, setCurrentMech] = useState(firstAvailable);
+
+    // 默认选中第一个有结果的机制（不含 compare）9.10_2
+    const firstAvailable = mechanisms.find(m => m !== "compare" && results[m]) || mechanisms[0];
     const [currentMech, setCurrentMech] = useState(firstAvailable);
 
-    //9.10修改搜索框实现输入提示
+
+    // 9.9修改搜索框提示用户输入哪些可以查询到较有效的配置
+    const [displayText, setDisplayText] = useState("");
     const [placeholderIndex, setPlaceholderIndex] = useState(0);
     const [displayPlaceholder, setDisplayPlaceholder] = useState(""); // 实际展示的 placeholder
     const [isPlaceholderFrozen, setIsPlaceholderFrozen] = useState(false);
+    const [lastSubmittedEmail, setLastSubmittedEmail] = useState("");
+
     const placeholders = [
-        { display: "请输入您的邮件地址：例如 user@example.com", value: "user@example.com" },
+        { display: "请输入您的邮件地址：如 user@example.com", value: "user@example.com" },
         { display: "Alice@qq.com", value: "Alice@qq.com" },
         { display: "Bob@163.com", value: "Bob@163.com" },
         { display: "xxx@gmail.com", value: "xxx@gmail.com" },
         { display: "test@yandex.com", value: "test@yandex.com" },
         { display: "admin@outlook.com", value: "admin@outlook.com" },
     ];
-    const [lastSubmittedEmail, setLastSubmittedEmail] = useState("");//9.10 配置信息卡片用户名展示
-
-    // 每 3 秒切换到下一个（如果没有冻结）
-    useEffect(() => {
-        if (isPlaceholderFrozen) return; // ❌ 冻结后停止轮播
-
-        const interval = setInterval(() => {
-            setPlaceholderIndex((prev) => (prev + 1) % placeholders.length);
-        }, 3000);
-
-        return () => clearInterval(interval);
-    }, [isPlaceholderFrozen]);
 
     // placeholder 轮播
     useEffect(() => {
         if (isPlaceholderFrozen) return; // 冻结时停止
         const interval = setInterval(() => {
-        setPlaceholderIndex((prev) => (prev + 1) % placeholders.length);
+            setPlaceholderIndex((prev) => (prev + 1) % placeholders.length);
         }, 3000);
         return () => clearInterval(interval);
     }, [isPlaceholderFrozen]);
@@ -344,10 +340,176 @@ function MainPage() {
         boxShadow: "0 4px 8px rgba(0,0,0,0.05)"
     };
 
+    //9.10_2 完善compare具体内容
+    const normalizeAuto = (mech, results) => {  //此处可参照后端函数calculatePortScores
+        const ports = results[mech]?.score_detail?.ports_usage || [];
+        return ports.map(item => {
+            let ssl = item.ssl;
+            // Autodiscover 里可能是 "on" / "off"
+            if (ssl === "on"||ssl === "ssl"||ssl==="tls") ssl = "SSL";
+            if (ssl === "off") ssl = "PLAIN";
+            return {
+                protocol: item.protocol?.toUpperCase() || "",
+                port: item.port,
+                host: item.host,
+                ssl: ssl?.toUpperCase() || ""
+            };
+        });
+    };
+
+    const normalizeSrv = (results) => {
+        const srv = results.srv?.srv_records || {};
+        const all = [...(srv.recv || []), ...(srv.send || [])];
+            return all.map(item => {
+            const service = item.Service || "";
+            // 例如 "_imaps._tcp.yandex.com"
+            const protoMatch = service.match(/^_([a-z]+)/i);
+            let protocol = "";
+            let ssl = "";
+            if (protoMatch) {
+                const proto = protoMatch[1].toLowerCase();
+                if (proto.startsWith("imap")) protocol = "IMAP";
+                else if (proto.startsWith("pop")) protocol = "POP3";
+                else if (proto.startsWith("submission")) protocol = "SMTP";
+                // SSL 类型
+                ssl = proto.endsWith("s") ? "SSL" : "STARTTLS"; //此处存疑TODO
+            }
+            return {
+                protocol,
+                port: item.Port,
+                host: (item.Target || "").replace(/\.$/, ""), // 去掉末尾点
+                ssl
+            };
+        });
+    };
+    
+    const comparePortsUsage = (results) => {
+        const mechList = ["autodiscover", "autoconfig", "srv"];
+
+        const allNormalized = {
+            autodiscover: normalizeAuto("autodiscover", results),
+            autoconfig: normalizeAuto("autoconfig", results),
+            srv: normalizeSrv(results)
+        };
+
+        const comparisonMap = {}; // key = protocol-port
+
+        mechList.forEach(mech => {
+            allNormalized[mech].forEach(item => {
+                const key = `${item.protocol}-${item.port}`;
+                if (!comparisonMap[key]) comparisonMap[key] = {};
+                comparisonMap[key][mech] = item;
+            });
+        });
+
+        return comparisonMap;
+    };
 
     // 当前机制内容渲染函数7.28
     const renderMechanismContent = (mech) => {
         const result = results[mech];
+        //9.10_2 确保compare Tab一直会出现
+        if (mech === "compare") {
+            const comparisonMap = comparePortsUsage(results);
+        
+            const thStyle = {
+                border: "1px solid #ccc",
+                padding: "8px",
+                background: "#f7f7f7",
+                minWidth: "120px",
+                textAlign: "center",
+            };
+            const tdStyle = {
+                border: "1px solid #ccc",
+                padding: "8px",
+                textAlign: "center",
+            };
+        
+            return (
+            <div style={{ marginTop: "2rem" }}>
+                {/* 说明文案 */}
+                <div
+                style={{
+                    backgroundColor: "#f0f8ff",
+                    padding: "10px",
+                    border: "1px solid #ccc",
+                    borderRadius: "8px",
+                    marginBottom: "15px",
+                    fontSize: "14px",
+                    lineHeight: "1.6",
+                }}
+                >
+                <p>🔍 <b>Compare 分析说明：</b></p>
+                <ul style={{ margin: "0 0 0 18px", padding: 0 }}>
+                    <li>Compare 用于比较 <b>Autodiscover / Autoconfig / SRV</b> 三种机制返回的配置。</li>
+                    <div>
+                        ✅ <span style={{ color: "#28a745", fontWeight: "bold" }}>绿色</span> 表示一致；
+                        ❌ <span style={{ color: "#dc3545", fontWeight: "bold" }}>红色</span> 表示不一致。
+                    </div>
+
+                    <li>配置不一致可能导致客户端配置错误或其他安全隐患，请重点关注。</li>
+                </ul>
+                </div>
+        
+                <h4 style={{ marginBottom: "1rem" }}>⚖️ 配置比较结果</h4>
+                <table
+                style={{
+                    width: "100%",
+                    borderCollapse: "collapse",
+                    tableLayout: "fixed",
+                }}
+                >
+                <thead>
+                    <tr>
+                    <th style={thStyle}>协议</th>
+                    <th style={thStyle}>端口</th>
+                    <th style={thStyle}>机制</th>
+                    <th style={thStyle}>主机</th>
+                    <th style={thStyle}>SSL类型</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {Object.entries(comparisonMap).map(([key, mechData], idx) => {
+                    // 检查一致性
+                    const fields = ["host", "ssl"];
+                    const isConsistent = fields.every((field) => {
+                        const values = Object.values(mechData)
+                        .map((m) => m[field])
+                        .filter(Boolean);
+                        return (
+                        values.length <= 1 || values.every((v) => v === values[0])
+                        );
+                    });
+        
+                    return Object.entries(mechData).map(([mech, item], rowIdx) => (
+                        <tr
+                        key={`${idx}-${rowIdx}`}
+                        style={{
+                            backgroundColor: isConsistent ? "#f0f0f0" : "#f8d7da",
+                        }}
+                        >
+                        {rowIdx === 0 && (
+                            <>
+                            <td style={tdStyle} rowSpan={Object.keys(mechData).length}>
+                                {item.protocol}
+                            </td>
+                            <td style={tdStyle} rowSpan={Object.keys(mechData).length}>
+                                {item.port}
+                            </td>
+                            </>
+                        )}
+                        <td style={tdStyle}>{mech}</td>
+                        <td style={tdStyle}>{item.host}</td>
+                        <td style={tdStyle}>{item.ssl}</td>
+                        </tr>
+                    ));
+                    })}
+                </tbody>
+                </table>
+            </div>
+            );
+        }
+        
         if (!result && Object.keys(results).length === 0) return null;
         if (!result) return <p style={{ color: "gray" }}>No data for {mech}</p>;
 
@@ -756,7 +918,7 @@ function MainPage() {
                 )}
 
 
-                {mech !== "srv" && mech!=="guess" &&(
+                {mech !== "srv" && mech!=="guess" && (
                     <>
                         <h4
                             onClick={() => toggleRaw(mech)}
@@ -1074,7 +1236,40 @@ function MainPage() {
 
             {hasAnyResult && (
                 <>
-                    <div style={{ display: "flex", gap: "1rem", marginTop: "1.5rem", marginBottom: "1.5rem", flexWrap: "wrap" }}>
+                    <div style={{ width: "100%", maxWidth: "900px", backgroundColor: "#f5f8fa", padding: "2rem", borderRadius: "12px", boxShadow: "0 2px 10px rgba(0,0,0,0.04)", border: "1px solid #eee", marginTop: "1rem" }}>
+    
+                        {/* 机制 Tab */}
+                        <div style={{ display: "flex", gap: "1rem", marginBottom: "1rem", flexWrap: "wrap" }}>
+                            {mechanisms.map((mech) => (
+                                <div
+                                    key={mech}
+                                    onClick={() => setCurrentMech(mech)}
+                                    style={{
+                                        padding: "0.8rem 1.2rem",
+                                        borderRadius: "10px",
+                                        cursor: "pointer",
+                                        backgroundColor: currentMech === mech ? "#e3edf5" : "#f9f9f9",
+                                        color: currentMech === mech ? "#3a506b" : "#888",
+                                        border: currentMech === mech ? "2px solid #8aa3b4" : "1px solid #ddd",
+                                        boxShadow: currentMech === mech ? "0 2px 6px rgba(138,163,180,0.4)" : "none",
+                                        transition: "all 0.2s ease-in-out",
+                                        minWidth: "120px",
+                                        textAlign: "center",
+                                        fontWeight: 600,
+                                        letterSpacing: "0.5px"
+                                    }}
+                                >
+                                    {mech.toUpperCase()}
+                                </div>
+                            ))}
+                        </div>
+
+                        {/* 机制内容 */}
+                        {renderMechanismContent(currentMech)}
+                    </div>
+
+                    {/* 9.10_2 */}
+                    {/* <div style={{ display: "flex", gap: "1rem", marginTop: "1.5rem", marginBottom: "1.5rem", flexWrap: "wrap" }}>
                         {mechanisms.map((mech) => (
                             <div
                                 key={mech}
@@ -1112,7 +1307,7 @@ function MainPage() {
                         }}
                     >
                         {renderMechanismContent(currentMech)}
-                    </div>
+                    </div> */}
                 </>
             )}
 
