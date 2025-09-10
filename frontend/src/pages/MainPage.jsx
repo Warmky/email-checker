@@ -39,6 +39,69 @@ function MainPage() {
     const firstAvailable = mechanisms.find(m => results[m]) || mechanisms[0];
     const [currentMech, setCurrentMech] = useState(firstAvailable);
 
+    //9.10修改搜索框实现输入提示
+    const [placeholderIndex, setPlaceholderIndex] = useState(0);
+    const [displayPlaceholder, setDisplayPlaceholder] = useState(""); // 实际展示的 placeholder
+    const [isPlaceholderFrozen, setIsPlaceholderFrozen] = useState(false);
+    const placeholders = [
+        { display: "请输入您的邮件地址：例如 user@example.com", value: "user@example.com" },
+        { display: "Alice@qq.com", value: "Alice@qq.com" },
+        { display: "Bob@163.com", value: "Bob@163.com" },
+        { display: "xxx@gmail.com", value: "xxx@gmail.com" },
+        { display: "test@yandex.com", value: "test@yandex.com" },
+        { display: "admin@outlook.com", value: "admin@outlook.com" },
+    ];
+    const [lastSubmittedEmail, setLastSubmittedEmail] = useState("");//9.10 配置信息卡片用户名展示
+
+    // 每 3 秒切换到下一个（如果没有冻结）
+    useEffect(() => {
+        if (isPlaceholderFrozen) return; // ❌ 冻结后停止轮播
+
+        const interval = setInterval(() => {
+            setPlaceholderIndex((prev) => (prev + 1) % placeholders.length);
+        }, 3000);
+
+        return () => clearInterval(interval);
+    }, [isPlaceholderFrozen]);
+
+    // placeholder 轮播
+    useEffect(() => {
+        if (isPlaceholderFrozen) return; // 冻结时停止
+        const interval = setInterval(() => {
+        setPlaceholderIndex((prev) => (prev + 1) % placeholders.length);
+        }, 3000);
+        return () => clearInterval(interval);
+    }, [isPlaceholderFrozen]);
+    
+    // 更新展示 placeholder
+    useEffect(() => {
+        if (!isPlaceholderFrozen) {
+        setDisplayPlaceholder(placeholders[placeholderIndex]);
+        }
+    }, [placeholderIndex, isPlaceholderFrozen]);
+
+    // 点击检测时
+    const handleClick = () => {
+        const currentPlaceholder = placeholders[placeholderIndex];
+        const targetEmail = email.trim() || currentPlaceholder.value;
+        handleSearch(targetEmail);
+
+        // 冻结 placeholder（固定显示）
+        setIsPlaceholderFrozen(true);
+        setEmail(targetEmail); // 把值写到 input 里（黑色文字）
+        setLastSubmittedEmail(targetEmail); // 保存已提交的邮箱以供配置信息卡片展示用户名 9.10
+    };
+
+    // 输入框聚焦：恢复轮播
+    const handleFocus = () => {
+        if (isPlaceholderFrozen) {
+        setIsPlaceholderFrozen(false);
+        setEmail(""); // 清空输入框，恢复 placeholder 轮播
+        }
+    };
+
+
+
     const certLabelMap = {
         IsTrusted: "是否可信",
         VerifyError: "验证错误",
@@ -101,8 +164,13 @@ function MainPage() {
             .catch((err) => console.error("Failed to fetch recent scans:", err));
     };
 
-    const handleSearch = async () => {
-        if (!email) {
+    const handleSearch = async (targetEmail) => {  //9.10
+        // if (!email) {
+        //     setErrors("请输入邮箱地址");
+        //     return;
+        // }
+        const finalEmail = targetEmail || email.trim();
+        if (!finalEmail) {        
             setErrors("请输入邮箱地址");
             return;
         }
@@ -141,7 +209,7 @@ function MainPage() {
         };
 
         try {
-            const response = await fetch(`/checkAll?email=${email}`);
+            const response = await fetch(`/checkAll?email=${finalEmail}`); //9.10
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
@@ -304,14 +372,6 @@ function MainPage() {
                         <table style={tableStyle}>
                             <thead>
                                 <tr>
-                                    {/* <th style={thStyle}>Method</th>
-                                    <th style={thStyle}>Index</th>
-                                    <th style={thStyle}>URI</th>
-                                    <th style={thStyle}>Config</th>
-                                    <th style={thStyle}>Encrypted</th>
-                                    <th style={thStyle}>Standard</th>
-                                    <th style={thStyle}>Score</th>
-                                    <th style={thStyle}>View</th> */}
                                     <th style={thStyle}>途径</th>
                                     <th style={thStyle}>序号</th>
                                     <th style={thStyle}>请求URI</th>
@@ -361,21 +421,6 @@ function MainPage() {
                                         <td style={tdStyle}>{item.score?.encrypted_ports ?? "-"}</td>
                                         <td style={tdStyle}>{item.score?.standard_ports ?? "-"}</td>
                                         <td style={tdStyle}>{item.score?.overall ?? "-"}</td>
-                                        {/* <td style={tdStyle}>
-                                            {item.config && (
-                                                // <a
-                                                //     href={`/config-view?uri=${encodeURIComponent(item.uri)}&config=${btoa(encodeURIComponent(item.config))}&details=${btoa(JSON.stringify(connectDetails))}`}//&rawCerts=${btoa(JSON.stringify(certInfo?.RawCerts || []))}
-                                                //     target="_blank"
-                                                //     rel="noopener noreferrer"
-                                                //     style={{
-                                                //         color: "#3498db",
-                                                //         textDecoration: "underline"
-                                                //     }}
-                                                // >
-                                                //     查看
-                                                // </a>
-                                            )}
-                                        </td> */}
                                         <td style={tdStyle}>
                                             {item.config && (
                                                 <button
@@ -414,70 +459,6 @@ function MainPage() {
                                                 </button>
                                             )}
                                         </td>
-                                        {/* <td style={tdStyle}>
-                                            {item.config && (
-                                                <button
-                                                onClick={async () => {
-                                                    // 1️⃣ 点击事件立即打开空窗口
-                                                    const newWin = window.open("", "_blank");
-                                                    if (!newWin) {
-                                                    alert("⚠️ 浏览器阻止了弹窗，请允许弹窗");
-                                                    return;
-                                                    }
-
-                                                    // 2️⃣ 构造 payload
-                                                    const payload = {
-                                                    config: item.config,
-                                                    uri: item.uri,
-                                                    details: item.score_detail?.actualconnect_details || [],
-                                                    portsUsage: item.score_detail?.ports_usage || [],
-                                                    rawCerts: item.cert_info?.RawCerts || [],
-                                                    mech: mech,
-                                                    };
-                                                    console.log("📤 发送 payload:", payload);
-
-                                                    try {
-                                                    // 3️⃣ 异步 POST 数据
-                                                    const res = await fetch("/store-temp-data", {
-                                                        method: "POST",
-                                                        headers: { "Content-Type": "application/json" },
-                                                        body: JSON.stringify(payload),
-                                                    });
-
-                                                    console.log("📥 响应状态:", res.status);
-                                                    const text = await res.text();  // 先用 text 打印原始返回
-                                                    console.log("📄 响应内容:", text);
-
-                                                    // 尝试解析 JSON
-                                                    let data;
-                                                    try {
-                                                        data = JSON.parse(text);
-                                                    } catch (jsonErr) {
-                                                        console.error("❌ JSON 解析失败:", jsonErr);
-                                                        alert("⚠️ 返回内容不是 JSON，请查看控制台");
-                                                        newWin.close();
-                                                        return;
-                                                    }
-
-                                                    console.log("✅ 解析后的数据:", data);
-
-                                                    // 4️⃣ 成功后设置新窗口 URL
-                                                    newWin.location.href = `/config-view?id=${data.id}`;
-                                                    } catch (err) {
-                                                    console.error("❌ 打开详情失败:", err);
-                                                    newWin.close(); // 出错关闭空窗口
-                                                    alert("⚠️ 无法打开详情页");
-                                                    }
-                                                }}
-                                                style={viewButtonStyle}
-                                                >
-                                                查看
-                                                </button>
-                                            )}
-                                        </td> */}
-
-
-
                                     </tr>
                                 ))}
                             </tbody>
@@ -624,12 +605,12 @@ function MainPage() {
                                                     </tr>
                                                     <tr>
                                                         <td style={tdStyle}><strong>用户名</strong></td>
-                                                        <td style={tdStyle}>你的邮件地址</td>
+                                                        <td style={tdStyle}>{lastSubmittedEmail}</td>
                                                     </tr>
-                                                    <tr>
+                                                    {/* <tr>
                                                         <td style={tdStyle}><strong>密码</strong></td>
                                                         <td style={tdStyle}>你的邮箱密码</td>
-                                                    </tr>
+                                                    </tr> */}
                                                 </tbody>
                                             </table>
                                         </div>
@@ -1027,58 +1008,56 @@ function MainPage() {
     const hasAnyResult = Object.values(results).some((r) => r && Object.keys(r).length > 0);{/*7.28 */}
 
     return (
-        <div style={{ display: "flex", flexDirection: "column", alignItems: "center", marginTop: "10vh", marginBottom: "2rem" }}>
-            <h1 style={{ fontSize: "2.5rem", marginBottom: "1rem", color: "#29323eff" }}>邮件自动化配置检测</h1>
+        <div 
+            style={{
+                marginTop: "10vh",
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                padding: "0 1rem", // 手机端留边
+            }}
+        >
+            <h1 style={{ fontSize: "2.5rem", marginBottom: "1rem", color: "#29323eff" }}>
+                邮件自动化配置检测
+            </h1>
 
-            <div>
+            <div style={{ maxWidth: "600px", width: "100%" }}>
                 <input
                     type="text"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    placeholder="请输入您的邮件地址"
+                    onFocus={handleFocus}   // ⚡ 聚焦时恢复轮播
+                    placeholder={isPlaceholderFrozen ? "" : placeholders[placeholderIndex].display} // 冻结时不用 placeholder
                     style={{
                         padding: "1rem",
                         width: "400px",
                         fontSize: "1.2rem",
                         borderRadius: "8px",
                         border: "1px solid #ccc",
-                        outline: "none"
+                        outline: "none",
+                        color: "#000",
                     }}
                 />
                 <button
-                    onClick={handleSearch}
-                    style={{
-                        marginLeft: "1rem",
-                        padding: "1rem",
-                        fontSize: "1.2rem",
-                        borderRadius: "8px",
-                        backgroundColor: "#3c71cdff",
-                        color: "white",
-                        border: "none",
-                        cursor: "pointer",
-                        fontWeight: "bold",
-                        transition: "background 0.3s"
-                    }}
-                    onMouseOver={(e) => (e.target.style.backgroundColor = "#2e4053")}
-                    onMouseOut={(e) => (e.target.style.backgroundColor = "#3a506b")}
+                onClick={handleClick}
+                style={{
+                    marginLeft: "1rem",
+                    padding: "1rem",
+                    fontSize: "1.2rem",
+                    borderRadius: "8px",
+                    backgroundColor: "#3c71cdff",
+                    color: "white",
+                    border: "none",
+                    cursor: "pointer",
+                    fontWeight: "bold",
+                    transition: "background 0.3s",
+                }}
+                onMouseOver={(e) => (e.target.style.backgroundColor = "#2e4053")}
+                onMouseOut={(e) => (e.target.style.backgroundColor = "#3a506b")}
                 >
-                    开始检测
+                开始检测
                 </button>
             </div>
-
-            {/* {loading && (
-                <div style={{ marginTop: "1rem", width: "400px", textAlign: "center" }}>
-                    <div style={{ background: "#f0f4f8", borderRadius: "10px", overflow: "hidden", height: "20px", marginBottom: "0.5rem" }}>
-                        <div style={{
-                            width: `${progress}%`,
-                            background: "#8aa3b4",
-                            height: "100%",
-                            transition: "width 0.3s ease"
-                        }}></div>
-                    </div>
-                    <p style={{ color: "#555" }}>{progress}% - {stage} - {progressMessage}</p>
-                </div>
-            )} */}
 
             {loading && (
                 <div style={{ marginTop: "2rem", textAlign: "center" }}>
