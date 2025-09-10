@@ -414,6 +414,69 @@ function MainPage() {
                                                 </button>
                                             )}
                                         </td>
+                                        {/* <td style={tdStyle}>
+                                            {item.config && (
+                                                <button
+                                                onClick={async () => {
+                                                    // 1️⃣ 点击事件立即打开空窗口
+                                                    const newWin = window.open("", "_blank");
+                                                    if (!newWin) {
+                                                    alert("⚠️ 浏览器阻止了弹窗，请允许弹窗");
+                                                    return;
+                                                    }
+
+                                                    // 2️⃣ 构造 payload
+                                                    const payload = {
+                                                    config: item.config,
+                                                    uri: item.uri,
+                                                    details: item.score_detail?.actualconnect_details || [],
+                                                    portsUsage: item.score_detail?.ports_usage || [],
+                                                    rawCerts: item.cert_info?.RawCerts || [],
+                                                    mech: mech,
+                                                    };
+                                                    console.log("📤 发送 payload:", payload);
+
+                                                    try {
+                                                    // 3️⃣ 异步 POST 数据
+                                                    const res = await fetch("/store-temp-data", {
+                                                        method: "POST",
+                                                        headers: { "Content-Type": "application/json" },
+                                                        body: JSON.stringify(payload),
+                                                    });
+
+                                                    console.log("📥 响应状态:", res.status);
+                                                    const text = await res.text();  // 先用 text 打印原始返回
+                                                    console.log("📄 响应内容:", text);
+
+                                                    // 尝试解析 JSON
+                                                    let data;
+                                                    try {
+                                                        data = JSON.parse(text);
+                                                    } catch (jsonErr) {
+                                                        console.error("❌ JSON 解析失败:", jsonErr);
+                                                        alert("⚠️ 返回内容不是 JSON，请查看控制台");
+                                                        newWin.close();
+                                                        return;
+                                                    }
+
+                                                    console.log("✅ 解析后的数据:", data);
+
+                                                    // 4️⃣ 成功后设置新窗口 URL
+                                                    newWin.location.href = `/config-view?id=${data.id}`;
+                                                    } catch (err) {
+                                                    console.error("❌ 打开详情失败:", err);
+                                                    newWin.close(); // 出错关闭空窗口
+                                                    alert("⚠️ 无法打开详情页");
+                                                    }
+                                                }}
+                                                style={viewButtonStyle}
+                                                >
+                                                查看
+                                                </button>
+                                            )}
+                                        </td> */}
+
+
 
                                     </tr>
                                 ))}
