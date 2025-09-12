@@ -828,103 +828,434 @@ function MainPage() {
                         fontFamily: '"PingFang SC", "Microsoft YaHei", sans-serif',
                         fontWeight: 400,
                         textAlign: "left"
-                    }}>
-                        <h4>📡 可通过 {mech.toUpperCase()} 方法得到的所有配置</h4>
-                        {/* <table style={{ width: "100%", borderCollapse: "collapse" }}> */}
-                        <table style={tableStyle}>
-                            <thead>
-                                <tr>
-                                    <th style={thStyle}>途径</th>
-                                    {/* <th style={thStyle}>序号</th> */}
-                                    <th style={thStyle}>请求URI</th>
-                                    <th style={thStyle}>是否得到配置</th>
-                                    <th style={thStyle}>加密评分</th>
-                                    <th style={thStyle}>标准评分</th>
-                                    <th style={thStyle}>综合评分</th>
-                                    <th style={thStyle}>查看详情</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {result.all.map((item, idx) => (
-                                    <tr key={idx}>
-                                        <td style={tdStyle}>{item.method}</td>
-                                        {/* <td style={tdStyle}>{item.index}</td> */}
-                                        <td style={{ ...tdStyle, maxWidth: "250px", overflow: "hidden" }}>
-                                        <div
-                                            style={{
-                                            overflowX: "auto",
-                                            whiteSpace: "nowrap",
-                                            scrollbarWidth: "thin", // Firefox
-                                            scrollbarColor: "#ccc transparent", // Firefox
-                                            }}
-                                            className="scrollable-uri"
-                                        >
-                                            {item.uri}
-                                        </div>
-                                        </td>
+                        }}>
+                        {/* 9.12 */}
+                        {/* 🔌 配置信息概况 */}
+                        {Array.isArray(portsUsage) && portsUsage.length > 0 && (
+                        <div style={{ marginTop: "2rem" }}>
+                            {/* 上方主题分界线 */}
+                            <div
+                            style={{
+                                borderTop: "2px solid #333",
+                                paddingTop: "10px",
+                                marginBottom: "20px",
+                                display: "flex",
+                                alignItems: "center",
+                            }}
+                            >
+                            <span style={{ fontSize: "32px", marginRight: "10px" }}>🔌</span>
+                            <h3 style={{ margin: 0, color: "#333" }}>配置信息概况</h3>
+                            </div>
 
-                                        <style>
-                                            {`
-                                            .scrollable-uri::-webkit-scrollbar {
-                                                height: 6px; /* 滚动条高度（横向） */
-                                            }
-                                            .scrollable-uri::-webkit-scrollbar-thumb {
-                                                background-color: #853333ff; /* 滚动条颜色 */
-                                                border-radius: 3px;
-                                            }
-                                            .scrollable-uri::-webkit-scrollbar-track {
-                                                background: transparent; /* 背景透明 */
-                                            }
-                                            `}
-                                        </style>
-
-
-                                        <td style={tdStyle}>{item.config ? "✅" : "❌"}</td>
-                                        <td style={tdStyle}>{item.score?.encrypted_ports ?? "-"}</td>
-                                        <td style={tdStyle}>{item.score?.standard_ports ?? "-"}</td>
-                                        <td style={tdStyle}>{item.score?.overall ?? "-"}</td>
-                                        <td style={tdStyle}>
-                                            {item.config && (
-                                                <button
-                                                onClick={async () => {
-                                                    console.log("当前 item:", item);
-                                                    const payload = {
-                                                        config: item.config,
-                                                        uri: item.uri,
-                                                        details: item.score_detail?.actualconnect_details || [],
-                                                        portsUsage: item.score_detail?.ports_usage || [],
-                                                        rawCerts: item.cert_info?.RawCerts || [],
-                                                        mech: mech,
-                                                    };
-
-                                                    try {
-                                                    const res = await fetch("/store-temp-data", {
-                                                        method: "POST",
-                                                        headers: { "Content-Type": "application/json" },
-                                                        body: JSON.stringify(payload),
-                                                    });
-
-                                                    if (!res.ok) throw new Error("存储失败");
-
-                                                    const { id } = await res.json();
-
-                                                    // ✅ 避免 431：只带 id
-                                                    window.open(`/config-view?id=${id}`, "_blank");
-                                                    } catch (err) {
-                                                    console.error("❌ 打开详情失败:", err);
-                                                    alert("⚠️ 无法打开详情页");
-                                                    }
-                                                }}
-                                                style={viewButtonStyle}
-                                                >
-                                                查看
-                                                </button>
-                                            )}
-                                        </td>
+                            <div style={{ display: "flex", flexWrap: "wrap", gap: "1rem" }}>
+                            {portsUsage.map((item, idx) => (
+                                <div
+                                key={idx}
+                                style={{
+                                    backgroundColor: "#f9f9f9",
+                                    color: "#333",
+                                    padding: "1rem",
+                                    borderRadius: "12px",
+                                    boxShadow: "0 2px 8px rgba(85, 136, 207, 0.1)",
+                                    border: "1px solid #e0e0e0",
+                                    minWidth: "220px",
+                                    flex: "1",
+                                    maxWidth: "280px",
+                                }}
+                                >
+                                <table style={{ width: "100%", borderCollapse: "collapse" }}>
+                                    <tbody>
+                                    <tr>
+                                        <td style={tdStyle}><strong>协议</strong></td>
+                                        <td style={tdStyle}>{item.protocol}</td>
                                     </tr>
-                                ))}
-                            </tbody>
-                        </table>
+                                    <tr>
+                                        <td style={tdStyle}><strong>端口</strong></td>
+                                        <td style={tdStyle}>{item.port}</td>
+                                    </tr>
+                                    <tr>
+                                        <td style={tdStyle}><strong>主机名</strong></td>
+                                        <td style={tdStyle}>{item.host}</td>
+                                    </tr>
+                                    <tr>
+                                        <td style={tdStyle}><strong>SSL类型</strong></td>
+                                        <td style={tdStyle}>{item.ssl}</td>
+                                    </tr>
+                                    <tr>
+                                        <td style={tdStyle}><strong>用户名</strong></td>
+                                        <td style={tdStyle}>{lastSubmittedEmail}</td>
+                                    </tr>
+                                    <tr>
+                                        <td style={tdStyle}><strong>密码</strong></td>
+                                        <td style={tdStyle}>你的邮箱密码</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                                </div>
+                            ))}
+                            </div>
+                        </div>
+                        )}
+
+                        <div style={{ marginTop: "2rem" }}>
+                        {/* 上方主题分界线 */}
+                            <div
+                                style={{
+                                borderTop: "2px solid #333",
+                                paddingTop: "10px",
+                                marginBottom: "20px",
+                                display: "flex",
+                                alignItems: "center",
+                                cursor: "pointer",
+                                }}
+                                onClick={() => toggleRaw(mech)}
+                            >
+                                <span style={{ fontSize: "32px", marginRight: "10px" }}>🛠️</span>
+                                <h3 style={{ margin: 0, color: "#333" }}>
+                                原始配置文件 {showRawConfig[mech] ? "▲" : "▼"}
+                                </h3>
+                            </div>
+
+                            {showRawConfig[mech] && (
+                                <pre
+                                    style={{
+                                    background: "#f4f7f9",
+                                    padding: "12px",
+                                    borderRadius: "6px",
+                                    border: "1px solid #ddd",
+                                    maxHeight: "400px",
+                                    overflowY: "auto",
+                                    fontFamily: "Consolas, Monaco, monospace",
+                                    fontSize: "14px",
+                                    lineHeight: "1.5",
+                                    }}
+                                >
+                                    {result.config}
+                                </pre>
+                            )}
+                        </div>
+
+                        <div style={{ marginTop: "2rem" }}>
+                            <div
+                                style={{
+                                borderTop: "2px solid #333",
+                                paddingTop: "10px",
+                                marginBottom: "20px",
+                                display: "flex",
+                                alignItems: "center",
+                                }}
+                            >
+                                <span style={{ fontSize: "32px", marginRight: "10px" }}>📄</span>
+                                <h3 style={{ margin: 0, color: "#333" }}>配置服务器证书信息</h3>
+                            </div>
+
+                            <ul>
+                                {Object.entries(certInfo || {}).map(([k, v]) =>
+                                k !== "RawCert" && k !== "RawCerts" && v !== "" ? (
+                                    <li key={k} style={{ color: "#364957", marginBottom: "4px" }}>
+                                    <strong>{certLabelMap[k] || k}:</strong> {String(v)}
+                                    </li>
+                                ) : null
+                                )}
+                                {certInfo?.RawCerts && (
+                                <li>
+                                    <strong>原始证书:</strong>
+                                    <button
+                                    onClick={() => toggleRawCerts(mech)}
+                                    style={{
+                                        marginLeft: "10px",
+                                        padding: "4px 8px",
+                                        backgroundColor: "#5b73a9",
+                                        color: "#fff",
+                                        border: "none",
+                                        borderRadius: "4px",
+                                        cursor: "pointer",
+                                        fontSize: "0.9rem",
+                                    }}
+                                    >
+                                    {showRawCertsMap[mech] ? "隐藏" : "展开"}
+                                    </button>
+                                    {showRawCertsMap[mech] && (
+                                    <div
+                                        style={{
+                                        wordBreak: "break-all",
+                                        maxHeight: "200px",
+                                        overflowY: "auto",
+                                        marginTop: "10px",
+                                        background: "#f5f5f5",
+                                        padding: "10px",
+                                        borderRadius: "6px",
+                                        border: "1px solid #ccc",
+                                        fontFamily: "Consolas, Monaco, monospace",
+                                        fontSize: "13px",
+                                        }}
+                                    >
+                                        {certInfo.RawCerts.join(", ")}
+                                    </div>
+                                    )}
+                                </li>
+                                )}
+                            </ul>
+                        </div>
+
+                        {Array.isArray(certInfo?.RawCerts) && certInfo.RawCerts.length > 0 && (
+                            <div style={{ marginTop: "2rem" }}>
+                                <div
+                                style={{
+                                    borderTop: "2px solid #333",
+                                    paddingTop: "10px",
+                                    marginBottom: "20px",
+                                    display: "flex",
+                                    alignItems: "center",
+                                    cursor: "pointer",
+                                }}
+                                onClick={() => toggleCertChain(mech)}
+                                >
+                                <span style={{ fontSize: "32px", marginRight: "10px" }}>🔗</span>
+                                <h3 style={{ margin: 0, color: "#333" }}>
+                                    配置服务器证书链 {showCertChainMap[mech] ? "▲" : "▼"}
+                                </h3>
+                                </div>
+                            
+                                {showCertChainMap[mech] && (
+                                <>
+                                    <div style={{ marginBottom: "10px" }}>
+                                    {certInfo.RawCerts.map((_, idx) => (
+                                        <button
+                                        key={idx}
+                                        onClick={() => setActiveCertIdx(mech, idx)}
+                                        style={{
+                                            marginRight: "8px",
+                                            padding: "4px 10px",
+                                            backgroundColor:
+                                            activeCertIdxMap[mech] === idx ? "#5b73a9" : "#ddd",
+                                            color: activeCertIdxMap[mech] === idx ? "#fff" : "#000",
+                                            border: "none",
+                                            borderRadius: "6px",
+                                            cursor: "pointer",
+                                            fontWeight: "bold",
+                                        }}
+                                        >
+                                        第{idx + 1}证书
+                                        </button>
+                                    ))}
+                                    </div>
+                                    <PeculiarCertificateViewer
+                                    certificate={certInfo.RawCerts[activeCertIdxMap[mech] || 0]}
+                                    />
+                                </>
+                                )}
+                            </div> 
+                        )}
+                        
+                        <div style={{ marginTop: "2rem" }}>
+                            <div
+                                style={{
+                                borderTop: "2px solid #333",
+                                paddingTop: "10px",
+                                marginBottom: "20px",
+                                display: "flex",
+                                alignItems: "center",
+                                cursor: "pointer",
+                                }}
+                                onClick={() => toggleAnalysis(mech)}
+                            >
+                                <span style={{ fontSize: "32px", marginRight: "10px" }}>📊</span>
+                                <h3 style={{ margin: 0, color: "#3e5c79" }}>
+                                {showAnalysis[mech] ? "收起评分与建议 ▲" : "展开评分与建议 ▼"}
+                                </h3>
+                            </div>
+                            {showAnalysis[mech] && (
+                                <>
+                                    <div style={{ display: "flex", marginBottom: "1rem" }}>
+                                        {["score", "recommend", "radar"].map(tab => (
+                                            <button
+                                                key={tab}
+                                                onClick={() => changeTab(mech, tab)}
+                                                style={{
+                                                    padding: "8px 16px",
+                                                    marginRight: "8px",
+                                                    backgroundColor: (activeTab[mech] === tab ? "#2980b9" : "#7f8c8d"),
+                                                    color: "#fff",
+                                                    border: "none",
+                                                    borderRadius: "4px"
+                                                }}>
+                                                {/* {tab.toUpperCase()} */}
+                                                {tabLabelMap[tab]}
+                                            </button>
+                                        ))}
+                                    </div>
+
+                                    {activeTab[mech] === "score" && (
+                                        <>
+                                            {renderScoreBar("加密端口评分", score.encrypted_ports || 0)}
+                                            {renderScoreBar("标准端口评分", score.standard_ports || 0)}
+                                            {renderScoreBar(
+                                                mech === "srv" ? "DNSSEC评分" : "证书评分",
+                                                mech === "srv" ? score.dnssec_score || 0 : score.cert_score || 0
+                                            )}
+                                            {renderScoreBar("实际连接评分", score.connect_score || 0)}
+                                            {renderConnectionDetail(detail)}
+                                        </>
+                                    )}
+
+                                    {activeTab[mech] === "recommend" && (
+                                        <div style={{ backgroundColor: "#7ab0ceff", padding: "15px", borderRadius: "6px" }}>
+                                            {(mech === "autodiscover"|| mech === "autoconfig") && portsUsage && (() => {
+                                                const rec = getAutodiscoverRecommendations(portsUsage, score);
+                                                return (
+                                                    <>
+                                                        <h4>🔧 端口使用建议</h4>
+                                                        <ul>{rec.tips.map((tip, i) => <li key={i}>{tip.text} <b>{tip.impact}</b></li>)}</ul>
+                                                        <p><b>预估改进后评分:</b> {rec.improvedScore}</p>
+                                                    </>
+                                                );
+                                            })()}
+                                            {mech === "srv" && portsUsage && (() => {
+                                                const rec = getSRVRecommendations(portsUsage, score);
+                                                return (
+                                                    <>
+                                                        <h4>🔧 端口使用建议</h4>
+                                                        <ul>{rec.tips.map((tip, i) => <li key={i}>{tip.text} <b>{tip.impact}</b></li>)}</ul>
+                                                        <p><b>预估改进后评分:</b> {rec.improvedScore}</p>
+                                                    </>
+                                                );
+                                            })()}
+                                            {(mech === "autodiscover" || mech === "autoconfig") && certInfo && (() => {
+                                                const rec = getCertRecommendations(certInfo, score);
+                                                return (
+                                                    <>
+                                                        <h4>📜 证书配置建议</h4>
+                                                        <ul>{rec.tips.map((tip, i) => <li key={i}>{tip.text} <b>{tip.impact}</b></li>)}</ul>
+                                                        <p><b>预估改进后评分:</b> {rec.improvedScore}</p>
+                                                    </>
+                                                );
+                                            })()}
+                                        </div>
+                                    )}
+
+                                    {activeTab[mech] === "radar" && defense && (
+                                        <DefenseRadarChart data={defense} />
+                                    )}
+                                </>
+                            )}
+                        </div>
+
+                        <div style={{ marginTop: "2rem" }}>
+                            <div
+                                style={{
+                                borderTop: "2px solid #333",
+                                paddingTop: "10px",
+                                marginBottom: "20px",
+                                display: "flex",
+                                alignItems: "center",
+                                }}
+                            >
+                                <span style={{ fontSize: "32px", marginRight: "10px" }}>📡</span>
+                                <h3 style={{ margin: 0, color: "#333" }}>
+                                可通过 {mech.toUpperCase()} 方法得到的所有配置
+                                </h3>
+                            </div>
+                            <table style={tableStyle}>
+                                <thead>
+                                    <tr>
+                                        {/* 9.11 */}
+                                        <th style={thStyle}>途径</th>
+                                        {/* <th style={thStyle}>序号</th> */}
+                                        <th style={thStyle}>请求URI</th>
+                                        <th style={thStyle}>是否得到配置</th>
+                                        <th style={thStyle}>加密评分</th>
+                                        <th style={thStyle}>标准评分</th>
+                                        <th style={thStyle}>综合评分</th>
+                                        <th style={thStyle}>查看详情</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {result.all.map((item, idx) => (
+                                        <tr key={idx}>
+                                            <td style={tdStyle}>{item.method}</td>
+                                            {/* 9.11 */}
+                                            {/* <td style={tdStyle}>{item.index}</td> */}
+                                            <td style={{ ...tdStyle, maxWidth: "250px", overflow: "hidden" }}>
+                                            <div
+                                                style={{
+                                                overflowX: "auto",
+                                                whiteSpace: "nowrap",
+                                                scrollbarWidth: "thin", // Firefox
+                                                scrollbarColor: "#ccc transparent", // Firefox
+                                                }}
+                                                className="scrollable-uri"
+                                            >
+                                                {item.uri}
+                                            </div>
+                                            </td>
+
+                                            <style>
+                                                {`
+                                                .scrollable-uri::-webkit-scrollbar {
+                                                    height: 6px; /* 滚动条高度（横向） */
+                                                }
+                                                .scrollable-uri::-webkit-scrollbar-thumb {
+                                                    background-color: #853333ff; /* 滚动条颜色 */
+                                                    border-radius: 3px;
+                                                }
+                                                .scrollable-uri::-webkit-scrollbar-track {
+                                                    background: transparent; /* 背景透明 */
+                                                }
+                                                `}
+                                            </style>
+
+
+                                            <td style={tdStyle}>{item.config ? "✅" : "❌"}</td>
+                                            <td style={tdStyle}>{item.score?.encrypted_ports ?? "-"}</td>
+                                            <td style={tdStyle}>{item.score?.standard_ports ?? "-"}</td>
+                                            <td style={tdStyle}>{item.score?.overall ?? "-"}</td>
+                                            <td style={tdStyle}>
+                                                {item.config && (
+                                                    <button
+                                                    onClick={async () => {
+                                                        console.log("当前 item:", item);
+                                                        const payload = {
+                                                            config: item.config,
+                                                            uri: item.uri,
+                                                            details: item.score_detail?.actualconnect_details || [],
+                                                            portsUsage: item.score_detail?.ports_usage || [],
+                                                            rawCerts: item.cert_info?.RawCerts || [],
+                                                            mech: mech,
+                                                        };
+
+                                                        try {
+                                                        const res = await fetch("/store-temp-data", {
+                                                            method: "POST",
+                                                            headers: { "Content-Type": "application/json" },
+                                                            body: JSON.stringify(payload),
+                                                        });
+
+                                                        if (!res.ok) throw new Error("存储失败");
+
+                                                        const { id } = await res.json();
+
+                                                        // ✅ 避免 431：只带 id
+                                                        window.open(`/config-view?id=${id}`, "_blank");
+                                                        } catch (err) {
+                                                        console.error("❌ 打开详情失败:", err);
+                                                        alert("⚠️ 无法打开详情页");
+                                                        }
+                                                    }}
+                                                    style={viewButtonStyle}
+                                                    >
+                                                    查看
+                                                    </button>
+                                                )}
+                                            </td>
+
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+
+                        </div>
+
 
                         {/* 8.29 */}
                         {(() => {
@@ -1024,344 +1355,249 @@ function MainPage() {
                                 </div>
                             );
                         })()}
-
-
-
-
-                        {Array.isArray(portsUsage) && portsUsage.length > 0 && (
-                            <div style={{ marginTop: "2rem" }}>
-                                <h4 style={{ marginBottom: "1rem" }}>🔌 配置信息概况</h4>
-                                <div style={{ display: "flex", flexWrap: "wrap", gap: "1rem" }}>
-                                    {portsUsage.map((item, idx) => (
-                                        <div
-                                            key={idx}
-                                            style={{
-                                                backgroundColor: "#cee9f0ff",
-                                                color: "#ddd",
-                                                padding: "1rem",
-                                                borderRadius: "12px",
-                                                boxShadow: "0 2px 8px rgba(85, 136, 207, 0.05)",
-                                                border: "1px solid #eee",
-                                                minWidth: "220px",
-                                                flex: "1",
-                                                maxWidth: "280px"
-                                            }}
-                                        >
-                                            <table style={{ width: "100%", borderCollapse: "collapse" }}>
-                                                <tbody>
-                                                    <tr>
-                                                        <td style={tdStyle}><strong>协议</strong></td>
-                                                        <td style={tdStyle}>{item.protocol}</td>
-                                                    </tr>
-                                                    <tr>
-                                                        {/* <td style={tdStyle}><strong>Port</strong></td> */}
-                                                        <td style={tdStyle}><strong>端口</strong></td>
-                                                        <td style={tdStyle}>{item.port}</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td style={tdStyle}><strong>主机名</strong></td>
-                                                        <td style={tdStyle}>{item.host}</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td style={tdStyle}><strong>SSL类型</strong></td>
-                                                        <td style={tdStyle}>{item.ssl}</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td style={tdStyle}><strong>用户名</strong></td>
-                                                        <td style={tdStyle}>{lastSubmittedEmail}</td>
-                                                    </tr>
-                                                    {/* <tr>
-                                                        <td style={tdStyle}><strong>密码</strong></td>
-                                                        <td style={tdStyle}>你的邮箱密码</td>
-                                                    </tr> */}
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    ))}
-                                </div>
-                            </div>
-                        )}
                     </div>
                 )}
 
                 {mech === "srv" && result.srv_records && (
-                    <>
-                        <h4>📄 原始SRV 记录</h4>
-                        <pre style={{ background: "#cee9f0ff", color: "#4c5a64ff", padding: "10px", borderRadius: "4px" }}>
-                            {JSON.stringify(result.srv_records, null, 2)}
-                        </pre>
-                        {result.dns_record && (
-                            <>
-                                <h4>🌐 DNS 信息</h4>
-                                <ul>
-                                    {Object.entries(result.dns_record).map(([k, v]) => (
-                                        <li key={k}><strong>{dnsFieldMap[k]||k}:</strong> {String(v)}</li>
-                                    ))}
-                                </ul>
-                            </>
-                        )}
-                    </>
-                )}
-                {mech === "srv" && result.srv_records && (
-                <div style={{ marginTop: "2rem" }}>
-                    {/* <h4 style={{ marginBottom: "1rem" }}>📄 SRV Records - Receive (Recv)</h4> */}
-                    <h4 style={{ marginBottom: "1rem" }}>📄 SRV 记录 - 接收 (Recv)</h4>
-                    {Array.isArray(result.srv_records.recv) && result.srv_records.recv.length > 0 ? (
-                    <div style={{ display: "flex", flexWrap: "wrap", gap: "1rem" }}>
-                        {result.srv_records.recv.map((item, idx) => (
-                        <div
-                            key={`recv-${idx}`}
-                            style={{
-                            backgroundColor: "#cee9f0ff",
-                            color: "#ddd",
-                            padding: "1rem",
-                            borderRadius: "12px",
-                            boxShadow: "0 2px 8px rgba(0, 0, 0, 0.05)",
-                            border: "1px solid #ddd",
-                            // minWidth: "220px",
-                            minWidth: "300px",
-                            flex: "1",
-                            // maxWidth: "280px"
-                            maxWidth: "300px"
-                            }}
-                        >
-                            <table style={{ width: "100%", borderCollapse: "collapse" }}>
-                            <tbody>
-                                <tr>
-                                {/* <td style={tdStyle}><strong>Service</strong></td> */}
-                                <td style={tdStyle}><strong>服务标签</strong></td>
-                                <td style={tdStyle}>{item.Service}</td>
-                                </tr>
-                                <tr>
-                                {/* <td style={tdStyle}><strong>Priority</strong></td> */}
-                                <td style={tdStyle}><strong>优先级</strong></td>
-                                <td style={tdStyle}>{item.Priority}</td>
-                                </tr>
-                                <tr>
-                                {/* <td style={tdStyle}><strong>Weight</strong></td> */}
-                                <td style={tdStyle}><strong>权重</strong></td>
-                                <td style={tdStyle}>{item.Weight}</td>
-                                </tr>
-                                <tr>
-                                {/* <td style={tdStyle}><strong>Port</strong></td> */}
-                                <td style={tdStyle}><strong>端口</strong></td>
-                                <td style={tdStyle}>{item.Port}</td>
-                                </tr>
-                                <tr>
-                                {/* <td style={tdStyle}><strong>Target</strong></td> */}
-                                <td style={tdStyle}><strong>邮件服务器</strong></td>
-                                <td style={tdStyle}>{item.Target}</td>
-                                </tr>
-                            </tbody>
-                            </table>
+                    <div style={{ marginTop: "2rem" }}>
+                        {/* Recv 部分 */}
+                        <div style={{
+                            borderTop: "2px solid #333",
+                            paddingTop: "10px",
+                            margin: "20px 0",
+                            display: "flex",
+                            alignItems: "center"
+                        }}>
+                            <span style={{ fontSize: "32px", marginRight: "10px" }}>📥</span>
+                            <h3 style={{ margin: 0, color: "#333" }}>SRV 记录 - 接收 (Recv)</h3>
                         </div>
-                        ))}
-                    </div>
-                    ) : (
-                    <p>No receive records found.</p>
-                    )}
 
-                    {/* <h4 style={{ margin: "2rem 0 1rem" }}>📄 SRV Records - Send</h4> */}
-                    <h4 style={{ marginBottom: "1rem" }}>📄 SRV 记录 - 发送 (Send)</h4>
-                    {Array.isArray(result.srv_records.send) && result.srv_records.send.length > 0 ? (
-                    <div style={{ display: "flex", flexWrap: "wrap", gap: "1rem" }}>
-                        {result.srv_records.send.map((item, idx) => (
-                        <div
-                            key={`send-${idx}`}
-                            style={{
-                            backgroundColor: "#cee9f0ff",
-                            color: "#ddd",
-                            padding: "1rem",
-                            borderRadius: "12px",
-                            boxShadow: "0 2px 8px rgba(0, 0, 0, 0.05)",
-                            border: "1px solid #ddd",
-                            minWidth: "300px",
-                            flex: "1",
-                            maxWidth: "300px"
-                            }}
-                        >
-                            <table style={{ width: "100%", borderCollapse: "collapse" }}>
-                            <tbody>
-                                <tr>
-                                {/* <td style={tdStyle}><strong>Service</strong></td> */}
-                                <td style={tdStyle}><strong>服务标签</strong></td>
-                                <td style={tdStyle}>{item.Service}</td>
-                                </tr>
-                                <tr>
-                                {/* <td style={tdStyle}><strong>Priority</strong></td> */}
-                                <td style={tdStyle}><strong>优先级</strong></td>
-                                <td style={tdStyle}>{item.Priority}</td>
-                                </tr>
-                                <tr>
-                                {/* <td style={tdStyle}><strong>Weight</strong></td> */}
-                                <td style={tdStyle}><strong>权重</strong></td>
-                                <td style={tdStyle}>{item.Weight}</td>
-                                </tr>
-                                <tr>
-                                {/* <td style={tdStyle}><strong>Port</strong></td> */}
-                                <td style={tdStyle}><strong>端口</strong></td>
-                                <td style={tdStyle}>{item.Port}</td>
-                                </tr>
-                                <tr>
-                                {/* <td style={tdStyle}><strong>Target</strong></td> */}
-                                <td style={tdStyle}><strong>邮件服务器</strong></td>
-                                <td style={tdStyle}>{item.Target}</td>
-                                </tr>
-                            </tbody>
-                            </table>
-                        </div>
-                        ))}
-                    </div>
-                    ) : (
-                    <p>No send records found.</p>
-                    )}
-                </div>
-                )}
-
-
-                {mech !== "srv" && mech!=="guess" && (
-                    <>
-                        <h4
-                            onClick={() => toggleRaw(mech)}
-                            style={{ cursor: "pointer", color: "#3e5c79ff", userSelect: "none" }}>
-                            🛠️原始配置文件 {showRawConfig[mech] ? "▲" : "▼"}
-                        </h4>
-                        {showRawConfig[mech] && (
-                            <pre style={{ background: "#b6cbd9ff", padding: "12px", borderRadius: "6px" }}>
-                                {result.config}
-                            </pre>
-                        )}
-
-                        <h4>📄 配置服务器证书信息</h4>
-                        <ul>
-                            {Object.entries(certInfo || {}).map(([k, v]) => (
-                                k !== "RawCert" && k !== "RawCerts" && v !== "" && (
-                                    <li key={k} style={{ color: "#364957ff", marginBottom: "4px"}}>
-                                        <strong>{certLabelMap[k] || k}:</strong> {String(v)}
-                                    </li>
-                                )
-                            ))}
-                            {certInfo?.RawCerts && (
-                                <li>
-                                    <strong>原始证书:</strong>
-                                    <button 
-                                        onClick={() => toggleRawCerts(mech)} 
-                                        style={{ 
-                                            marginLeft: '10px',
-                                            padding: '4px 8px',
-                                            backgroundColor: '#5b73a9ff',
-                                            color: '#fff',
-                                            border: 'none',
-                                            borderRadius: '4px',
-                                            cursor: 'pointer',
-                                            fontSize: '0.9rem'
+                        {Array.isArray(result.srv_records.recv) && result.srv_records.recv.length > 0 ? (
+                            <div style={{ display: "flex", flexWrap: "wrap", gap: "1rem" }}>
+                                {result.srv_records.recv.map((item, idx) => (
+                                    <div
+                                        key={`recv-${idx}`}
+                                        style={{
+                                            backgroundColor: "#f8f9fa",
+                                            padding: "1rem",
+                                            borderRadius: "12px",
+                                            boxShadow: "0 2px 8px rgba(0, 0, 0, 0.05)",
+                                            border: "1px solid #ddd",
+                                            minWidth: "300px",
+                                            maxWidth: "300px",
+                                            flex: "1"
                                         }}
                                     >
-                                        {showRawCertsMap[mech] ? "隐藏" : "展开"}
-                                    </button>
-                                    {showRawCertsMap[mech] && (
-                                        <div style={{
-                                            wordBreak: 'break-all',
-                                            maxHeight: '200px',
-                                            overflowY: 'auto',
-                                            marginTop: '10px',
-                                            background: '#f5f5f5',
-                                            padding: '10px',
-                                            borderRadius: '6px',
-                                            border: '1px solid #ccc'
-                                        }}>
-                                            {certInfo.RawCerts.join(', ')}
-                                        </div>
-                                    )}
-                                </li>
-                            )}
-                        </ul>
-
-                        {Array.isArray(certInfo?.RawCerts) && certInfo.RawCerts.length > 0 && (
-                            <div style={{ marginTop: '20px' }}>
-                                <h4
-                                    onClick={() => toggleCertChain(mech)}
-                                    style={{ 
-                                        cursor: "pointer", 
-                                        color: "#3e5c79ff", 
-                                        userSelect: "none",
-                                        display: 'flex',
-                                        alignItems: 'center',
-                                        gap: '6px'
-                                    }}
-                                >
-                                    🔗 配置服务器证书链 {showCertChainMap[mech] ? "▲" : "▼"}
-                                </h4>
-
-                                {showCertChainMap[mech] && (
-                                    <>
-                                        <div style={{ marginBottom: '10px' }}>
-                                            {certInfo.RawCerts.map((_, idx) => (
-                                                <button
-                                                    key={idx}
-                                                    onClick={() => setActiveCertIdx(mech, idx)}
-                                                    style={{
-                                                        marginRight: '8px',
-                                                        padding: '4px 10px',
-                                                        backgroundColor: activeCertIdxMap[mech] === idx ? '#5b73a9ff' : '#ddd',
-                                                        color: activeCertIdxMap[mech] === idx ? '#fff' : '#000',
-                                                        border: 'none',
-                                                        borderRadius: '6px',
-                                                        cursor: 'pointer',
-                                                        fontWeight: 'bold'
-                                                    }}
-                                                >
-                                                    第{idx + 1}证书
-                                                </button>
-                                            ))}
-                                        </div>
-                                        <PeculiarCertificateViewer certificate={certInfo.RawCerts[activeCertIdxMap[mech] || 0]} />
-                                    </>
-                                )}
+                                        <table style={{ width: "100%", borderCollapse: "collapse" }}>
+                                            <tbody>
+                                                <tr><td style={tdStyle}><strong>服务标签</strong></td><td style={tdStyle}>{item.Service}</td></tr>
+                                                <tr><td style={tdStyle}><strong>优先级</strong></td><td style={tdStyle}>{item.Priority}</td></tr>
+                                                <tr><td style={tdStyle}><strong>权重</strong></td><td style={tdStyle}>{item.Weight}</td></tr>
+                                                <tr><td style={tdStyle}><strong>端口</strong></td><td style={tdStyle}>{item.Port}</td></tr>
+                                                <tr><td style={tdStyle}><strong>邮件服务器</strong></td><td style={tdStyle}>{item.Target}</td></tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                ))}
                             </div>
+                        ) : <p>未发现接收记录。</p>}
+
+                        {/* Send 部分 */}
+                        <div style={{
+                            borderTop: "2px solid #333",
+                            paddingTop: "10px",
+                            margin: "20px 0",
+                            display: "flex",
+                            alignItems: "center"
+                        }}>
+                            <span style={{ fontSize: "32px", marginRight: "10px" }}>📤</span>
+                            <h3 style={{ margin: 0, color: "#333" }}>SRV 记录 - 发送 (Send)</h3>
+                        </div>
+
+                        {Array.isArray(result.srv_records.send) && result.srv_records.send.length > 0 ? (
+                            <div style={{ display: "flex", flexWrap: "wrap", gap: "1rem" }}>
+                                {result.srv_records.send.map((item, idx) => (
+                                    <div
+                                        key={`send-${idx}`}
+                                        style={{
+                                            backgroundColor: "#f8f9fa",
+                                            padding: "1rem",
+                                            borderRadius: "12px",
+                                            boxShadow: "0 2px 8px rgba(0, 0, 0, 0.05)",
+                                            border: "1px solid #ddd",
+                                            minWidth: "300px",
+                                            maxWidth: "300px",
+                                            flex: "1"
+                                        }}
+                                    >
+                                        <table style={{ width: "100%", borderCollapse: "collapse" }}>
+                                            <tbody>
+                                                <tr><td style={tdStyle}><strong>服务标签</strong></td><td style={tdStyle}>{item.Service}</td></tr>
+                                                <tr><td style={tdStyle}><strong>优先级</strong></td><td style={tdStyle}>{item.Priority}</td></tr>
+                                                <tr><td style={tdStyle}><strong>权重</strong></td><td style={tdStyle}>{item.Weight}</td></tr>
+                                                <tr><td style={tdStyle}><strong>端口</strong></td><td style={tdStyle}>{item.Port}</td></tr>
+                                                <tr><td style={tdStyle}><strong>邮件服务器</strong></td><td style={tdStyle}>{item.Target}</td></tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                ))}
+                            </div>
+                        ) : <p>未发现发送记录。</p>}
+
+                        {/* 原始 SRV JSON */}
+                        <div style={{
+                            borderTop: "2px solid #333",
+                            paddingTop: "10px",
+                            marginBottom: "20px",
+                            marginTop: "20px",
+                            display: "flex",
+                            alignItems: "center"
+                        }}>
+                            <span style={{ fontSize: "32px", marginRight: "10px" }}>📄</span>
+                            <h3 style={{ margin: 0, color: "#333" }}>原始 SRV 记录</h3>
+                        </div>
+
+                        <pre style={{
+                            background: "#f8f9fa",
+                            color: "#2c3e50",
+                            padding: "12px",
+                            borderRadius: "6px",
+                            fontSize: "14px",
+                            overflowX: "auto"
+                        }}>
+                            {JSON.stringify(result.srv_records, null, 2)}
+                        </pre>
+
+                        {/* DNS 信息 */}
+                        {result.dns_record && (
+                            <>
+                                <div style={{
+                                    borderTop: "2px solid #333",
+                                    paddingTop: "10px",
+                                    marginTop: "20px",
+                                    marginBottom: "15px",
+                                    display: "flex",
+                                    alignItems: "center"
+                                }}>
+                                    <span style={{ fontSize: "32px", marginRight: "10px" }}>🌐</span>
+                                    <h3 style={{ margin: 0, color: "#333" }}>DNS 信息</h3>
+                                </div>
+                                <div style={{
+                                    backgroundColor: "#f8f9fa",
+                                    padding: "1rem",
+                                    borderRadius: "12px",
+                                    boxShadow: "0 2px 8px rgba(0, 0, 0, 0.05)",
+                                    border: "1px solid #ddd",
+                                    maxWidth: "450px"
+                                }}>
+                                    <table style={{ width: "100%", borderCollapse: "collapse" }}>
+                                        <tbody>
+                                            {Object.entries(result.dns_record).map(([k, v]) => (
+                                                <tr key={k}>
+                                                    <td style={{
+                                                        padding: "6px 10px",
+                                                        borderBottom: "1px solid #ddd",
+                                                        fontWeight: "bold",
+                                                        color: "#2c3e50",
+                                                        width: "30%"
+                                                    }}>
+                                                        {dnsFieldMap[k] || k}
+                                                    </td>
+                                                    <td style={{
+                                                        padding: "6px 10px",
+                                                        borderBottom: "1px solid #ddd",
+                                                        color: "#34495e"
+                                                    }}>
+                                                        {String(v)}
+                                                    </td>
+                                                </tr>
+                                            ))}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </>
                         )}
-                    </>
+                    </div>
                 )}
 
-                
-
                 {mech === "guess" && result.score_detail?.ports_usage?.length > 0 && (
-                <div className="guess-result-card">
-                    <h3>猜测到的可用邮件服务器</h3>
-                    <p className="text-gray-600">
+                <div style={{ marginTop: "2rem" }}>
+                    {/* 分界线 + 标题 */}
+                    <div style={{
+                    borderTop: "2px solid #333",
+                    paddingTop: "10px",
+                    marginBottom: "20px",
+                    display: "flex",
+                    alignItems: "center"
+                    }}>
+                    <span style={{ fontSize: "32px", marginRight: "10px" }}>🔍</span>
+                    <h3 style={{ margin: 0, color: "#333" }}>猜测到的可用邮件服务器</h3>
+                    </div>
+
+                    <p style={{ color: "#555", marginBottom: "1rem" }}>
                     （以下是基于常见邮件服务前缀和端口的初步探测结果，表示这些服务器端口可以建立 TCP 连接。）
                     </p>
-                    
-                    <table className="table-auto border-collapse border border-gray-300 mt-3">
-                    <thead>
-                        <tr className="bg-gray-100">
-                        <th style={{ fontSize: "18px", color: "#899db1ff", fontWeight: "bold" }} className="border border-gray-300 px-4 py-2">
-                            主机
-                        </th>
-                        <th style={{ fontSize: "18px", color: "#87a4c2ff", fontWeight: "bold" }} className="border border-gray-300 px-4 py-2">
-                            端口
-                        </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {result.score_detail.ports_usage.map((item, idx) => (
-                        <tr key={idx}>
-                            <td style={{ fontSize: "18px", color: "#658adbff", fontWeight: "bold" }} className="border border-gray-300 px-4 py-2">
-                            {item.host}
-                            </td>
-                            <td style={{ fontSize: "18px", color: "#4d9ae8ff", fontWeight: "bold" }} className="border border-gray-300 px-4 py-2">
-                            {item.port}
-                            </td>
-                        </tr>
-                        ))}
-                    </tbody>
-                    </table>
-                    {/* <button
-                    className="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
-                    onClick={() => navigate(`/connection-details?domain=${domain}`)}
-                    >
-                    查看连接详情
-                    </button> */}
+
+                    {/* 卡片容器 */}
+                    <div style={{
+                    display: "flex",
+                    flexWrap: "wrap",
+                    gap: "1rem"
+                    }}>
+                    {result.score_detail.ports_usage.map((item, idx) => (
+                        <div
+                        key={idx}
+                        style={{
+                            backgroundColor: "#f8f9fa",
+                            padding: "1rem",
+                            borderRadius: "12px",
+                            boxShadow: "0 2px 8px rgba(0, 0, 0, 0.05)",
+                            border: "1px solid #ddd",
+                            minWidth: "220px",
+                            maxWidth: "220px",
+                            flex: "1"
+                        }}
+                        >
+                        <table style={{ width: "100%", borderCollapse: "collapse" }}>
+                            <tbody>
+                            <tr>
+                                <td style={{
+                                padding: "6px 10px",
+                                borderBottom: "1px solid #ddd",
+                                fontWeight: "bold",
+                                color: "#2c3e50",
+                                width: "35%"
+                                }}>
+                                主机
+                                </td>
+                                <td style={{
+                                padding: "6px 10px",
+                                borderBottom: "1px solid #ddd",
+                                color: "#34495e"
+                                }}>
+                                {item.host}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style={{
+                                padding: "6px 10px",
+                                fontWeight: "bold",
+                                color: "#2c3e50"
+                                }}>
+                                端口
+                                </td>
+                                <td style={{
+                                padding: "6px 10px",
+                                color: "#34495e"
+                                }}>
+                                {item.port}
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        </div>
+                    ))}
+                    </div>
                 </div>
                 )}
 
@@ -1378,19 +1614,31 @@ function MainPage() {
                     )
                 ))}
 
-
                 {/* 折叠主观分析 */}
-                {mech !== "guess" && (
+                {mech === "srv" && (
                     <>
-                        <h3
+                        {/* 分界线标题 */}
+                        <div style={{
+                            borderTop: "2px solid #333",
+                            paddingTop: "10px",
+                            marginTop: "30px",
+                            marginBottom: "20px",
+                            display: "flex",
+                            alignItems: "center",
+                            cursor: "pointer",
+                            userSelect: "none"
+                        }}
                             onClick={() => toggleAnalysis(mech)}
-                            style={{ marginTop: "20px", cursor: "pointer", color: "#83a3cbff", userSelect: "none" }}
                         >
-                            {showAnalysis[mech] ? "⬆️ 收起分析结果" : "⬇️ 展开评分与建议"}
-                        </h3>
+                            <span style={{ fontSize: "28px", marginRight: "10px" }}>📊</span>
+                            <h3 style={{ margin: 0, color: "#333" }}>
+                                {showAnalysis[mech] ? "收起评分与建议" : "展开评分与建议"}
+                            </h3>
+                        </div>
 
                         {showAnalysis[mech] && (
                             <>
+                                {/* Tab 切换按钮 */}
                                 <div style={{ display: "flex", marginBottom: "1rem" }}>
                                     {["score", "recommend", "radar"].map(tab => (
                                         <button
@@ -1402,55 +1650,38 @@ function MainPage() {
                                                 backgroundColor: (activeTab[mech] === tab ? "#2980b9" : "#7f8c8d"),
                                                 color: "#fff",
                                                 border: "none",
-                                                borderRadius: "4px"
+                                                borderRadius: "4px",
+                                                cursor: "pointer"
                                             }}>
-                                            {/* {tab.toUpperCase()} */}
                                             {tabLabelMap[tab]}
                                         </button>
                                     ))}
                                 </div>
 
+                                {/* Score Tab */}
                                 {activeTab[mech] === "score" && (
                                     <>
                                         {renderScoreBar("加密端口评分", score.encrypted_ports || 0)}
                                         {renderScoreBar("标准端口评分", score.standard_ports || 0)}
-                                        {renderScoreBar(
-                                            mech === "srv" ? "DNSSEC评分" : "证书评分",
-                                            mech === "srv" ? score.dnssec_score || 0 : score.cert_score || 0
-                                        )}
+                                        {renderScoreBar("DNSSEC评分", score.dnssec_score || 0)}
                                         {renderScoreBar("实际连接评分", score.connect_score || 0)}
                                         {renderConnectionDetail(detail)}
                                     </>
                                 )}
 
+                                {/* Recommend Tab */}
                                 {activeTab[mech] === "recommend" && (
                                     <div style={{ backgroundColor: "#7ab0ceff", padding: "15px", borderRadius: "6px" }}>
-                                        {(mech === "autodiscover"|| mech === "autoconfig") && portsUsage && (() => {
-                                            const rec = getAutodiscoverRecommendations(portsUsage, score);
-                                            return (
-                                                <>
-                                                    <h4>🔧 端口使用建议</h4>
-                                                    <ul>{rec.tips.map((tip, i) => <li key={i}>{tip.text} <b>{tip.impact}</b></li>)}</ul>
-                                                    <p><b>预估改进后评分:</b> {rec.improvedScore}</p>
-                                                </>
-                                            );
-                                        })()}
-                                        {mech === "srv" && portsUsage && (() => {
+                                        {portsUsage && (() => {
                                             const rec = getSRVRecommendations(portsUsage, score);
                                             return (
                                                 <>
                                                     <h4>🔧 端口使用建议</h4>
-                                                    <ul>{rec.tips.map((tip, i) => <li key={i}>{tip.text} <b>{tip.impact}</b></li>)}</ul>
-                                                    <p><b>预估改进后评分:</b> {rec.improvedScore}</p>
-                                                </>
-                                            );
-                                        })()}
-                                        {(mech === "autodiscover" || mech === "autoconfig") && certInfo && (() => {
-                                            const rec = getCertRecommendations(certInfo, score);
-                                            return (
-                                                <>
-                                                    <h4>📜 证书配置建议</h4>
-                                                    <ul>{rec.tips.map((tip, i) => <li key={i}>{tip.text} <b>{tip.impact}</b></li>)}</ul>
+                                                    <ul>
+                                                        {rec.tips.map((tip, i) =>
+                                                            <li key={i}>{tip.text} <b>{tip.impact}</b></li>
+                                                        )}
+                                                    </ul>
                                                     <p><b>预估改进后评分:</b> {rec.improvedScore}</p>
                                                 </>
                                             );
@@ -1458,6 +1689,7 @@ function MainPage() {
                                     </div>
                                 )}
 
+                                {/* Radar Tab */}
                                 {activeTab[mech] === "radar" && defense && (
                                     <DefenseRadarChart data={defense} />
                                 )}
@@ -1465,6 +1697,7 @@ function MainPage() {
                         )}
                     </>
                 )}
+
             </div>
         );
     };
