@@ -457,7 +457,7 @@ function MainPage() {
                 res.hasInternalDiff = checkInternalDiff(res);
             }
         });
-      };
+    };
 
     // 小模块显示文字，前置勾叉
     const renderModuleText = (label, score) => (
@@ -495,6 +495,72 @@ function MainPage() {
     
     
     //9.11
+    //9.11_2
+    function getCertGrade(certInfo) {
+        if (!certInfo) return { grade: "N/A", issues: [] };
+    
+        const issues = [];
+    
+        if (!certInfo.IsTrusted) issues.push("🔒 服务器证书未被受信任的 CA 签发，可能存在风险。");
+        if (!certInfo.IsHostnameMatch) issues.push("🌐 证书中的主机名与实际访问的域名不一致，存在中间人攻击风险。");
+        if (certInfo.IsExpired) issues.push("⏰ 证书已过期，需更新。");
+        if (certInfo.IsSelfSigned) issues.push("⚠️ 证书为自签名，客户端可能无法验证其真实性。");
+        if (!certInfo.IsInOrder) issues.push("📑 证书链顺序错误，部分客户端可能验证失败。");
+        if (certInfo.AlgWarning) issues.push(`🔧 使用的签名算法存在安全隐患: ${certInfo.AlgWarning}`);
+    
+        let grade = "A";
+        if (!certInfo.IsTrusted || !certInfo.IsHostnameMatch) grade = "B";
+        if (!certInfo.IsTrusted && !certInfo.IsHostnameMatch) grade = "C";
+    
+        return { grade, issues };
+    }
+    
+    function getDNSSummary(result) {
+        const dns = result?.dns_record;
+        if (!dns) return { score: 0, details: ["无有效 SRV 记录"] };
+        
+        const details = [];
+        const adBits = {
+            IMAP: dns.ADbit_imap,
+            IMAPS: dns.ADbit_imaps,
+            POP3: dns.ADbit_pop3,
+            POP3S: dns.ADbit_pop3s,
+            SMTP: dns.ADbit_smtp,
+            SMTPS: dns.ADbit_smtps,
+        };
+    
+        Object.entries(adBits).forEach(([proto, bit]) => {
+            if (bit === true) details.push(`${proto} ✅ DNSSEC 有效`);
+            else if (bit === false) details.push(`${proto} ❌ DNSSEC 无效`);
+            else details.push(`${proto} ⚪ 未检测到结果`);
+        });
+    
+        return { score: result.score?.dnssec_score || 0, details };
+    }
+
+    // 计算证书 + DNSSEC 分数
+    function calculateCertDnsScore(results) {
+        const certGrades = ["autodiscover", "autoconfig"]
+            .map(m => results[m]?.cert_info ? getCertGrade(results[m].cert_info).grade : null)
+            .filter(Boolean);
+
+        let certScore = 0;
+        if (certGrades.length > 0) {
+            certScore = Math.round(certGrades
+                .map(g => ({ "A": 100, "B": 60, "C": 30 }[g]))
+                .reduce((a, b) => a + b, 0) / certGrades.length);
+        }
+
+        const dnsScore = results.srv ? getDNSSummary(results.srv).score : 0;
+        return Math.round(certScore * 0.7 + dnsScore * 0.3);
+    }
+
+    // 计算最终综合评分
+    function calculateOverallConfigScore(consistencyScore, certDnsScore) {
+        const weights = { consistency: 0.4, certDns: 0.6 };
+        return Math.round(consistencyScore * weights.consistency + certDnsScore * weights.certDns);
+    }
+    //9.11_2
 
     // 当前机制内容渲染函数7.28
     const renderMechanismContent = (mech) => {
@@ -524,21 +590,30 @@ function MainPage() {
                 }
             });
 
+            
+            //9.11_2
+            // 证书与 DNSSEC 分数
+            const certDnsScore = calculateCertDnsScore(results);
+            // 综合评分
+            const overallConfigScore = calculateOverallConfigScore(consistencyScore, certDnsScore);
+
+            // // 配置获取过程安全性评分（取平均）
+            // const mechScores = ["autodiscover", "autoconfig", "srv"]//这里应该是scores["cert_score"]
+            //     .map(m => results[m]?.score?.overall || 0)
+            //     .filter(s => s > 0);
+            // const overallConfigScore = mechScores.length
+            //     ? Math.round(mechScores.reduce((a, b) => a + b, 0) / mechScores.length)
+            //     : 0;
     
-            // 配置安全性评分（取平均）
-            const mechScores = ["autodiscover", "autoconfig", "srv"]//这里应该是scores["cert_score"]
-                .map(m => results[m]?.score?.overall || 0)
+            // 连接安全性（取最低/平均？）
+            const connectScores = ["autodiscover", "autoconfig", "srv"]
+                .map(m => results[m]?.score_detail?.connection?.Overall_Connection_Score || 0)
                 .filter(s => s > 0);
-            const overallConfigScore = mechScores.length
-                ? Math.round(mechScores.reduce((a, b) => a + b, 0) / mechScores.length)
-                : 0;
-    
-            // 连接安全性（取最低）
-            const connectScores = ["autodiscover", "autoconfig", "srv"]//scores["connect_score"] = connectScores["Overall_Connection_Score"].(int)
-                .map(m => results[m]?.score?.connect_score || 0)
-                .filter(s => s > 0);
+            // const unifiedConnectScore = connectScores.length
+            //     ? Math.min(...connectScores)
+            //     : 0;
             const unifiedConnectScore = connectScores.length
-                ? Math.min(...connectScores)
+                ? connectScores.reduce((a, b) => a + b, 0) / connectScores.length
                 : 0;
     
             // 大评级框
@@ -553,7 +628,7 @@ function MainPage() {
                     justifyContent: "center",
                     fontSize: "28px",
                     fontWeight: "bold",
-                    background: score === 100 ? "#2ecc71" : score === 50 ? "#f1c40f" : "#e74c3c",
+                    background: score >= 90? "#2ecc71" : score >= 50? "#f1c40f" : score >= 30? "#ff9800"  : "#e74c3c",    
                     color: "#fff",
                     marginRight: "20px"
                 }}>
@@ -581,33 +656,65 @@ function MainPage() {
 
                 {/* 主体内容 */}
                 <div style={{ display: "flex", alignItems: "flex-start", marginBottom: "20px" }}>
-                    {gradeBox(overallConfigScore, 100)} {/* 左边大评级框，增大尺寸 */}
+                    {gradeBox(overallConfigScore)} {/* 左边大评级框，增大尺寸 */}
 
                     {/* 右边两个模块 */}
                     <div style={{ flex: 1 }}>
-                        {/* 上模块：配置信息差异性 */}
+                        {/* 上模块：配置信息差异性 9.11_2*/}
                         <CollapsibleModule label="配置信息差异性" score={consistencyScore}>
-                            <ul style={{ margin: 0, paddingLeft: "18px", color: "#333" }}>
-                                {Object.entries(results).map(([mech, res]) => {
-                                    if (res?.hasInternalDiff) {
-                                        return <li key={mech}>机制 {mech} 不同路径存在不同配置</li>;
-                                    }
-                                    return null;
-                                })}
-                                {consistencyScore === 50 && <li>不同机制之间存在配置差异</li>}
-                                {consistencyScore === 100 && <li>所有机制一致</li>}
-                            </ul>
+                        <ul style={{ margin: 0, paddingLeft: "18px", color: "#333" }}>
+                            {/* 内部差异（逐个机制列出） */}
+                            {Object.entries(results).map(([mech, res]) => {
+                            if (res?.hasInternalDiff) {
+                                return (
+                                <li key={mech}>
+                                    机制 <b>{mech}</b> 内部不同路径存在配置差异
+                                </li>
+                                );
+                            }
+                            return null;
+                            })}
+
+                            {/* 跨机制差异（只要 consistencyScore <= 50 就显示） */}
+                            {consistencyScore <= 50 && (
+                            <li>不同机制之间存在配置差异</li>
+                            )}
+
+                            {/* 完全一致（只有 100 分时显示） */}
+                            {consistencyScore === 100 && (
+                            <li>所有机制配置完全一致</li>
+                            )}
+                        </ul>
                         </CollapsibleModule>
 
                         {/* 下模块：配置获取过程安全性 */}
-                        <CollapsibleModule label="配置获取过程安全性" score={overallConfigScore}>
-                            <p style={{ fontSize: "14px", color: "#333", margin: 0 }}>
-                                {overallConfigScore >= 80
-                                    ? "过程安全，证书可信且 DNSSEC 有效"
-                                    : overallConfigScore >= 60
-                                        ? "过程存在部分安全风险"
-                                        : "过程存在安全问题，请检查证书或 DNS 配置"}
-                            </p>
+                        {/* 9.11_2 */}
+                        <CollapsibleModule label="证书与 DNS 验证" score={overallConfigScore}>
+                            {["autodiscover", "autoconfig"].map(m => {
+                                const certInfo = results[m]?.cert_info;
+                                if (!certInfo) return null;
+                                const { issues } = getCertGrade(certInfo);
+                                return (
+                                    <div key={m} style={{ marginBottom: "10px" }}>
+                                        <h4>{m.toUpperCase()} 机制配置服务器证书检测</h4>
+                                        <ul style={{ margin: 0, paddingLeft: "18px", color: "#333" }}>
+                                        {issues.length > 0 ? issues.map((i, idx) => <li key={idx}>{i}</li>) : <li>配置服务器返回的证书链完整，验证通过，连接信息正常。</li>}
+                                        </ul>
+                                    </div>
+                                    );
+                            })}
+
+                            {results.srv && (
+                                <div style={{ marginTop: "10px" }}>
+                                    <h4>SRV 机制：DNSSEC 结果</h4>
+                                    <ul style={{ margin: 0, paddingLeft: "18px", color: "#333" }}>
+                                    {getDNSSummary(results.srv).details.map((d, idx) => (
+                                        <li key={idx}>{d}</li>
+                                    ))}
+                                    </ul>
+                                </div>
+                            )}
+
                         </CollapsibleModule>
                     </div>
                 </div>
@@ -674,16 +781,22 @@ function MainPage() {
                     </div>
 
                     <div style={{ display: "flex", alignItems: "flex-start" }}>
-                        {gradeBox(unifiedConnectScore, 100)} {/* 左边大评级框，增大尺寸 */}
+                        {gradeBox(unifiedConnectScore)} {/* 左边大评级框，增大尺寸 */}
 
                         <div style={{ flex: 1 }}>
                             <CollapsibleModule label="连接提示" score={unifiedConnectScore}>
                                 <ul style={{ margin: 0, paddingLeft: "18px", color: "#333" }}>
                                     {["autodiscover", "autoconfig", "srv"].map(m => {
-                                        const score = results[m]?.score?.connect_score || 0;
-                                        if (score < 100) {
-                                            return <li key={m}>{m} 机制连接存在风险</li>;
+                                        const connection = results[m]?.score_detail?.connection;
+                                        if (!connection) return null;
+                                        const warnings = connection.warnings || [];
+                                        if (warnings.length > 0) {
+                                            return warnings.map((w, idx) => <li key={m + idx}>{m} 机制: {w}</li>);
                                         }
+                                        if (connection.Overall_Connection_Score < 50) {
+                                            return <li key={m}>{m} 机制连接存在风险</li>;
+                                        }  
+                                        // 9.11_2
                                         return null;
                                     })}
                                     {unifiedConnectScore === 100 && <li>所有机制连接安全</li>}

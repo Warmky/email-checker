@@ -159,21 +159,29 @@ func calculateConnectScores(config string) (map[string]interface{}, []models.Con
 	tlsScore := (successTLS * 100) / totalProtocols
 	starttlsScore := (successStartTLS * 100) / totalProtocols
 	plainScore := (successPlain * 100) / totalProtocols
-	overall := (tlsScore*3 + starttlsScore*2 + plainScore*1) / 6
+	//overall := (tlsScore*3 + starttlsScore*2 + plainScore*1) / 6
+	overall := (tlsScore*3+starttlsScore*2)/5 - plainScore/2
+	if overall < 0 {
+		overall = 0
+	}
+	if overall > 100 {
+		overall = 100
+	}
 
 	grade := "F"
 	switch {
-	case (tlsScore == 100 || starttlsScore == 100) && plainScore == 0:
+	case tlsScore == 100 && plainScore == 0:
 		grade = "A+"
-	case tlsScore >= 80 || starttlsScore >= 80:
+	case tlsScore >= 80 && plainScore == 0:
 		grade = "A"
-	case tlsScore >= 50 || starttlsScore >= 50:
+	case tlsScore >= 50 && plainScore == 0:
 		grade = "B"
-	case plainScore >= 50:
-		grade = "C"
-	case tlsScore == 0 && starttlsScore == 0 && plainScore == 0:
+	case plainScore > 0:
+		grade = "C" // 任何明文可连上，直接降级
+	default:
 		grade = "F"
 	}
+	//9.11_2 修改后端对实际连接测试的评分标准，降低可以明文连接的比重
 
 	scores["TLS_Connections"] = tlsScore
 	scores["Plaintext_Connections"] = plainScore
@@ -671,22 +679,29 @@ func calculateConnectScores_Autoconfig(config string) (map[string]interface{}, [
 	tlsScore := (successTLS * 100) / totalProtocols // 100 分制
 	starttlsScore := (successStartTLS * 100) / totalProtocols
 	plainScore := (successPlain * 100) / totalProtocols
-	overall := (tlsScore*3 + starttlsScore*2 + plainScore*1) / 6
+	//overall := (tlsScore*3 + starttlsScore*2 + plainScore*1) / 6
+	overall := (tlsScore*3+starttlsScore*2)/5 - plainScore/2
+	if overall < 0 {
+		overall = 0
+	}
+	if overall > 100 {
+		overall = 100
+	}
 
-	//等级判断逻辑
 	grade := "F"
 	switch {
-	case (tlsScore == 100 || starttlsScore == 100) && plainScore == 0:
+	case tlsScore == 100 && plainScore == 0:
 		grade = "A+"
-	case tlsScore >= 80 || starttlsScore >= 80:
+	case tlsScore >= 80 && plainScore == 0:
 		grade = "A"
-	case tlsScore >= 50 || starttlsScore >= 50:
+	case tlsScore >= 50 && plainScore == 0:
 		grade = "B"
-	case plainScore >= 50:
-		grade = "C"
-	case tlsScore == 0 && starttlsScore == 0 && plainScore == 0:
+	case plainScore > 0:
+		grade = "C" // 任何明文可连上，直接降级
+	default:
 		grade = "F"
 	}
+	//9.11_2
 	scores["TLS_Connections"] = tlsScore
 	scores["Plaintext_Connections"] = plainScore
 	scores["STARTTLS_Connections"] = starttlsScore
@@ -972,21 +987,29 @@ func calculateConnectScores_SRV(result models.SRVResult) (map[string]interface{}
 	tlsScore := (successTLS * 100) / totalProtocols
 	starttlsScore := (successStartTLS * 100) / totalProtocols
 	plainScore := (successPlain * 100) / totalProtocols
-	overall := (tlsScore*3 + starttlsScore*2 + plainScore*1) / 6
+	//overall := (tlsScore*3 + starttlsScore*2 + plainScore*1) / 6
+	overall := (tlsScore*3+starttlsScore*2)/5 - plainScore/2
+	if overall < 0 {
+		overall = 0
+	}
+	if overall > 100 {
+		overall = 100
+	}
 
 	grade := "F"
 	switch {
-	case (tlsScore == 100 || starttlsScore == 100) && plainScore == 0:
+	case tlsScore == 100 && plainScore == 0:
 		grade = "A+"
-	case tlsScore >= 80 || starttlsScore >= 80:
+	case tlsScore >= 80 && plainScore == 0:
 		grade = "A"
-	case tlsScore >= 50 || starttlsScore >= 50:
+	case tlsScore >= 50 && plainScore == 0:
 		grade = "B"
-	case plainScore >= 50:
-		grade = "C"
-	case tlsScore == 0 && starttlsScore == 0 && plainScore == 0:
+	case plainScore > 0:
+		grade = "C" // 任何明文可连上，直接降级
+	default:
 		grade = "F"
 	}
+	//9.11_2
 
 	scores["TLS_Connections"] = tlsScore
 	scores["Plaintext_Connections"] = plainScore
@@ -1153,22 +1176,30 @@ func calculateConnectScores_Guess(guessed []string) (map[string]interface{}, []m
 	tlsScore := (successTLS * 100) / totalProtocols // 100 分制
 	starttlsScore := (successStartTLS * 100) / totalProtocols
 	plainScore := (successPlain * 100) / totalProtocols
-	overall := (tlsScore*3 + starttlsScore*2 + plainScore*1) / 6
+	//overall := (tlsScore*3 + starttlsScore*2 + plainScore*1) / 6
+	overall := (tlsScore*3+starttlsScore*2)/5 - plainScore/2
+	if overall < 0 {
+		overall = 0
+	}
+	if overall > 100 {
+		overall = 100
+	}
 
-	//等级判断逻辑
 	grade := "F"
 	switch {
-	case (tlsScore == 100 || starttlsScore == 100) && plainScore == 0:
+	case tlsScore == 100 && plainScore == 0:
 		grade = "A+"
-	case tlsScore >= 80 || starttlsScore >= 80:
+	case tlsScore >= 80 && plainScore == 0:
 		grade = "A"
-	case tlsScore >= 50 || starttlsScore >= 50:
+	case tlsScore >= 50 && plainScore == 0:
 		grade = "B"
-	case plainScore >= 50:
-		grade = "C"
-	case tlsScore == 0 && starttlsScore == 0 && plainScore == 0:
+	case plainScore > 0:
+		grade = "C" // 任何明文可连上，直接降级
+	default:
 		grade = "F"
 	}
+	//9.11_2
+
 	scores["TLS_Connections"] = tlsScore
 	scores["Plaintext_Connections"] = plainScore
 	scores["STARTTLS_Connections"] = starttlsScore
