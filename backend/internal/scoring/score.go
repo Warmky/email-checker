@@ -760,6 +760,8 @@ func calculatePortScores_SRV(result models.SRVResult) (map[string]int, []models.
 			Protocol: normalizeProtocol(record.Service),
 			Port:     strconv.Itoa(int(port)),
 			Status:   status,
+			Host:     strings.TrimSuffix(record.Target, "."),
+			SSL:      normalizeSSL(record.Service), //9.15_2
 		})
 	}
 
@@ -793,6 +795,15 @@ func calculatePortScores_SRV(result models.SRVResult) (map[string]int, []models.
 	scores["standard_ports"] = standardScore
 	fmt.Print(portsUsage)
 	return scores, portsUsage
+}
+
+func normalizeSSL(service string) string {
+	if strings.HasPrefix(service, "_submissions") || strings.HasPrefix(service, "_imaps") || strings.HasPrefix(service, "_pop3s") {
+		return "on"
+	} else if strings.HasPrefix(service, "_submission") || strings.HasPrefix(service, "_imap") || strings.HasPrefix(service, "_pop3") {
+		return "off"
+	}
+	return "UNKNOWN"
 }
 
 func normalizeProtocol(service string) string {

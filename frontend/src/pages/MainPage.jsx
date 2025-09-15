@@ -36,67 +36,50 @@ function MainPage() {
 
 
     const mechanisms = ["autodiscover", "autoconfig", "srv", "guess", "compare"];//9.10_2 新增加比较机制供管理者一眼看出不同机制得到的配置信息有何不同
-    // // 默认选中第一个有结果的机制
-    // const firstAvailable = mechanisms.find(m => results[m]) || mechanisms[0];
-    // const [currentMech, setCurrentMech] = useState(firstAvailable);
-
     // 默认选中第一个有结果的机制（不含 compare）9.10_2
     const firstAvailable = mechanisms.find(m => m !== "compare" && results[m]) || mechanisms[0];
     const [currentMech, setCurrentMech] = useState(firstAvailable);
-
-
-    // 9.9修改搜索框提示用户输入哪些可以查询到较有效的配置
-    const [displayText, setDisplayText] = useState("");
-    const [placeholderIndex, setPlaceholderIndex] = useState(0);
-    const [displayPlaceholder, setDisplayPlaceholder] = useState(""); // 实际展示的 placeholder
-    const [isPlaceholderFrozen, setIsPlaceholderFrozen] = useState(false);
     const [lastSubmittedEmail, setLastSubmittedEmail] = useState("");
 
-    const placeholders = [
-        { display: "请输入您的邮件地址：如 user@example.com", value: "user@example.com" },
-        { display: "Alice@qq.com", value: "Alice@qq.com" },
-        { display: "Bob@163.com", value: "Bob@163.com" },
-        { display: "xxx@gmail.com", value: "xxx@gmail.com" },
-        { display: "test@yandex.com", value: "test@yandex.com" },
-        { display: "admin@outlook.com", value: "admin@outlook.com" },
+    //9.15 改造输入框
+    const [suggestions, setSuggestions] = useState([]);
+
+    const presetDomains = [
+    "qq.com",
+    "163.com",
+    "gmail.com",
+    "yandex.com",
+    "outlook.com"
     ];
 
-    // placeholder 轮播
-    useEffect(() => {
-        if (isPlaceholderFrozen) return; // 冻结时停止
-        const interval = setInterval(() => {
-            setPlaceholderIndex((prev) => (prev + 1) % placeholders.length);
-        }, 3000);
-        return () => clearInterval(interval);
-    }, [isPlaceholderFrozen]);
+    const handleChange = (e) => {
+        const value = e.target.value;
+        setEmail(value);
+
+        // 如果输入包含 @ 且不是结尾，就提示
+        const atIndex = value.indexOf("@");
+        if (atIndex !== -1 && atIndex === value.length - 1) {
+            const username = value.slice(0, atIndex);
+            const newSuggestions = presetDomains.map((d) => `${username}@${d}`);
+            setSuggestions(newSuggestions);
+        } else {
+            setSuggestions([]);
+        }
+    };
+
+    const handleSelect = (suggestion) => {
+        setEmail(suggestion);
+        setSuggestions([]);
+    };
     
-    // 更新展示 placeholder
-    useEffect(() => {
-        if (!isPlaceholderFrozen) {
-        setDisplayPlaceholder(placeholders[placeholderIndex]);
-        }
-    }, [placeholderIndex, isPlaceholderFrozen]);
-
-    // 点击检测时
+    // 点击检测按钮
     const handleClick = () => {
-        const currentPlaceholder = placeholders[placeholderIndex];
-        const targetEmail = email.trim() || currentPlaceholder.value;
-        handleSearch(targetEmail);
-
-        // 冻结 placeholder（固定显示）
-        setIsPlaceholderFrozen(true);
-        setEmail(targetEmail); // 把值写到 input 里（黑色文字）
-        setLastSubmittedEmail(targetEmail); // 保存已提交的邮箱以供配置信息卡片展示用户名 9.10
+        const targetEmail = email.trim();
+        if (!targetEmail) return; // 空输入不处理
+    
+        handleSearch(targetEmail); // 调你原来的检测函数
+        setLastSubmittedEmail(targetEmail); // 保存用户名用于展示
     };
-
-    // 输入框聚焦：恢复轮播
-    const handleFocus = () => {
-        if (isPlaceholderFrozen) {
-        setIsPlaceholderFrozen(false);
-        setEmail(""); // 清空输入框，恢复 placeholder 轮播
-        }
-    };
-
 
 
     const certLabelMap = {
@@ -847,7 +830,7 @@ function MainPage() {
                             <h3 style={{ margin: 0, color: "#333" }}>配置信息概况</h3>
                             </div>
 
-                            <div style={{ display: "flex", flexWrap: "wrap", gap: "1rem" }}>
+                            <div style={{ display: "flex", flexWrap: "wrap", gap: "1rem",justifyContent: "center", maxWidth: "1000px", margin: "0 auto" }}>
                             {portsUsage.map((item, idx) => (
                                 <div
                                 key={idx}
@@ -1360,89 +1343,135 @@ function MainPage() {
 
                 {mech === "srv" && result.srv_records && (
                     <div style={{ marginTop: "2rem" }}>
-                        {/* Recv 部分 */}
-                        <div style={{
+                        {/* 🔌 配置信息概况 */}
+                        {Array.isArray(portsUsage) && portsUsage.length > 0 && (
+                        <div style={{ marginBottom: "2rem" }}>
+                            <div
+                            style={{
+                                borderTop: "2px solid #333",
+                                paddingTop: "10px",
+                                marginBottom: "20px",
+                                display: "flex",
+                                alignItems: "center",
+                                // justifyContent: "center",
+                                gap: "10px",
+                            }}
+                            >
+                            <span style={{ fontSize: "32px" }}>🔌</span>
+                            <h3 style={{ margin: 0, color: "#333" }}>配置信息概况</h3>
+                            </div>
+
+                            <div
+                            style={{
+                                display: "flex",
+                                flexWrap: "wrap",
+                                gap: "1rem",
+                                justifyContent: "center",
+                                maxWidth: "1000px",
+                                margin: "0 auto",
+                            }}
+                            >
+                            {portsUsage.map((item, idx) => (
+                                <div
+                                key={idx}
+                                style={{
+                                    backgroundColor: "#f9f9f9",
+                                    color: "#333",
+                                    padding: "1rem",
+                                    borderRadius: "12px",
+                                    boxShadow: "0 2px 8px rgba(85, 136, 207, 0.1)",
+                                    border: "1px solid #e0e0e0",
+                                    minWidth: "220px",
+                                    maxWidth: "280px",
+                                    flex: "1",
+                                }}
+                                >
+                                <table style={{ width: "100%", borderCollapse: "collapse" }}>
+                                    <tbody>
+                                    <tr>
+                                        <td style={tdStyle}><strong>协议</strong></td>
+                                        <td style={tdStyle}>{item.protocol}</td>
+                                    </tr>
+                                    <tr>
+                                        <td style={tdStyle}><strong>端口</strong></td>
+                                        <td style={tdStyle}>{item.port}</td>
+                                    </tr>
+                                    <tr>
+                                        <td style={tdStyle}><strong>主机名</strong></td>
+                                        <td style={tdStyle}>{item.host}</td>
+                                    </tr>
+                                    <tr>
+                                        <td style={tdStyle}><strong>SSL类型</strong></td>
+                                        <td style={tdStyle}>{item.ssl}</td>
+                                    </tr>
+                                    <tr>
+                                        <td style={tdStyle}><strong>用户名</strong></td>
+                                        <td style={tdStyle}>{lastSubmittedEmail}</td>
+                                    </tr>
+                                    <tr>
+                                        <td style={tdStyle}><strong>密码</strong></td>
+                                        <td style={tdStyle}>你的邮箱密码</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                                </div>
+                            ))}
+                            </div>
+                        </div>
+                        )}
+                        {/* 🔌 SRV 记录 */}
+                        <div style={{ marginTop: "2rem" }}>
+                        <div
+                            style={{
                             borderTop: "2px solid #333",
                             paddingTop: "10px",
-                            margin: "20px 0",
+                            marginBottom: "20px",
                             display: "flex",
-                            alignItems: "center"
-                        }}>
-                            <span style={{ fontSize: "32px", marginRight: "10px" }}>📥</span>
-                            <h3 style={{ margin: 0, color: "#333" }}>SRV 记录 - 接收 (Recv)</h3>
+                            alignItems: "center",
+                            }}
+                        >
+                            <span style={{ fontSize: "32px", marginRight: "10px" }}>🌐</span>
+                            <h3 style={{ margin: 0, color: "#333" }}>SRV 记录</h3>
                         </div>
 
-                        {Array.isArray(result.srv_records.recv) && result.srv_records.recv.length > 0 ? (
-                            <div style={{ display: "flex", flexWrap: "wrap", gap: "1rem" }}>
-                                {result.srv_records.recv.map((item, idx) => (
-                                    <div
-                                        key={`recv-${idx}`}
-                                        style={{
-                                            backgroundColor: "#f8f9fa",
-                                            padding: "1rem",
-                                            borderRadius: "12px",
-                                            boxShadow: "0 2px 8px rgba(0, 0, 0, 0.05)",
-                                            border: "1px solid #ddd",
-                                            minWidth: "300px",
-                                            maxWidth: "300px",
-                                            flex: "1"
-                                        }}
-                                    >
-                                        <table style={{ width: "100%", borderCollapse: "collapse" }}>
-                                            <tbody>
-                                                <tr><td style={tdStyle}><strong>服务标签</strong></td><td style={tdStyle}>{item.Service}</td></tr>
-                                                <tr><td style={tdStyle}><strong>优先级</strong></td><td style={tdStyle}>{item.Priority}</td></tr>
-                                                <tr><td style={tdStyle}><strong>权重</strong></td><td style={tdStyle}>{item.Weight}</td></tr>
-                                                <tr><td style={tdStyle}><strong>端口</strong></td><td style={tdStyle}>{item.Port}</td></tr>
-                                                <tr><td style={tdStyle}><strong>邮件服务器</strong></td><td style={tdStyle}>{item.Target}</td></tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
+                        <table style={{ width: "100%", borderCollapse: "collapse", textAlign: "left" }}>
+                            <thead style={{ background: "#f2f2f2" }}>
+                            <tr>
+                                <th style={tdStyle}>记录类型</th>
+                                <th style={tdStyle}>服务标签</th>
+                                <th style={tdStyle}>优先级</th>
+                                <th style={tdStyle}>权重</th>
+                                <th style={tdStyle}>端口</th>
+                                <th style={tdStyle}>邮件服务器</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {Array.isArray(result.srv_records.recv) &&
+                                result.srv_records.recv.map((item, idx) => (
+                                <tr key={`recv-${idx}`}>
+                                    <td style={tdStyle}>📥 Recv</td>
+                                    <td style={tdStyle}>{item.Service}</td>
+                                    <td style={tdStyle}>{item.Priority}</td>
+                                    <td style={tdStyle}>{item.Weight}</td>
+                                    <td style={tdStyle}>{item.Port}</td>
+                                    <td style={tdStyle}>{item.Target}</td>
+                                </tr>
                                 ))}
-                            </div>
-                        ) : <p>未发现接收记录。</p>}
-
-                        {/* Send 部分 */}
-                        <div style={{
-                            borderTop: "2px solid #333",
-                            paddingTop: "10px",
-                            margin: "20px 0",
-                            display: "flex",
-                            alignItems: "center"
-                        }}>
-                            <span style={{ fontSize: "32px", marginRight: "10px" }}>📤</span>
-                            <h3 style={{ margin: 0, color: "#333" }}>SRV 记录 - 发送 (Send)</h3>
+                            {Array.isArray(result.srv_records.send) &&
+                                result.srv_records.send.map((item, idx) => (
+                                <tr key={`send-${idx}`}>
+                                    <td style={tdStyle}>📤 Send</td>
+                                    <td style={tdStyle}>{item.Service}</td>
+                                    <td style={tdStyle}>{item.Priority}</td>
+                                    <td style={tdStyle}>{item.Weight}</td>
+                                    <td style={tdStyle}>{item.Port}</td>
+                                    <td style={tdStyle}>{item.Target}</td>
+                                </tr>
+                                ))}
+                            </tbody>
+                        </table>
                         </div>
 
-                        {Array.isArray(result.srv_records.send) && result.srv_records.send.length > 0 ? (
-                            <div style={{ display: "flex", flexWrap: "wrap", gap: "1rem" }}>
-                                {result.srv_records.send.map((item, idx) => (
-                                    <div
-                                        key={`send-${idx}`}
-                                        style={{
-                                            backgroundColor: "#f8f9fa",
-                                            padding: "1rem",
-                                            borderRadius: "12px",
-                                            boxShadow: "0 2px 8px rgba(0, 0, 0, 0.05)",
-                                            border: "1px solid #ddd",
-                                            minWidth: "300px",
-                                            maxWidth: "300px",
-                                            flex: "1"
-                                        }}
-                                    >
-                                        <table style={{ width: "100%", borderCollapse: "collapse" }}>
-                                            <tbody>
-                                                <tr><td style={tdStyle}><strong>服务标签</strong></td><td style={tdStyle}>{item.Service}</td></tr>
-                                                <tr><td style={tdStyle}><strong>优先级</strong></td><td style={tdStyle}>{item.Priority}</td></tr>
-                                                <tr><td style={tdStyle}><strong>权重</strong></td><td style={tdStyle}>{item.Weight}</td></tr>
-                                                <tr><td style={tdStyle}><strong>端口</strong></td><td style={tdStyle}>{item.Port}</td></tr>
-                                                <tr><td style={tdStyle}><strong>邮件服务器</strong></td><td style={tdStyle}>{item.Target}</td></tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                ))}
-                            </div>
-                        ) : <p>未发现发送记录。</p>}
 
                         {/* 原始 SRV JSON */}
                         <div style={{
@@ -1470,52 +1499,74 @@ function MainPage() {
 
                         {/* DNS 信息 */}
                         {result.dns_record && (
-                            <>
-                                <div style={{
-                                    borderTop: "2px solid #333",
-                                    paddingTop: "10px",
-                                    marginTop: "20px",
-                                    marginBottom: "15px",
-                                    display: "flex",
-                                    alignItems: "center"
-                                }}>
-                                    <span style={{ fontSize: "32px", marginRight: "10px" }}>🌐</span>
-                                    <h3 style={{ margin: 0, color: "#333" }}>DNS 信息</h3>
-                                </div>
-                                <div style={{
-                                    backgroundColor: "#f8f9fa",
-                                    padding: "1rem",
-                                    borderRadius: "12px",
-                                    boxShadow: "0 2px 8px rgba(0, 0, 0, 0.05)",
-                                    border: "1px solid #ddd",
-                                    maxWidth: "450px"
-                                }}>
-                                    <table style={{ width: "100%", borderCollapse: "collapse" }}>
-                                        <tbody>
-                                            {Object.entries(result.dns_record).map(([k, v]) => (
-                                                <tr key={k}>
-                                                    <td style={{
-                                                        padding: "6px 10px",
-                                                        borderBottom: "1px solid #ddd",
-                                                        fontWeight: "bold",
-                                                        color: "#2c3e50",
-                                                        width: "30%"
-                                                    }}>
-                                                        {dnsFieldMap[k] || k}
-                                                    </td>
-                                                    <td style={{
-                                                        padding: "6px 10px",
-                                                        borderBottom: "1px solid #ddd",
-                                                        color: "#34495e"
-                                                    }}>
-                                                        {String(v)}
-                                                    </td>
-                                                </tr>
-                                            ))}
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </>
+                        <>
+                            <div
+                            style={{
+                                borderTop: "2px solid #333",
+                                paddingTop: "10px",
+                                marginTop: "20px",
+                                marginBottom: "15px",
+                                display: "flex",
+                                alignItems: "center",
+                            }}
+                            >
+                            <span style={{ fontSize: "32px", marginRight: "10px" }}>🌐</span>
+                            <h3 style={{ margin: 0, color: "#333" }}>DNS 信息</h3>
+                            </div>
+
+                            <div
+                            style={{
+                                backgroundColor: "#f8f9fa",
+                                padding: "1rem",
+                                borderRadius: "12px",
+                                boxShadow: "0 2px 8px rgba(0, 0, 0, 0.05)",
+                                border: "1px solid #ddd",
+                                overflowX: "auto", // 防止字段太多撑破
+                            }}
+                            >
+                            <table
+                                style={{
+                                width: "100%",
+                                borderCollapse: "collapse",
+                                textAlign: "left",
+                                }}
+                            >
+                                <thead style={{ background: "#f2f2f2" }}>
+                                <tr>
+                                    {Object.keys(result.dns_record).map((k) => (
+                                    <th
+                                        key={k}
+                                        style={{
+                                        padding: "8px 10px",
+                                        borderBottom: "1px solid #ddd",
+                                        fontWeight: "bold",
+                                        color: "#2c3e50",
+                                        }}
+                                    >
+                                        {dnsFieldMap[k] || k}
+                                    </th>
+                                    ))}
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    {Object.values(result.dns_record).map((v, idx) => (
+                                    <td
+                                        key={idx}
+                                        style={{
+                                        padding: "8px 10px",
+                                        borderBottom: "1px solid #ddd",
+                                        color: "#34495e",
+                                        }}
+                                    >
+                                        {String(v)}
+                                    </td>
+                                    ))}
+                                </tr>
+                                </tbody>
+                            </table>
+                            </div>
+                        </>
                         )}
                     </div>
                 )}
@@ -1704,39 +1755,38 @@ function MainPage() {
     const hasAnyResult = Object.values(results).some((r) => r && Object.keys(r).length > 0);{/*7.28 */}
 
     return (
-        <div 
+        <div
             style={{
-                marginTop: "10vh",
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-                padding: "0 1rem", // 手机端留边
+            marginTop: "10vh",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            padding: "0 1rem",
             }}
         >
             <h1 style={{ fontSize: "2.5rem", marginBottom: "1rem", color: "#29323eff" }}>
-                邮件自动化配置检测
+            邮件自动化配置检测
             </h1>
 
-            <div style={{ maxWidth: "600px", width: "100%" }}>
+            <div style={{ maxWidth: "600px", width: "100%", position: "relative" }}>
                 <input
                     type="text"
                     value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    onFocus={handleFocus}   // ⚡ 聚焦时恢复轮播
-                    placeholder={isPlaceholderFrozen ? "" : placeholders[placeholderIndex].display} // 冻结时不用 placeholder
+                    onChange={handleChange}
+                    placeholder="请输入您的邮件地址：如 user@example.com"
                     style={{
-                        padding: "1rem",
-                        width: "400px",
-                        fontSize: "1.2rem",
-                        borderRadius: "8px",
-                        border: "1px solid #ccc",
-                        outline: "none",
-                        color: "#000",
+                    padding: "1rem",
+                    width: "400px",
+                    fontSize: "1.2rem",
+                    borderRadius: "8px",
+                    border: "1px solid #ccc",
+                    outline: "none",
+                    color: "#000",
                     }}
                 />
                 <button
-                onClick={handleClick}
-                style={{
+                    onClick={handleClick}
+                    style={{
                     marginLeft: "1rem",
                     padding: "1rem",
                     fontSize: "1.2rem",
@@ -1747,13 +1797,49 @@ function MainPage() {
                     cursor: "pointer",
                     fontWeight: "bold",
                     transition: "background 0.3s",
-                }}
-                onMouseOver={(e) => (e.target.style.backgroundColor = "#2e4053")}
-                onMouseOut={(e) => (e.target.style.backgroundColor = "#3a506b")}
+                    }}
+                    onMouseOver={(e) => (e.target.style.backgroundColor = "#2e4053")}
+                    onMouseOut={(e) => (e.target.style.backgroundColor = "#3a506b")}
                 >
-                开始检测
+                    开始检测
                 </button>
-            </div>
+
+                {/* 下拉框 */}
+                {suggestions.length > 0 && (
+                    <div
+                        style={{
+                            position: "absolute",
+                            top: "100%",
+                            left: 0,
+                            width: "430px",
+                            background: "#fff",
+                            border: "1px solid #ccc",
+                            maxHeight: "150px",        // 限制高度
+                            overflowY: "auto",         // 超出时滚动
+                            borderRadius: "6px",
+                            marginTop: "4px",
+                            boxShadow: "0 2px 6px rgba(0,0,0,0.15)",
+                            zIndex: 10,
+                        }}
+                    >
+                    {suggestions.map((s, idx) => (
+                        <div
+                            key={idx}
+                            onClick={() => handleSelect(s)}
+                            style={{
+                                padding: "8px 12px",
+                                cursor: "pointer",
+                                borderBottom: idx !== suggestions.length - 1 ? "1px solid #eee" : "none"
+                            }}
+                            onMouseOver={(e) => (e.currentTarget.style.background = "#f5f5f5")}
+                            onMouseOut={(e) => (e.currentTarget.style.background = "white")}
+                        >
+                            {s}
+                        </div>
+                    ))}
+                </div>
+            )}
+        </div>
 
             {loading && (
                 <div style={{ marginTop: "2rem", textAlign: "center" }}>
@@ -1801,47 +1887,6 @@ function MainPage() {
                         {/* 机制内容 */}
                         {renderMechanismContent(currentMech)}
                     </div>
-
-                    {/* 9.10_2 */}
-                    {/* <div style={{ display: "flex", gap: "1rem", marginTop: "1.5rem", marginBottom: "1.5rem", flexWrap: "wrap" }}>
-                        {mechanisms.map((mech) => (
-                            <div
-                                key={mech}
-                                onClick={() => setCurrentMech(mech)}
-                                style={{
-                                    padding: "0.8rem 1.2rem",
-                                    borderRadius: "10px",
-                                    cursor: "pointer",
-                                    backgroundColor: currentMech === mech ? "#e3edf5" : "#f9f9f9",
-                                    color: currentMech === mech ? "#3a506b" : "#888",
-                                    border: currentMech === mech ? "2px solid #8aa3b4" : "1px solid #ddd",
-                                    boxShadow: currentMech === mech ? "0 2px 6px rgba(138,163,180,0.4)" : "none",
-                                    transition: "all 0.2s ease-in-out",
-                                    minWidth: "120px",
-                                    textAlign: "center",
-                                    fontWeight: 600,
-                                    letterSpacing: "0.5px"
-                                }}
-                            >
-                                {mech.toUpperCase()}
-                            </div>
-                        ))}
-                    </div>
-
-                    <div
-                        style={{
-                            width: "100%",
-                            maxWidth: "900px",
-                            backgroundColor: "#f5f8fa",
-                            padding: "2rem",
-                            borderRadius: "12px",
-                            boxShadow: "0 2px 10px rgba(0,0,0,0.04)",
-                            border: "1px solid #eee",
-                            marginTop: "1rem"
-                        }}
-                    >
-                        {renderMechanismContent(currentMech)}
-                    </div> */}
                 </>
             )}
 

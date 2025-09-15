@@ -61,21 +61,6 @@ func CheckAllHandler(w http.ResponseWriter, r *http.Request) { //5.19新增以�
 				bestScore = score["overall"]
 				bestGrade = connectScores["Connection_Grade"].(string)
 			}
-			// autodiscoverResp = map[string]interface{}{
-			// 	"config": result.Config,
-			// 	"score":  score,
-			// 	"score_detail": map[string]interface{}{
-			// 		"connection":  connectScores,
-			// 		"defense":     securityDefense,
-			// 		"ports_usage": PortsUsage, //
-			// 	},
-			// 	"cert_info": result.CertInfo,
-			// }
-
-			// bestScore = score["overall"]
-			// bestGrade = connectScores["Connection_Grade"].(string)
-
-			//break
 		}
 	}
 	var autodiscoverResp map[string]interface{}
