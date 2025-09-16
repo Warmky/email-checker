@@ -309,34 +309,45 @@ func calculatePortScores_Autoconfig(config string) (map[string]int, []models.Por
 			ssl = "N/A"
 		} //7.27
 		status := "nonstandard"
+		//9.15_5
+		switch ssl {
+		case "SSL":
+			status = "standard"
+		case "PLAIN":
+			status = "standard"
+		case "STARTTLS":
+			status = "standard"
+		default:
+			status = "nonstandard"
+		}
 		// 分类端口
 		switch protocolType {
 		case "smtp":
 			if port == "465" {
-				status = "secure"
+				//status = "secure"
 				securePorts["SMTP"] = true
 			} else if port == "25" || port == "587" {
-				status = "insecure"
+				//status = "insecure"
 				insecurePorts["SMTP"] = true
 			} else {
 				nonStandardPorts["SMTP"] = true
 			}
 		case "imap":
 			if port == "993" {
-				status = "secure"
+				//status = "secure"
 				securePorts["IMAP"] = true
 			} else if port == "143" {
-				status = "insecure"
+				//status = "insecure"
 				insecurePorts["IMAP"] = true
 			} else {
 				nonStandardPorts["IMAP"] = true
 			}
 		case "pop3":
 			if port == "995" {
-				status = "secure"
+				//status = "secure"
 				securePorts["POP3"] = true
 			} else if port == "110" {
-				status = "insecure"
+				//status = "insecure"
 				insecurePorts["POP3"] = true
 			} else {
 				nonStandardPorts["POP3"] = true
@@ -375,34 +386,45 @@ func calculatePortScores_Autoconfig(config string) (map[string]int, []models.Por
 			ssl = "N/A"
 		}
 		status := "nonstandard"
+		//9.15_5
+		switch ssl {
+		case "SSL":
+			status = "standard"
+		case "PLAIN":
+			status = "standard"
+		case "STARTTLS":
+			status = "standard"
+		default:
+			status = "nonstandard"
+		}
 		// 分类端口
 		switch protocolType {
 		case "smtp":
 			if port == "465" {
-				status = "secure"
+				//status = "secure"
 				securePorts["SMTP"] = true
 			} else if port == "25" || port == "587" {
-				status = "insecure"
+				//status = "insecure"
 				insecurePorts["SMTP"] = true
 			} else {
 				nonStandardPorts["SMTP"] = true
 			}
 		case "imap":
 			if port == "993" {
-				status = "secure"
+				//status = "secure"
 				securePorts["IMAP"] = true
 			} else if port == "143" {
-				status = "insecure"
+				//status = "insecure"
 				insecurePorts["IMAP"] = true
 			} else {
 				nonStandardPorts["IMAP"] = true
 			}
 		case "pop3":
 			if port == "995" {
-				status = "secure"
+				//status = "secure"
 				securePorts["POP3"] = true
 			} else if port == "110" {
-				status = "insecure"
+				//status = "insecure"
 				insecurePorts["POP3"] = true
 			} else {
 				nonStandardPorts["POP3"] = true
@@ -1356,34 +1378,60 @@ func calculatePortScores(config string) (map[string]int, []models.PortUsageDetai
 		// 	scores["IMAPS"] = "yes"
 		// }
 		status := "nonstandard"
+
+		//9.15_5
+		if encElem := protocolElem.SelectElement("Encryption"); encElem != nil {
+			switch ssl {
+			case "NONE":
+				status = "standard"
+			case "SSL":
+				status = "standard"
+			case "TLS":
+				status = "standard"
+			case "Auto":
+				status = "standard"
+			default:
+				status = "nonstandard"
+			}
+
+		} else if sslElem := protocolElem.SelectElement("SSL"); sslElem != nil {
+			switch ssl {
+			case "on":
+				status = "standard"
+			case "off":
+				status = "standard"
+			default:
+				status = "nonstandard"
+			}
+		}
 		// 分类端口
 		switch protocolType {
 		case "SMTP":
 			if port == "465" {
-				status = "secure"
+				// status = "secure" //9.15_5
 				securePorts["SMTP"] = true
 			} else if port == "25" || port == "587" {
-				status = "insecure"
+				//status = "insecure"
 				insecurePorts["SMTP"] = true
 			} else {
 				nonStandardPorts["SMTP"] = true
 			}
 		case "IMAP":
 			if port == "993" {
-				status = "secure"
+				//status = "secure"
 				securePorts["IMAP"] = true
 			} else if port == "143" {
-				status = "insecure"
+				//status = "insecure"
 				insecurePorts["IMAP"] = true
 			} else {
 				nonStandardPorts["IMAP"] = true
 			}
 		case "POP3":
 			if port == "995" {
-				status = "secure"
+				//status = "secure"
 				securePorts["POP3"] = true
 			} else if port == "110" {
-				status = "insecure"
+				//status = "insecure"
 				insecurePorts["POP3"] = true
 			} else {
 				nonStandardPorts["POP3"] = true

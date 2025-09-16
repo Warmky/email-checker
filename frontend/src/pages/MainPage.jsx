@@ -12,6 +12,7 @@ import { PeculiarCertificateViewer } from '@peculiar/certificates-viewer-react';
 import LinearProgress from '@mui/material/LinearProgress';
 import "../App.css";
 import { checkInternalDiff } from "../components/checkInternalDiff";//9.11
+import TlsAnalyzerPanel from "../components/TlsAnalyzerPanel";
 
 
 function MainPage() {
@@ -478,6 +479,18 @@ function MainPage() {
     
     
     //9.11
+
+    // 9.15_5
+    const [showAnalyzerMap, setShowAnalyzerMap] = useState({});
+
+    const toggleAnalyzer = (key, host, port) => {
+    setShowAnalyzerMap(prev => ({
+        ...prev,
+        [key]: !prev[key],
+    }));
+    };
+
+
     //9.11_2
     function getCertGrade(certInfo) {
         if (!certInfo) return { grade: "N/A", issues: [] };
@@ -544,6 +557,33 @@ function MainPage() {
         return Math.round(consistencyScore * weights.consistency + certDnsScore * weights.certDns);
     }
     //9.11_2
+
+    //9.15_3
+    {/* 辅助函数：提取证书问题列表 */}
+    function extractCertIssues(certInfo) {
+        if (!certInfo) return [];
+
+        const issues = [];
+        if (!certInfo.IsTrusted) issues.push("🔒 服务器证书未被受信任的 CA 签发，可能存在风险。");
+        if (!certInfo.IsHostnameMatch) issues.push("🌐 证书中的主机名与实际访问的域名不一致，存在中间人攻击风险。");
+        if (certInfo.IsExpired) issues.push("⏰ 证书已过期，需更新。");
+        if (certInfo.IsSelfSigned) issues.push("⚠️ 证书为自签名，客户端可能无法验证其真实性。");
+        if (!certInfo.IsInOrder) issues.push("📑 证书链顺序错误，部分客户端可能验证失败。");
+        if (certInfo.AlgWarning) issues.push(`🔧 使用的签名算法存在安全隐患: ${certInfo.AlgWarning}`);
+
+        return issues;
+    }
+
+    // 内部使用：计算评级（不在 UI 渲染）
+    function computeCertGrade(certInfo) {
+        if (!certInfo) return "N/A";
+
+        let grade = "A";
+        if (!certInfo.IsTrusted || !certInfo.IsHostnameMatch) grade = "B";
+        if (!certInfo.IsTrusted && !certInfo.IsHostnameMatch) grade = "C";
+
+        return grade;
+    }
 
     // 当前机制内容渲染函数7.28
     const renderMechanismContent = (mech) => {
@@ -1238,6 +1278,210 @@ function MainPage() {
                             </table>
 
                         </div>
+                        
+                        {/* 9.15_3 */}
+                        {/* 所有路径的证书验证结果 + 最终重定向协议 */}
+                        <div style={{ marginTop: "2rem" }}>
+                        <div
+                            style={{
+                            borderTop: "2px solid #333",
+                            paddingTop: "10px",
+                            marginBottom: "20px",
+                            display: "flex",
+                            alignItems: "center",
+                            }}
+                        >
+                            <span style={{ fontSize: "32px", marginRight: "10px" }}>🔒</span>
+                            <h3 style={{ margin: 0, color: "#333" }}>
+                            {mech.toUpperCase()} 所有路径的建议
+                            </h3>
+                        </div>
+
+                        {result.all.map((item, idx) => {
+                            // 提取最后重定向 URL 的 scheme
+                            let finalRedirect = null;
+                            let finalScheme = null;
+                            if (item.redirects && item.redirects.length > 0) {
+                            finalRedirect = item.redirects[item.redirects.length - 1].URL;
+                            finalScheme = finalRedirect ? finalRedirect.split(":")[0].toLowerCase() : null;
+                            }
+
+                            return (
+                            <div
+                                key={idx}
+                                style={{
+                                marginBottom: "1.5rem",
+                                padding: "1rem",
+                                border: "1px solid #ccc",
+                                borderRadius: "8px",
+                                backgroundColor: "#fafafa",
+                                }}
+                            >
+                                <h4 style={{ marginTop: 0, marginBottom: "0.5rem", color: "#444" }}>
+                                {item.method} → {item.uri}
+                                </h4>
+
+                                {/* 证书问题列表 */}
+                                <ul style={{ margin: 0, paddingLeft: "1.2rem" }}>
+                                {extractCertIssues(item.cert_info).length > 0 ? (
+                                    extractCertIssues(item.cert_info).map((issue, i) => (
+                                    <li key={i} style={{ color: "#c33", marginBottom: "4px" }}>
+                                        {issue}
+                                    </li>
+                                    ))
+                                ) : (
+                                    <li style={{ color: "#388e3c" }}>✅ 证书验证通过，无发现问题</li>
+                                )}
+                                </ul>
+
+                                {/* 重定向落点信息 */}
+                                {finalScheme && (
+                                <p style={{ marginTop: "8px", color: finalScheme === "http" ? "#c33" : "#388e3c" }}>
+                                    🔗 最终获取配置使用协议：{finalScheme.toUpperCase()}{" "}
+                                    {finalScheme === "http" && "(明文，存在安全风险)"}
+                                </p>
+                                )}
+
+                                {/* 端口使用情况展示9.15_5 */}
+                                {/* {item.score_detail?.ports_usage && item.score_detail.ports_usage.length > 0 && (
+                                <div style={{ marginTop: "10px" }}>
+                                    <h5 style={{ margin: "0 0 6px 0", color: "#333" }}>📡 端口使用情况</h5>
+                                    <ul style={{ margin: 0, paddingLeft: "1.2rem" }}>
+                                    {item.score_detail.ports_usage.map((p, idx2) => (
+                                        <li key={idx2}>
+                                        {p.protocol} : {p.port} → <strong>{p.status}</strong>{" "}
+                                        {p.ssl && `(SSL: ${p.ssl})`}{" "}
+                                        {p.host && <span>({p.host})</span>}
+                                        </li>
+                                    ))}
+                                    </ul>
+                                </div>
+                                )} */}
+                                {/* 端口使用情况展示 */}
+                                {item.score_detail?.ports_usage && item.score_detail.ports_usage.length > 0 && (
+                                <div style={{ marginTop: "10px" }}>
+                                    <h5 style={{ margin: "0 0 6px 0", color: "#333" }}>📡 端口使用情况</h5>
+                                    <ul style={{ margin: 0, paddingLeft: "1.2rem" }}>
+                                    {item.score_detail.ports_usage.map((p, idx2) => {
+                                        // 唯一 key，避免多个 path 混淆
+                                        const analyzerKey = `${mech}-${idx}-${p.host}-${p.port}`;
+                                        return (
+                                        <li key={idx2}>
+                                            {p.protocol} : {p.port} → <strong>{p.status}</strong>{" "}
+                                            {p.ssl && `(SSL: ${p.ssl})`}{" "}
+                                            {p.host && <span>({p.host})</span>}
+
+                                            {/* 🔍 实际连接检测结果提示 */}
+                                            {item.score_detail?.actualconnect_details &&
+                                            item.score_detail?.actualconnect_details.length > 0 &&
+                                            (() => {
+                                                const match = item.score_detail?.actualconnect_details.find(
+                                                (d) =>
+                                                    d.type?.toLowerCase() === p.protocol?.toLowerCase() &&
+                                                    String(d.port) === String(p.port) &&
+                                                    d.host === p.host
+                                                );
+                                                if (match) {
+                                                if (match.plain?.success) {
+                                                    return (
+                                                    <span style={{ color: "red", marginLeft: "8px" }}>
+                                                        ⚠️ 明文可连接
+                                                    </span>
+                                                    );
+                                                } else if (match.tls?.success || match.starttls?.success) {
+                                                    return (
+                                                    <span style={{ color: "green", marginLeft: "8px" }}>
+                                                        ✅ 安全连接可用
+                                                    </span>
+                                                    );
+                                                } else {
+                                                    return (
+                                                    <span style={{ color: "gray", marginLeft: "8px" }}>
+                                                        ❌ 无法连接
+                                                    </span>
+                                                    );
+                                                }
+                                                }
+                                                return null;
+                                            })()}
+
+                                            {/* 🔬 深度分析按钮 */}
+                                            <button
+                                            onClick={() => toggleAnalyzer(analyzerKey, p.host, p.port)}
+                                            style={{
+                                                marginLeft: "8px",
+                                                padding: "2px 6px",
+                                                fontSize: "0.8rem",
+                                                borderRadius: "4px",
+                                                border: "1px solid #586c9b",
+                                                background: "#586c9b",
+                                                color: "#fff",
+                                                cursor: "pointer",
+                                            }}
+                                            >
+                                            深度分析
+                                            </button>
+
+                                            {/* 🔎 动态展开分析面板 */}
+                                            {showAnalyzerMap[analyzerKey] && (
+                                            <div style={{ marginTop: "6px" }}>
+                                                <TlsAnalyzerPanel host={p.host} port={p.port} />
+                                            </div>
+                                            )}
+                                        </li>
+                                        );
+                                    })}
+                                    </ul>
+                                </div>
+                                )}
+
+                                
+
+
+
+
+                                {/* 原始证书展开 */}
+                                {item.cert_info?.RawCerts && item.cert_info.RawCerts.length > 0 && (
+                                <div style={{ marginTop: "10px" }}>
+                                    <button
+                                    onClick={() => toggleRawCerts(`${mech}-${idx}`)}
+                                    style={{
+                                        padding: "4px 8px",
+                                        backgroundColor: "#5b73a9",
+                                        color: "#fff",
+                                        border: "none",
+                                        borderRadius: "4px",
+                                        cursor: "pointer",
+                                        fontSize: "0.9rem",
+                                    }}
+                                    >
+                                    {showRawCertsMap[`${mech}-${idx}`] ? "隐藏" : "展开"} 原始证书
+                                    </button>
+
+                                    {showRawCertsMap[`${mech}-${idx}`] && (
+                                    <div
+                                        style={{
+                                        wordBreak: "break-all",
+                                        maxHeight: "200px",
+                                        overflowY: "auto",
+                                        marginTop: "10px",
+                                        background: "#f5f5f5",
+                                        padding: "10px",
+                                        borderRadius: "6px",
+                                        border: "1px solid #ccc",
+                                        fontFamily: "Consolas, Monaco, monospace",
+                                        fontSize: "13px",
+                                        }}
+                                    >
+                                        {item.cert_info.RawCerts.join(", ")}
+                                    </div>
+                                    )}
+                                </div>
+                                )}
+                            </div>
+                            );
+                        })}
+                        </div>
 
 
                         {/* 8.29 */}
@@ -1768,78 +2012,84 @@ function MainPage() {
             邮件自动化配置检测
             </h1>
 
-            <div style={{ maxWidth: "600px", width: "100%", position: "relative" }}>
-                <input
-                    type="text"
-                    value={email}
-                    onChange={handleChange}
-                    placeholder="请输入您的邮件地址：如 user@example.com"
-                    style={{
-                    padding: "1rem",
-                    width: "400px",
-                    fontSize: "1.2rem",
-                    borderRadius: "8px",
-                    border: "1px solid #ccc",
-                    outline: "none",
-                    color: "#000",
-                    }}
-                />
-                <button
-                    onClick={handleClick}
-                    style={{
-                    marginLeft: "1rem",
-                    padding: "1rem",
-                    fontSize: "1.2rem",
-                    borderRadius: "8px",
-                    backgroundColor: "#3c71cdff",
-                    color: "white",
-                    border: "none",
-                    cursor: "pointer",
-                    fontWeight: "bold",
-                    transition: "background 0.3s",
-                    }}
-                    onMouseOver={(e) => (e.target.style.backgroundColor = "#2e4053")}
-                    onMouseOut={(e) => (e.target.style.backgroundColor = "#3a506b")}
-                >
-                    开始检测
-                </button>
-
-                {/* 下拉框 */}
-                {suggestions.length > 0 && (
-                    <div
+            <div style={{ maxWidth: "900px", width: "100%", display: "flex", justifyContent: "flex-start",marginLeft: "30%"}}>
+                {/* 邮箱输入 + 单个检测按钮 */}
+                <div style={{ display: "flex", alignItems: "center", position: "relative" }}>
+                    <input
+                        type="text"
+                        value={email}
+                        onChange={handleChange}
+                        placeholder="请输入您的邮件地址：如 user@example.com"
                         style={{
-                            position: "absolute",
-                            top: "100%",
-                            left: 0,
-                            width: "430px",
-                            background: "#fff",
+                            padding: "1rem",
+                            width: "400px",
+                            fontSize: "1.2rem",
+                            borderRadius: "8px",
                             border: "1px solid #ccc",
-                            maxHeight: "150px",        // 限制高度
-                            overflowY: "auto",         // 超出时滚动
-                            borderRadius: "6px",
-                            marginTop: "4px",
-                            boxShadow: "0 2px 6px rgba(0,0,0,0.15)",
-                            zIndex: 10,
+                            outline: "none",
+                            color: "#000",
                         }}
+                    />
+                    <button
+                        onClick={handleClick}
+                        style={{
+                            marginLeft: "1rem",
+                            padding: "1rem",
+                            fontSize: "1.2rem",
+                            borderRadius: "8px",
+                            backgroundColor: "#3c71cdff",
+                            color: "white",
+                            border: "none",
+                            cursor: "pointer",
+                            fontWeight: "bold",
+                            transition: "background 0.3s",
+                        }}
+                        onMouseOver={(e) => (e.target.style.backgroundColor = "#2e4053")}
+                        onMouseOut={(e) => (e.target.style.backgroundColor = "#3a506b")}
                     >
-                    {suggestions.map((s, idx) => (
+                        开始检测
+                    </button>
+
+                    {/* 下拉框 */}
+                    {suggestions.length > 0 && (
                         <div
-                            key={idx}
-                            onClick={() => handleSelect(s)}
                             style={{
-                                padding: "8px 12px",
-                                cursor: "pointer",
-                                borderBottom: idx !== suggestions.length - 1 ? "1px solid #eee" : "none"
+                                position: "absolute",
+                                top: "100%", // 紧贴输入框下方
+                                left: 0,
+                                width: "430px",
+                                background: "#fff",
+                                border: "1px solid #ccc",
+                                maxHeight: "150px",
+                                overflowY: "auto",
+                                borderRadius: "6px",
+                                marginTop: "4px",
+                                boxShadow: "0 2px 6px rgba(0,0,0,0.15)",
+                                zIndex: 10,
                             }}
-                            onMouseOver={(e) => (e.currentTarget.style.background = "#f5f5f5")}
-                            onMouseOut={(e) => (e.currentTarget.style.background = "white")}
                         >
-                            {s}
+                            {suggestions.map((s, idx) => (
+                                <div
+                                    key={idx}
+                                    onClick={() => handleSelect(s)}
+                                    style={{
+                                        padding: "8px 12px",
+                                        cursor: "pointer",
+                                        borderBottom: idx !== suggestions.length - 1 ? "1px solid #eee" : "none"
+                                    }}
+                                    onMouseOver={(e) => (e.currentTarget.style.background = "#f5f5f5")}
+                                    onMouseOut={(e) => (e.currentTarget.style.background = "white")}
+                                >
+                                    {s}
+                                </div>
+                            ))}
                         </div>
-                    ))}
+                    )}
                 </div>
-            )}
-        </div>
+
+                {/* 批量检测组件 */}
+                <CSVUploadForm hideTitle={true} buttonPadding="1rem 1.2rem" />
+            </div>
 
             {loading && (
                 <div style={{ marginTop: "2rem", textAlign: "center" }}>
@@ -1890,7 +2140,7 @@ function MainPage() {
                 </>
             )}
 
-            <CSVUploadForm />
+            {/* <CSVUploadForm /> */}
 
             <h2 style={{ marginTop: "3rem", color: "#29394dff" }}>历史查询</h2>
             {recentlySeen.length > 0 ? (
@@ -1911,7 +2161,123 @@ function MainPage() {
 }
 
 
+//9.16
+// function CSVUploadForm() {
+//     const [downloadUrl, setDownloadUrl] = useState(null);
+//     const [isUploading, setIsUploading] = useState(false);
 
+//     const handleUpload = async (e) => {
+//         const file = e.target.files[0];
+//         if (!file) return;
+
+//         setIsUploading(true);
+//         setDownloadUrl(null);
+
+//         const formData = new FormData();
+//         formData.append("file", file);
+
+//         try {
+//             const res = await fetch(`/api/uploadCsvAndExportJsonl`, {
+//             method: "POST",
+//             body: formData,
+//             mode: "cors",               // 显式允许跨域9.6
+//             credentials: "omit",        // 如果不需要带 cookie
+//             });
+
+
+//             if (!res.ok) {
+//                 throw new Error("Upload failed");
+//             }
+
+//             const data = await res.json();
+//             setDownloadUrl(data.download_url);
+//         } catch (err) {
+//             alert("上传失败：" + err.message);
+//         } finally {
+//             setIsUploading(false);
+//         }
+//     };
+
+//     const handleDownload = async () => {
+//         try {
+//             const res = await fetch(`${downloadUrl}`);
+//             if (!res.ok) {
+//                 throw new Error("下载失败");
+//             }
+
+//             const blob = await res.blob();
+//             const url = window.URL.createObjectURL(blob);
+//             const a = document.createElement("a");
+//             a.href = url;
+//             a.download = "result.jsonl"; // 可以改成动态文件名
+//             document.body.appendChild(a);
+//             a.click();
+//             a.remove();
+//             window.URL.revokeObjectURL(url);
+//         } catch (err) {
+//             alert("下载失败：" + err.message);
+//         }
+//     };
+
+//     return (
+//         <div style={{ marginBottom: "30px", padding: "20px", textAlign: "center" }}>
+//             <h3 style={{ fontSize: "1.5rem", marginBottom: "1rem", color: "#29394dff" }}>📄 批量域名检测</h3>
+            
+//             <label 
+//                 style={{ 
+//                     display: "inline-block",
+//                     padding: "10px 20px",
+//                     backgroundColor: "#5daed7ff",
+//                     color: "white",
+//                     borderRadius: "8px",
+//                     cursor: "pointer",
+//                     fontWeight: "bold",
+//                     transition: "background 0.3s"
+//                 }}
+//                 onMouseOver={(e) => (e.target.style.backgroundColor = "#3c71cdff")}
+//                 onMouseOut={(e) => (e.target.style.backgroundColor = "#6d92cbff")}
+//             >
+//                 选择 CSV 文件
+//                 <input 
+//                     type="file" 
+//                     accept=".csv" 
+//                     onChange={handleUpload} 
+//                     style={{ display: "none" }}
+//                 />
+//             </label>
+
+//             {isUploading && <p style={{ marginTop: "1rem", color: "#888" }}>⏳ 处理中，请稍等...</p>}
+
+//             {downloadUrl && (
+//                 <p style={{ marginTop: "1rem" }}>
+//                     ✅ 查询完成，
+//                     <button 
+//                         onClick={handleDownload}
+//                         style={{
+//                             marginLeft: "10px",
+//                             padding: "8px 16px",
+//                             backgroundColor: "#3a506b",
+//                             color: "white",
+//                             border: "none",
+//                             borderRadius: "6px",
+//                             cursor: "pointer",
+//                             fontWeight: "bold",
+//                             transition: "background 0.3s"
+//                         }}
+//                         onMouseOver={(e) => (e.target.style.backgroundColor = "#2e4053")}
+//                         onMouseOut={(e) => (e.target.style.backgroundColor = "#3a506b")}
+//                     >
+//                         点击下载结果
+//                     </button>
+//                 </p>
+//             )}
+//         </div>
+//     );
+
+
+// }
+
+// 9.16
 function CSVUploadForm() {
     const [downloadUrl, setDownloadUrl] = useState(null);
     const [isUploading, setIsUploading] = useState(false);
@@ -1934,10 +2300,7 @@ function CSVUploadForm() {
             credentials: "omit",        // 如果不需要带 cookie
             });
 
-
-            if (!res.ok) {
-                throw new Error("Upload failed");
-            }
+            if (!res.ok) throw new Error("Upload failed");
 
             const data = await res.json();
             setDownloadUrl(data.download_url);
@@ -1951,15 +2314,13 @@ function CSVUploadForm() {
     const handleDownload = async () => {
         try {
             const res = await fetch(`${downloadUrl}`);
-            if (!res.ok) {
-                throw new Error("下载失败");
-            }
+            if (!res.ok) throw new Error("下载失败");
 
             const blob = await res.blob();
             const url = window.URL.createObjectURL(blob);
             const a = document.createElement("a");
             a.href = url;
-            a.download = "result.jsonl"; // 可以改成动态文件名
+            a.download = "result.jsonl";
             document.body.appendChild(a);
             a.click();
             a.remove();
@@ -1970,62 +2331,88 @@ function CSVUploadForm() {
     };
 
     return (
-        <div style={{ marginBottom: "30px", padding: "20px", textAlign: "center" }}>
-            <h3 style={{ fontSize: "1.5rem", marginBottom: "1rem", color: "#29394dff" }}>📄 批量域名检测</h3>
-            
-            <label 
-                style={{ 
-                    display: "inline-block",
-                    padding: "10px 20px",
-                    backgroundColor: "#5daed7ff",
-                    color: "white",
-                    borderRadius: "8px",
-                    cursor: "pointer",
-                    fontWeight: "bold",
-                    transition: "background 0.3s"
-                }}
-                onMouseOver={(e) => (e.target.style.backgroundColor = "#3c71cdff")}
-                onMouseOut={(e) => (e.target.style.backgroundColor = "#6d92cbff")}
-            >
-                选择 CSV 文件
-                <input 
-                    type="file" 
-                    accept=".csv" 
-                    onChange={handleUpload} 
-                    style={{ display: "none" }}
-                />
-            </label>
+        <div style={{ marginLeft: "1rem", display: "flex", alignItems: "center" }}>
+            {!downloadUrl && !isUploading && (
+                <label
+                    title="上传域名列表（.csv 格式）进行批量检测"
+                    style={{
+                        display: "inline-block",
+                        padding: "1rem",
+                        fontSize: "1.2rem",
+                        fontWeight: "bold",
+                        borderRadius: "8px",
+                        backgroundColor: "#365289",
+                        color: "white",
+                        cursor: "pointer",
+                        whiteSpace: "nowrap",
+                        transition: "background 0.3s",
+                    }}
+                    onMouseOver={(e) => (e.target.style.backgroundColor = "#2e4053")}
+                    onMouseOut={(e) => (e.target.style.backgroundColor = "#365289")}
+                >
+                    批量检测
+                    <input
+                        type="file"
+                        accept=".csv"
+                        onChange={handleUpload}
+                        style={{ display: "none" }}
+                    />
+                </label>
+            )}
 
-            {isUploading && <p style={{ marginTop: "1rem", color: "#888" }}>⏳ 处理中，请稍等...</p>}
+            {isUploading && (
+                <span style={{ marginLeft: "10px", color: "#888", fontSize: "0.95rem" }}>
+                    ⏳ 批量检测处理中...
+                </span>
+            )}
 
-            {downloadUrl && (
-                <p style={{ marginTop: "1rem" }}>
-                    ✅ 查询完成，
-                    <button 
+            {downloadUrl && !isUploading && (
+                <>
+                    <button
                         onClick={handleDownload}
                         style={{
-                            marginLeft: "10px",
-                            padding: "8px 16px",
-                            backgroundColor: "#3a506b",
+                            padding: "1rem",
+                            fontSize: "1.2rem",
+                            fontWeight: "bold",
+                            borderRadius: "8px",
+                            backgroundColor: "#2e4053",
                             color: "white",
                             border: "none",
-                            borderRadius: "6px",
                             cursor: "pointer",
-                            fontWeight: "bold",
-                            transition: "background 0.3s"
+                            transition: "background 0.3s",
                         }}
-                        onMouseOver={(e) => (e.target.style.backgroundColor = "#2e4053")}
-                        onMouseOut={(e) => (e.target.style.backgroundColor = "#3a506b")}
+                        title="点击下载检测结果"
+                        onMouseOver={(e) => (e.target.style.backgroundColor = "#1f2a3d")}
+                        onMouseOut={(e) => (e.target.style.backgroundColor = "#2e4053")}
                     >
-                        点击下载结果
+                        ⬇️ 下载检测结果
                     </button>
-                </p>
+                    <button
+                        onClick={() => setDownloadUrl(null)}
+                        style={{
+                            marginLeft: "10px",
+                            padding: "1rem",
+                            fontSize: "1.2rem",
+                            fontWeight: "bold",
+                            borderRadius: "8px",
+                            backgroundColor: "#888",
+                            color: "white",
+                            border: "none",
+                            cursor: "pointer",
+                            transition: "background 0.3s",
+                        }}
+                        title="重置批量检测"
+                        onMouseOver={(e) => (e.target.style.backgroundColor = "#555")}
+                        onMouseOut={(e) => (e.target.style.backgroundColor = "#888")}
+                    >
+                        🔄
+                    </button>
+                </>
             )}
         </div>
     );
-
-
 }
+
 
 
 

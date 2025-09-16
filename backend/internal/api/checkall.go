@@ -55,6 +55,7 @@ func CheckAllHandler(w http.ResponseWriter, r *http.Request) { //5.19新增以�
 					"ports_usage":           PortsUsage,
 				},
 				"cert_info": result.CertInfo,
+				"redirects": result.Redirects, // ⭐ 加上 redirects 字段9.15_4
 			})
 
 			if score["overall"] > bestScore {
@@ -110,6 +111,7 @@ func CheckAllHandler(w http.ResponseWriter, r *http.Request) { //5.19新增以�
 					"ports_usage":           PortsUsage,
 				},
 				"cert_info": result.CertInfo,
+				"redirects": result.Redirects, // ⭐ 同样加上9.15_4
 			})
 
 			if score["overall"] > bestScore {
