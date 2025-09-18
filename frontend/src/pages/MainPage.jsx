@@ -36,9 +36,9 @@ function MainPage() {
     const [progressMessage, setProgressMessage] = useState("");
 
 
-    const mechanisms = ["autodiscover", "autoconfig", "srv", "guess", "compare"];//9.10_2 新增加比较机制供管理者一眼看出不同机制得到的配置信息有何不同
+    const mechanisms = ["autodiscover", "autoconfig", "srv", "guess", "overview"];//9.10_2 新增加比较机制供管理者一眼看出不同机制得到的配置信息有何不同
     // 默认选中第一个有结果的机制（不含 compare）9.10_2
-    const firstAvailable = mechanisms.find(m => m !== "compare" && results[m]) || mechanisms[0];
+    const firstAvailable = mechanisms.find(m => m !== "overview" && results[m]) || mechanisms[0];
     const [currentMech, setCurrentMech] = useState(firstAvailable);
     const [lastSubmittedEmail, setLastSubmittedEmail] = useState("");
 
@@ -450,16 +450,19 @@ function MainPage() {
         </span>
     );
 
-    const CollapsibleModule = ({ label, score, children }) => {
+    //9.17
+    const CollapsibleModule = ({ label, score, children, style }) => {
         const [open, setOpen] = useState(false);
         return (
             <div
                 style={{
-                    border: "1px solid #fff",  // 白色边框
+                    border: "1px solid #fff",
                     borderRadius: "8px",
                     padding: "10px",
                     marginBottom: "10px",
-                    backgroundColor: "#fff", // 可以是白底，如果页面背景深色，可以微调
+                    backgroundColor: "#fff",
+                    width: "100%",     // ⭐️ 关键：让模块占满可用宽度
+                    ...style           // 可以从外部传入额外样式
                 }}
             >
                 {/* 标题行 */}
@@ -479,6 +482,42 @@ function MainPage() {
     
     
     //9.11
+
+        //9.17
+    // 新的布尔模块
+    const renderStatusText = (label, hasIssue) => (
+        <span style={{ fontWeight: "bold", marginRight: "6px", color: "#555" }}>
+        {hasIssue ? "❌" : "✅"} {label}
+        </span>
+    );
+    
+    const StatusModule = ({ label, hasIssue, children }) => {
+        const [open, setOpen] = useState(false);
+    
+        return (
+        <div
+            style={{
+            border: "1px solid #fff",
+            borderRadius: "8px",
+            padding: "10px",
+            marginBottom: "10px",
+            backgroundColor: "#fff",
+            }}
+        >
+            {/* 标题行 */}
+            <div
+            style={{ display: "flex", alignItems: "center", cursor: "pointer" }}
+            onClick={() => setOpen(!open)}
+            >
+            {renderStatusText(label, hasIssue)}
+            <span style={{ marginLeft: "6px", color: "#333" }}>{open ? "▲" : "▼"}</span>
+            </div>
+    
+            {/* 折叠内容 */}
+            {open && <div style={{ marginTop: "8px" }}>{children}</div>}
+        </div>
+        );
+    };
 
     // 9.15_5
     const [showAnalyzerMap, setShowAnalyzerMap] = useState({});
@@ -591,11 +630,12 @@ function MainPage() {
         //9.11
         preprocessResults(results);
 
-        if (mech === "compare") {
-            const comparisonMap = comparePortsUsage(results); //这里比较的是不同机制间
-    
-            // 一致性评分
+        // 9.17
+        if (mech === "overview") {
+            // ===== 1️⃣ 配置信息差异性 =====
+            const comparisonMap = comparePortsUsage(results); // 比较不同机制间
             let consistencyScore = 100;
+
             Object.entries(comparisonMap).forEach(([_, mechData]) => {
                 const fields = ["host", "ssl"];
                 const isConsistent = fields.every((field) => {
@@ -606,232 +646,473 @@ function MainPage() {
                 });
                 if (!isConsistent) consistencyScore = 50;
             });
-            // 考虑机制内部不一致
+
             Object.entries(results).forEach(([mech, res]) => {
-                if (res?.hasInternalDiff) {
-                    consistencyScore = 30; // 🚨 内部不一致，优先判定为不一致
-                }
+                if (res?.hasInternalDiff) consistencyScore = 30;
             });
 
+            // ===== 2️⃣ 配置信息获取过程安全性 =====
+            const mechanismList = ["autodiscover", "autoconfig"];
+            const httpIssues = {};
+            const certIssues = {};
+
+            mechanismList.forEach(m => {
+                httpIssues[m] = results[m]?.score_detail?.http_insecure || false;
+                const certInfo = results[m]?.cert_info;
+                certIssues[m] = certInfo ? getCertGrade(certInfo).issues.length > 0 : false;
+            });
+
+            // ===== SRV 机制风险分析 =====
+            let srvIssue = false;
+            const srvDetails = [];
+            if (results.srv?.dns_record) {
+                const adBits = results.srv.dns_record;
+                Object.entries({
+                    IMAP: adBits.ADbit_imap,
+                    IMAPS: adBits.ADbit_imaps,
+                    POP3: adBits.ADbit_pop3,
+                    POP3S: adBits.ADbit_pop3s,
+                    SMTP: adBits.ADbit_smtp,
+                    SMTPS: adBits.ADbit_smtps
+                }).forEach(([proto, bit]) => {
+                    let text = "⚪ 未检测到结果";
+                    if (bit === true) text = "✅ DNSSEC 有效";
+                    if (bit === false) {
+                        text = "❌ DNSSEC 无效";
+                        srvIssue = true;
+                    }
+                    srvDetails.push({ proto, text });
+                });
+            } else {
+                srvDetails.push({ proto: "SRV", text: "无有效 SRV 记录" });
+                srvIssue = true;
+            }
+
+            let configScore = 100;
+            mechanismList.forEach(m => {
+                if (httpIssues[m]) configScore -= 10;
+                if (certIssues[m]) configScore -= 30;
+            });
+            if (srvIssue) configScore -= 20;
+            if (configScore < 0) configScore = 0;
+
+            let connectScore = 100;
+            ["autodiscover","autoconfig","srv"].forEach(m => {
+                const mech = results[m];
+                if (!mech) return;
+                const allDetails = [];
+                if (mech.all) {
+                    mech.all.forEach(item =>
+                        item.score_detail?.actualconnect_details?.forEach(d => allDetails.push(d))
+                    );
+                } else {
+                    mech.score_detail?.actualconnect_details?.forEach(d => allDetails.push(d));
+                }
+
+                allDetails.forEach(d => {
+                    if (d.plain?.success) connectScore -= 40;
+                    if (!d.plain?.success && !d.tls?.success && !d.starttls?.success) connectScore -= 50;
+                });
+            });
+            if (connectScore < 0) connectScore = 0;
+
+            let lexScore = 100;
+            ["autodiscover","autoconfig"].forEach(m => {
+                const mech = results[m];
+                if (!mech) return;
+                const allPorts = [];
+                if (mech.all) {
+                    mech.all.forEach(item => item.score_detail?.ports_usage?.forEach(p => allPorts.push(p)));
+                } else {
+                    mech.score_detail?.ports_usage?.forEach(p => allPorts.push(p));
+                }
+                if (allPorts.some(p => p.status !== "standard")) lexScore = 60;
+            });
+
+
             
-            //9.11_2
-            // 证书与 DNSSEC 分数
-            const certDnsScore = calculateCertDnsScore(results);
-            // 综合评分
-            const overallConfigScore = calculateOverallConfigScore(consistencyScore, certDnsScore);
 
-            // // 配置获取过程安全性评分（取平均）
-            // const mechScores = ["autodiscover", "autoconfig", "srv"]//这里应该是scores["cert_score"]
-            //     .map(m => results[m]?.score?.overall || 0)
-            //     .filter(s => s > 0);
-            // const overallConfigScore = mechScores.length
-            //     ? Math.round(mechScores.reduce((a, b) => a + b, 0) / mechScores.length)
-            //     : 0;
-    
-            // 连接安全性（取最低/平均？）
-            const connectScores = ["autodiscover", "autoconfig", "srv"]
-                .map(m => results[m]?.score_detail?.connection?.Overall_Connection_Score || 0)
-                .filter(s => s > 0);
-            // const unifiedConnectScore = connectScores.length
-            //     ? Math.min(...connectScores)
-            //     : 0;
-            const unifiedConnectScore = connectScores.length
-                ? connectScores.reduce((a, b) => a + b, 0) / connectScores.length
-                : 0;
-    
-            // 大评级框
-            const gradeBox = (score) => (
-                <div style={{
-                    width: "100px",
-                    height: "100px",
-                    borderRadius: "10px",
-                    border: "2px solid #333",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    fontSize: "28px",
-                    fontWeight: "bold",
-                    background: score >= 90? "#2ecc71" : score >= 50? "#f1c40f" : score >= 30? "#ff9800"  : "#e74c3c",    
-                    color: "#fff",
-                    marginRight: "20px"
-                }}>
-                    {getGrade(score)}
-                </div>
-            );
+            // ===== 整体配置获取过程问题 =====
+            const configIssue = mechanismList.some(m => httpIssues[m] || certIssues[m]) || srvIssue;
+
+            // ===== 分数转等级和颜色 =====
+            const getGradeInfo = (score) => {
+                if (score >= 90) return { grade: "A", color: "#2ecc71" }; // 绿
+                if (score >= 50) return { grade: "B", color: "#f1c40f" }; // 黄
+                if (score >= 30) return { grade: "C", color: "#e67e22" }; // 橙
+                return { grade: "D", color: "#e74c3c" };                  // 红
+            };
+
+            // ===== 评级框 =====
+            const gradeBox = (score) => {
+                const { grade, color } = getGradeInfo(score);
+                return (
+                    <div
+                        style={{
+                            width: "100px",
+                            height: "100px",
+                            borderRadius: "10px",
+                            border: "2px solid #333",
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                            fontSize: "28px",
+                            fontWeight: "bold",
+                            background: color,
+                            color: "#fff",
+                            marginRight: "20px",
+                        }}
+                    >
+                        {grade}
+                    </div>
+                );
+            };
 
 
-    
             return (
                 <div style={{ marginTop: "2rem" }}>
-                    <h3 style={{ marginBottom: "15px" }}>📊 Compare 总览</h3>
-    
-                {/* 上方主题分界线 */}
-                <div style={{
-                    borderTop: "2px solid #333",
-                    paddingTop: "10px",
-                    marginBottom: "20px",
-                    display: "flex",
-                    alignItems: "center"
-                }}>
-                    <span style={{ fontSize: "32px", marginRight: "10px" }}>🛡️</span>
-                    <h3 style={{ margin: 0, color: "#333" }}>配置获取过程安全性</h3>
-                </div>
 
-                {/* 主体内容 */}
-                <div style={{ display: "flex", alignItems: "flex-start", marginBottom: "20px" }}>
-                    {gradeBox(overallConfigScore)} {/* 左边大评级框，增大尺寸 */}
-
-                    {/* 右边两个模块 */}
-                    <div style={{ flex: 1 }}>
-                        {/* 上模块：配置信息差异性 9.11_2*/}
-                        <CollapsibleModule label="配置信息差异性" score={consistencyScore}>
-                        <ul style={{ margin: 0, paddingLeft: "18px", color: "#333" }}>
-                            {/* 内部差异（逐个机制列出） */}
-                            {Object.entries(results).map(([mech, res]) => {
-                            if (res?.hasInternalDiff) {
-                                return (
-                                <li key={mech}>
-                                    机制 <b>{mech}</b> 内部不同路径存在配置差异
-                                </li>
-                                );
-                            }
-                            return null;
-                            })}
-
-                            {/* 跨机制差异（只要 consistencyScore <= 50 就显示） */}
-                            {consistencyScore <= 50 && (
-                            <li>不同机制之间存在配置差异</li>
-                            )}
-
-                            {/* 完全一致（只有 100 分时显示） */}
-                            {consistencyScore === 100 && (
-                            <li>所有机制配置完全一致</li>
-                            )}
-                        </ul>
-                        </CollapsibleModule>
-
-                        {/* 下模块：配置获取过程安全性 */}
-                        {/* 9.11_2 */}
-                        <CollapsibleModule label="证书与 DNS 验证" score={overallConfigScore}>
-                            {["autodiscover", "autoconfig"].map(m => {
-                                const certInfo = results[m]?.cert_info;
-                                if (!certInfo) return null;
-                                const { issues } = getCertGrade(certInfo);
-                                return (
-                                    <div key={m} style={{ marginBottom: "10px" }}>
-                                        <h4>{m.toUpperCase()} 机制配置服务器证书检测</h4>
-                                        <ul style={{ margin: 0, paddingLeft: "18px", color: "#333" }}>
-                                        {issues.length > 0 ? issues.map((i, idx) => <li key={idx}>{i}</li>) : <li>配置服务器返回的证书链完整，验证通过，连接信息正常。</li>}
-                                        </ul>
-                                    </div>
-                                    );
-                            })}
-
-                            {results.srv && (
-                                <div style={{ marginTop: "10px" }}>
-                                    <h4>SRV 机制：DNSSEC 结果</h4>
-                                    <ul style={{ margin: 0, paddingLeft: "18px", color: "#333" }}>
-                                    {getDNSSummary(results.srv).details.map((d, idx) => (
-                                        <li key={idx}>{d}</li>
-                                    ))}
-                                    </ul>
-                                </div>
-                            )}
-
-                        </CollapsibleModule>
+                    {/* ===== 概览说明 ===== */}
+                    <div
+                        style={{
+                            backgroundColor: "#eef6f7",
+                            border: "1px solid #ccd6dd",
+                            borderRadius: "8px",
+                            padding: "1rem 1.5rem",
+                            marginBottom: "1.5rem",
+                            color: "#333",
+                            lineHeight: 1.6,
+                            fontSize: "15px"
+                        }}
+                    >
+                        <p style={{ margin: 0 }}>
+                            本界面用于概览该邮件地址域名在获取配置信息过程中的
+                            <strong>整体潜在安全风险</strong>，包括不同机制路径取得配置信息的差异性、配置获取过程安全性、
+                            实际连接安全性以及端口使用规范性等。
+                        </p>
+                        <p style={{ margin: "0.5rem 0 0 0" }}>
+                            若需查看某一具体机制（Autodiscover、Autoconfig、SRV 等）
+                            中出现的详细问题，请切换到对应机制的界面。
+                        </p>
                     </div>
-                </div>
 
-
-                {/* 表格详情：直接显示，不折叠 */}
-                <div style={{ marginBottom: "20px" }}>
-                    <h4 style={{ marginBottom: "10px", color: "#333" }}>⚖️ 配置比较详情（不同机制间差异）</h4>
-                    <table style={{
-                        width: "100%",
-                        borderCollapse: "collapse",
-                        tableLayout: "fixed",
-                        color: "#333"
-                    }}>
-                        <thead>
-                            <tr>
-                                <th style={{ border: "1px solid #ccc", padding: "8px", background: "#f7f7f7" }}>协议</th>
-                                <th style={{ border: "1px solid #ccc", padding: "8px", background: "#f7f7f7" }}>端口</th>
-                                <th style={{ border: "1px solid #ccc", padding: "8px", background: "#f7f7f7" }}>机制</th>
-                                <th style={{ border: "1px solid #ccc", padding: "8px", background: "#f7f7f7" }}>主机</th>
-                                <th style={{ border: "1px solid #ccc", padding: "8px", background: "#f7f7f7" }}>SSL类型</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {Object.entries(comparisonMap).map(([key, mechData], idx) => {
-                                const fields = ["host", "ssl"];
-                                const isConsistent = fields.every((field) => {
-                                    const values = Object.values(mechData).map((m) => m[field]).filter(Boolean);
-                                    return values.length <= 1 || values.every((v) => v === values[0]);
-                                });
-
-                                return Object.entries(mechData).map(([mech, item], rowIdx) => (
-                                    <tr key={`${idx}-${rowIdx}`} style={{ backgroundColor: isConsistent ? "#f0f0f0" : "#f8d7da" }}>
-                                        {rowIdx === 0 && (
-                                            <>
-                                                <td style={{ border: "1px solid #ccc", padding: "8px", textAlign: "center" }} rowSpan={Object.keys(mechData).length}>{item.protocol}</td>
-                                                <td style={{ border: "1px solid #ccc", padding: "8px", textAlign: "center" }} rowSpan={Object.keys(mechData).length}>{item.port}</td>
-                                            </>
-                                        )}
-                                        <td style={{ border: "1px solid #ccc", padding: "8px", textAlign: "center" }}>{mech}</td>
-                                        <td style={{ border: "1px solid #ccc", padding: "8px", textAlign: "center" }}>{item.host}</td>
-                                        <td style={{ border: "1px solid #ccc", padding: "8px", textAlign: "center" }}>{item.ssl}</td>
-                                    </tr>
-                                ));
-                            })}
-                        </tbody>
-                    </table>
-                </div>
-
-                
-
-                {/* 连接安全性评级模块 */}
-                <div style={{ marginTop: "20px" }}>
-                    {/* 上方主题分界线 */}
+                    {/* ===== 配置信息差异性 ===== */}
                     <div style={{
                         borderTop: "2px solid #333",
                         paddingTop: "10px",
-                        marginBottom: "10px",
-                        display: "flex",
-                        alignItems: "center"
+                        marginBottom: "20px"
                     }}>
-                        <span style={{ fontSize: "32px", marginRight: "10px" }}>🔒</span>
-                        <h3 style={{ margin: 0, color: "#333" }}>连接安全性</h3>
-                    </div>
+                        <div style={{ display: "flex", alignItems: "center", marginBottom: "10px" }}>
+                            <span style={{ fontSize: "32px", marginRight: "10px" }}>📊</span>
+                            <h3 style={{ margin: 0, color: "#333" }}>配置信息差异性</h3>
+                        </div>
 
-                    <div style={{ display: "flex", alignItems: "flex-start" }}>
-                        {gradeBox(unifiedConnectScore)} {/* 左边大评级框，增大尺寸 */}
-
-                        <div style={{ flex: 1 }}>
-                            <CollapsibleModule label="连接提示" score={unifiedConnectScore}>
+                        <div style={{ display: "flex", alignItems: "flex-start", marginBottom: "20px", width: "100%"}}>
+                            {gradeBox(consistencyScore)}
+                            <CollapsibleModule
+                                label="配置信息差异性"
+                                score={consistencyScore}
+                                style={{
+                                    flex: 1,
+                                    minWidth: 0,
+                                    padding: "8px",
+                                    backgroundColor: "#eef6f7",
+                                    borderRadius: "6px",
+                                    minHeight: "100px"
+                                }}
+                            >
                                 <ul style={{ margin: 0, paddingLeft: "18px", color: "#333" }}>
-                                    {["autodiscover", "autoconfig", "srv"].map(m => {
-                                        const connection = results[m]?.score_detail?.connection;
-                                        if (!connection) return null;
-                                        const warnings = connection.warnings || [];
-                                        if (warnings.length > 0) {
-                                            return warnings.map((w, idx) => <li key={m + idx}>{m} 机制: {w}</li>);
-                                        }
-                                        if (connection.Overall_Connection_Score < 50) {
-                                            return <li key={m}>{m} 机制连接存在风险</li>;
-                                        }  
-                                        // 9.11_2
-                                        return null;
-                                    })}
-                                    {unifiedConnectScore === 100 && <li>所有机制连接安全</li>}
+                                    {Object.entries(results).map(([mech, res]) =>
+                                        res?.hasInternalDiff && (
+                                            <li key={mech}>机制 <b>{mech}</b> 内部存在配置差异</li>
+                                        )
+                                    )}
+                                    {consistencyScore <= 50 && <li>不同机制之间存在配置差异</li>}
+                                    {consistencyScore === 100 && <li>所有机制配置完全一致</li>}
                                 </ul>
                             </CollapsibleModule>
+
+                        </div>
+
+                        {/* 表格详情：直接显示 */}
+                        <div style={{ marginBottom: "20px" }}>
+                            <h4 style={{ marginBottom: "10px", color: "#333" }}>⚖️ 配置比较详情（不同机制间差异）</h4>
+                            <table style={{
+                                width: "100%",
+                                borderCollapse: "collapse",
+                                tableLayout: "fixed",
+                                color: "#333"
+                            }}>
+                                <thead>
+                                    <tr>
+                                        <th style={{ border: "1px solid #ccc", padding: "8px", background: "#f7f7f7" }}>协议</th>
+                                        <th style={{ border: "1px solid #ccc", padding: "8px", background: "#f7f7f7" }}>端口</th>
+                                        <th style={{ border: "1px solid #ccc", padding: "8px", background: "#f7f7f7" }}>机制</th>
+                                        <th style={{ border: "1px solid #ccc", padding: "8px", background: "#f7f7f7" }}>主机</th>
+                                        <th style={{ border: "1px solid #ccc", padding: "8px", background: "#f7f7f7" }}>SSL类型</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {Object.entries(comparisonMap).map(([key, mechData], idx) => {
+                                        const fields = ["host", "ssl"];
+                                        const isConsistent = fields.every((field) => {
+                                            const values = Object.values(mechData).map((m) => m[field]).filter(Boolean);
+                                            return values.length <= 1 || values.every((v) => v === values[0]);
+                                        });
+
+                                        return Object.entries(mechData).map(([mech, item], rowIdx) => (
+                                            <tr key={`${idx}-${rowIdx}`} style={{ backgroundColor: isConsistent ? "#f0f0f0" : "#f8d7da" }}>
+                                                {rowIdx === 0 && (
+                                                    <>
+                                                        <td style={{ border: "1px solid #ccc", padding: "8px", textAlign: "center" }} rowSpan={Object.keys(mechData).length}>{item.protocol}</td>
+                                                        <td style={{ border: "1px solid #ccc", padding: "8px", textAlign: "center" }} rowSpan={Object.keys(mechData).length}>{item.port}</td>
+                                                    </>
+                                                )}
+                                                <td style={{ border: "1px solid #ccc", padding: "8px", textAlign: "center" }}>{mech}</td>
+                                                <td style={{ border: "1px solid #ccc", padding: "8px", textAlign: "center" }}>{item.host}</td>
+                                                <td style={{ border: "1px solid #ccc", padding: "8px", textAlign: "center" }}>{item.ssl}</td>
+                                            </tr>
+                                        ));
+                                    })}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    {/* ===== 配置获取过程安全性 ===== */}
+                    <div style={{
+                        borderTop: "2px solid #333",
+                        paddingTop: "10px",
+                        marginBottom: "20px",
+                    }}>
+                        <div style={{ display: "flex", alignItems: "center", marginBottom: "10px" }}>
+                            <span style={{ fontSize: "32px", marginRight: "10px" }}>🛡️</span>
+                            <h3 style={{ margin: 0, color: "#333" }}>配置获取过程安全性</h3>
+                        </div>
+
+                        <div style={{ display: "flex", alignItems: "stretch", marginBottom: "20px", width: "100%" }}>
+                            {/* 左侧评级框 */}
+                            {gradeBox(configScore)}
+
+                            {/* 右侧 StatusModule */}
+                            <div style={{ flex: 1, minWidth: 0}}>
+                                <StatusModule label="配置获取过程安全性" hasIssue={configIssue}>
+                                    {mechanismList.map(m => (
+                                        <div key={m} style={{ marginBottom: "10px" }}>
+                                            <StatusModule label={`${m} HTTP连接方式`} hasIssue={httpIssues[m]}>
+                                                <div style={{
+                                                    margin: "4px 0 6px 0",
+                                                    padding: "6px",
+                                                    backgroundColor: "#eef6f7",
+                                                    borderRadius: "4px",
+                                                    fontSize: "0.85rem",
+                                                    color: "#333"
+                                                }}>
+                                                    {httpIssues[m]
+                                                        ? "通过 HTTP 获取配置，存在被篡改风险"
+                                                        : "通过 HTTPS 获取配置，安全"}
+                                                </div>
+                                            </StatusModule>
+
+                                            <StatusModule label={`${m} 配置服务器证书`} hasIssue={certIssues[m]}>
+                                                <div style={{
+                                                    margin: "4px 0 6px 0",
+                                                    padding: "6px",
+                                                    backgroundColor: "#eef6f7",
+                                                    borderRadius: "4px",
+                                                    fontSize: "0.85rem",
+                                                    color: "#333"
+                                                }}>
+                                                    {certIssues[m]
+                                                        ? "证书验证存在问题"
+                                                        : "证书验证通过"}
+                                                </div>
+                                            </StatusModule>
+                                        </div>
+                                    ))}
+
+                                    <StatusModule label="SRV 配置查询过程风险分析" hasIssue={srvIssue}>
+                                        <ul style={{ margin: 0, paddingLeft: "18px", color: "#333" }}>
+                                            {srvDetails.map((d, idx) => <li key={idx}>{d.proto} {d.text}</li>)}
+                                        </ul>
+                                    </StatusModule>
+                                </StatusModule>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    {/* ===== 实际连接安全性 ===== */}
+                    <div style={{
+                        borderTop: "2px solid #333",
+                        paddingTop: "10px",
+                        marginBottom: "20px"
+                    }}>
+                        <div style={{ display: "flex", alignItems: "center", marginBottom: "10px" }}>
+                            <span style={{ fontSize: "32px", marginRight: "10px" }}>🔒</span>
+                            <h3 style={{ margin: 0, color: "#333" }}>实际连接安全性</h3>
+                        </div>
+                        <div style={{ display: "flex", alignItems: "flex-start", marginBottom: "20px", width: "100%" }}>
+                            {gradeBox(connectScore)}
+                            {/* 右侧 StatusModule */}
+                            <div style={{ flex: 1, minWidth: 0 }}>
+                                <StatusModule
+                                    label="实际连接安全性"
+                                    hasIssue={(() => {
+                                        return ["autodiscover", "autoconfig", "srv"].some(m => {
+                                            const mech = results[m];
+                                            if (!mech) return false;
+
+                                            const allDetails = [];
+                                            if (mech.all) {
+                                                mech.all.forEach(item =>
+                                                    item.score_detail?.actualconnect_details?.forEach(d => allDetails.push(d))
+                                                );
+                                            } else {
+                                                mech.score_detail?.actualconnect_details?.forEach(d => allDetails.push(d));
+                                            }
+                                            return allDetails.some(d => d.plain?.success);
+                                        });
+                                    })()}
+                                >
+                                    {["autodiscover", "autoconfig", "srv"].map(m => {
+                                        const mech = results[m];
+                                        if (!mech) return null;
+
+                                        const serverMap = {};
+                                        if (mech.all) {
+                                            mech.all.forEach(item => {
+                                                item.score_detail?.actualconnect_details?.forEach(d => {
+                                                    if (!serverMap[d.host]) serverMap[d.host] = [];
+                                                    const exists = serverMap[d.host].some(
+                                                        x => x.type === d.type && x.port === d.port
+                                                    );
+                                                    if (!exists) serverMap[d.host].push(d);
+                                                });
+                                            });
+                                        } else {
+                                            mech.score_detail?.actualconnect_details?.forEach(d => {
+                                                if (!serverMap[d.host]) serverMap[d.host] = [];
+                                                const exists = serverMap[d.host].some(
+                                                    x => x.type === d.type && x.port === d.port
+                                                );
+                                                if (!exists) serverMap[d.host].push(d);
+                                            });
+                                        }
+
+                                        if (Object.keys(serverMap).length === 0) {
+                                            return (
+                                                <div key={m} style={{ marginBottom: "10px" }}>
+                                                    <strong>{m.toUpperCase()}：</strong> ⚪ 无检测结果
+                                                </div>
+                                            );
+                                        }
+
+                                        return (
+                                            <div key={m} style={{ marginBottom: "12px" }}>
+                                                <strong>{m.toUpperCase()}：</strong>
+                                                {Object.entries(serverMap).map(([host, details], idx) => (
+                                                    <div key={idx} style={{
+                                                        marginTop: "6px",
+                                                        padding: "6px",
+                                                        border: "1px solid #ccc",
+                                                        borderRadius: "6px",
+                                                        backgroundColor: "#f9f9f9",
+                                                    }}>
+                                                        <strong>{host}</strong>
+                                                        <ul style={{ margin: "4px 0 0 16px" }}>
+                                                            {details.map((d, dIdx) => (
+                                                                <li key={dIdx}>
+                                                                    {d.type.toUpperCase()} : {d.port} →
+                                                                    {d.plain?.success && (
+                                                                        <span style={{ color: "red", marginLeft: "8px" }}>⚠️ 明文可连接</span>
+                                                                    )}
+                                                                    {(d.tls?.success || d.starttls?.success) && (
+                                                                        <span style={{ color: "green", marginLeft: "8px" }}>✅ 安全连接可用</span>
+                                                                    )}
+                                                                    {!d.plain?.success && !d.tls?.success && !d.starttls?.success && (
+                                                                        <span style={{ color: "gray", marginLeft: "8px" }}>❌ 无法连接</span>
+                                                                    )}
+                                                                </li>
+                                                            ))}
+                                                        </ul>
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        );
+                                    })}
+                                </StatusModule>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* ===== 配置文件词法解析规范性 ===== */}
+                    <div style={{
+                        borderTop: "2px solid #333",
+                        paddingTop: "10px",
+                        marginBottom: "20px"
+                    }}>
+                        <div style={{ display: "flex", alignItems: "center", marginBottom: "10px" }}>
+                            <span style={{ fontSize: "32px", marginRight: "10px" }}>📑</span>
+                            <h3 style={{ margin: 0, color: "#333" }}>配置文件词法解析规范性</h3>
+                        </div>
+
+                        <div style={{ display: "flex", alignItems: "flex-start", marginBottom: "20px", width: "100%" }}>
+                            {gradeBox(lexScore)}
+
+                            <div style={{ flex: 1, minWidth: 0 }}>
+                                <StatusModule
+                                    label="配置文件词法解析规范性"
+                                    hasIssue={(() => {
+                                        return ["autodiscover", "autoconfig"].some(m => {
+                                            const mech = results[m];
+                                            if (!mech) return false;
+                                            const allPorts = [];
+                                            if (mech.all) {
+                                                mech.all.forEach(item =>
+                                                    item.score_detail?.ports_usage?.forEach(p => allPorts.push(p))
+                                                );
+                                            } else {
+                                                mech.score_detail?.ports_usage?.forEach(p => allPorts.push(p));
+                                            }
+                                            return allPorts.some(p => p.status !== "standard");
+                                        });
+                                    })()}
+                                >
+                                    <ul style={{ margin: 0, paddingLeft: "18px", color: "#333" }}>
+                                        {["autodiscover", "autoconfig"].map(m => {
+                                            const mech = results[m];
+                                            if (!mech) return null;
+
+                                            const allPorts = [];
+                                            if (mech.all) {
+                                                mech.all.forEach(item =>
+                                                    item.score_detail?.ports_usage?.forEach(p => allPorts.push(p))
+                                                );
+                                            } else {
+                                                mech.score_detail?.ports_usage?.forEach(p => allPorts.push(p));
+                                            }
+
+                                            if (allPorts.length === 0) {
+                                                return <li key={m}>{m} ⚪ 无检测结果</li>;
+                                            }
+
+                                            const hasIssue = allPorts.some(p => p.status !== "standard");
+                                            return (
+                                                <li key={m}>
+                                                    {m} {hasIssue ? "❌ 存在不符合规范的配置" : "✅ 全部符合规范"}
+                                                </li>
+                                            );
+                                        })}
+                                    </ul>
+                                </StatusModule>
+                            </div>
                         </div>
                     </div>
                 </div>
-
-                </div>
             );
         }
+
         
         if (!result && Object.keys(results).length === 0) return null;
         if (!result) return <p style={{ color: "gray" }}>No data for {mech}</p>;
@@ -867,7 +1148,7 @@ function MainPage() {
                             }}
                             >
                             <span style={{ fontSize: "32px", marginRight: "10px" }}>🔌</span>
-                            <h3 style={{ margin: 0, color: "#333" }}>配置信息概况</h3>
+                            <h3 style={{ margin: 0, color: "#333" }}>最佳配置信息</h3>
                             </div>
 
                             <div style={{ display: "flex", flexWrap: "wrap", gap: "1rem",justifyContent: "center", maxWidth: "1000px", margin: "0 auto" }}>
@@ -958,7 +1239,7 @@ function MainPage() {
                             )}
                         </div>
 
-                        <div style={{ marginTop: "2rem" }}>
+                        {/* <div style={{ marginTop: "2rem" }}>
                             <div
                                 style={{
                                 borderTop: "2px solid #333",
@@ -1019,7 +1300,7 @@ function MainPage() {
                                 </li>
                                 )}
                             </ul>
-                        </div>
+                        </div> */}
 
                         {Array.isArray(certInfo?.RawCerts) && certInfo.RawCerts.length > 0 && (
                             <div style={{ marginTop: "2rem" }}>
@@ -1071,98 +1352,7 @@ function MainPage() {
                             </div> 
                         )}
                         
-                        <div style={{ marginTop: "2rem" }}>
-                            <div
-                                style={{
-                                borderTop: "2px solid #333",
-                                paddingTop: "10px",
-                                marginBottom: "20px",
-                                display: "flex",
-                                alignItems: "center",
-                                cursor: "pointer",
-                                }}
-                                onClick={() => toggleAnalysis(mech)}
-                            >
-                                <span style={{ fontSize: "32px", marginRight: "10px" }}>📊</span>
-                                <h3 style={{ margin: 0, color: "#3e5c79" }}>
-                                {showAnalysis[mech] ? "收起评分与建议 ▲" : "展开评分与建议 ▼"}
-                                </h3>
-                            </div>
-                            {showAnalysis[mech] && (
-                                <>
-                                    <div style={{ display: "flex", marginBottom: "1rem" }}>
-                                        {["score", "recommend", "radar"].map(tab => (
-                                            <button
-                                                key={tab}
-                                                onClick={() => changeTab(mech, tab)}
-                                                style={{
-                                                    padding: "8px 16px",
-                                                    marginRight: "8px",
-                                                    backgroundColor: (activeTab[mech] === tab ? "#2980b9" : "#7f8c8d"),
-                                                    color: "#fff",
-                                                    border: "none",
-                                                    borderRadius: "4px"
-                                                }}>
-                                                {/* {tab.toUpperCase()} */}
-                                                {tabLabelMap[tab]}
-                                            </button>
-                                        ))}
-                                    </div>
-
-                                    {activeTab[mech] === "score" && (
-                                        <>
-                                            {renderScoreBar("加密端口评分", score.encrypted_ports || 0)}
-                                            {renderScoreBar("标准端口评分", score.standard_ports || 0)}
-                                            {renderScoreBar(
-                                                mech === "srv" ? "DNSSEC评分" : "证书评分",
-                                                mech === "srv" ? score.dnssec_score || 0 : score.cert_score || 0
-                                            )}
-                                            {renderScoreBar("实际连接评分", score.connect_score || 0)}
-                                            {renderConnectionDetail(detail)}
-                                        </>
-                                    )}
-
-                                    {activeTab[mech] === "recommend" && (
-                                        <div style={{ backgroundColor: "#7ab0ceff", padding: "15px", borderRadius: "6px" }}>
-                                            {(mech === "autodiscover"|| mech === "autoconfig") && portsUsage && (() => {
-                                                const rec = getAutodiscoverRecommendations(portsUsage, score);
-                                                return (
-                                                    <>
-                                                        <h4>🔧 端口使用建议</h4>
-                                                        <ul>{rec.tips.map((tip, i) => <li key={i}>{tip.text} <b>{tip.impact}</b></li>)}</ul>
-                                                        <p><b>预估改进后评分:</b> {rec.improvedScore}</p>
-                                                    </>
-                                                );
-                                            })()}
-                                            {mech === "srv" && portsUsage && (() => {
-                                                const rec = getSRVRecommendations(portsUsage, score);
-                                                return (
-                                                    <>
-                                                        <h4>🔧 端口使用建议</h4>
-                                                        <ul>{rec.tips.map((tip, i) => <li key={i}>{tip.text} <b>{tip.impact}</b></li>)}</ul>
-                                                        <p><b>预估改进后评分:</b> {rec.improvedScore}</p>
-                                                    </>
-                                                );
-                                            })()}
-                                            {(mech === "autodiscover" || mech === "autoconfig") && certInfo && (() => {
-                                                const rec = getCertRecommendations(certInfo, score);
-                                                return (
-                                                    <>
-                                                        <h4>📜 证书配置建议</h4>
-                                                        <ul>{rec.tips.map((tip, i) => <li key={i}>{tip.text} <b>{tip.impact}</b></li>)}</ul>
-                                                        <p><b>预估改进后评分:</b> {rec.improvedScore}</p>
-                                                    </>
-                                                );
-                                            })()}
-                                        </div>
-                                    )}
-
-                                    {activeTab[mech] === "radar" && defense && (
-                                        <DefenseRadarChart data={defense} />
-                                    )}
-                                </>
-                            )}
-                        </div>
+                        {/* 9.17删 */}
 
                         <div style={{ marginTop: "2rem" }}>
                             <div
@@ -1182,20 +1372,22 @@ function MainPage() {
                             <table style={tableStyle}>
                                 <thead>
                                     <tr>
-                                        {/* 9.11 */}
+                                        {/* 9.17 */}
+                                        <th style={thStyle}>序号</th>
                                         <th style={thStyle}>途径</th>
-                                        {/* <th style={thStyle}>序号</th> */}
+                                        
                                         <th style={thStyle}>请求URI</th>
                                         <th style={thStyle}>是否得到配置</th>
-                                        <th style={thStyle}>加密评分</th>
+                                        {/* <th style={thStyle}>加密评分</th>
                                         <th style={thStyle}>标准评分</th>
-                                        <th style={thStyle}>综合评分</th>
+                                        <th style={thStyle}>综合评分</th> */}
                                         <th style={thStyle}>查看详情</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     {result.all.map((item, idx) => (
                                         <tr key={idx}>
+                                            <td style={tdStyle}>{idx + 1}</td>  {/* 序号从 1 开始9.17 */}
                                             <td style={tdStyle}>{item.method}</td>
                                             {/* 9.11 */}
                                             {/* <td style={tdStyle}>{item.index}</td> */}
@@ -1230,9 +1422,9 @@ function MainPage() {
 
 
                                             <td style={tdStyle}>{item.config ? "✅" : "❌"}</td>
-                                            <td style={tdStyle}>{item.score?.encrypted_ports ?? "-"}</td>
+                                            {/* <td style={tdStyle}>{item.score?.encrypted_ports ?? "-"}</td>
                                             <td style={tdStyle}>{item.score?.standard_ports ?? "-"}</td>
-                                            <td style={tdStyle}>{item.score?.overall ?? "-"}</td>
+                                            <td style={tdStyle}>{item.score?.overall ?? "-"}</td> */}
                                             <td style={tdStyle}>
                                                 {item.config && (
                                                     <button
@@ -1279,312 +1471,387 @@ function MainPage() {
 
                         </div>
                         
-                        {/* 9.15_3 */}
-                        {/* 所有路径的证书验证结果 + 最终重定向协议 */}
-                        <div style={{ marginTop: "2rem" }}>
-                        <div
-                            style={{
-                            borderTop: "2px solid #333",
-                            paddingTop: "10px",
-                            marginBottom: "20px",
-                            display: "flex",
-                            alignItems: "center",
-                            }}
-                        >
-                            <span style={{ fontSize: "32px", marginRight: "10px" }}>🔒</span>
-                            <h3 style={{ margin: 0, color: "#333" }}>
-                            {mech.toUpperCase()} 所有路径的建议
-                            </h3>
-                        </div>
-
-                        {result.all.map((item, idx) => {
-                            // 提取最后重定向 URL 的 scheme
-                            let finalRedirect = null;
-                            let finalScheme = null;
-                            if (item.redirects && item.redirects.length > 0) {
-                            finalRedirect = item.redirects[item.redirects.length - 1].URL;
-                            finalScheme = finalRedirect ? finalRedirect.split(":")[0].toLowerCase() : null;
-                            }
-
-                            return (
+                                       {/* 9.17 */}
+                                       <div style={{ marginTop: "2rem" }}>
                             <div
-                                key={idx}
                                 style={{
-                                marginBottom: "1.5rem",
-                                padding: "1rem",
-                                border: "1px solid #ccc",
-                                borderRadius: "8px",
-                                backgroundColor: "#fafafa",
+                                    borderTop: "2px solid #333",
+                                    paddingTop: "10px",
+                                    marginBottom: "20px",
+                                    display: "flex",
+                                    alignItems: "center",
                                 }}
                             >
-                                <h4 style={{ marginTop: 0, marginBottom: "0.5rem", color: "#444" }}>
-                                {item.method} → {item.uri}
-                                </h4>
-
-                                {/* 证书问题列表 */}
-                                <ul style={{ margin: 0, paddingLeft: "1.2rem" }}>
-                                {extractCertIssues(item.cert_info).length > 0 ? (
-                                    extractCertIssues(item.cert_info).map((issue, i) => (
-                                    <li key={i} style={{ color: "#c33", marginBottom: "4px" }}>
-                                        {issue}
-                                    </li>
-                                    ))
-                                ) : (
-                                    <li style={{ color: "#388e3c" }}>✅ 证书验证通过，无发现问题</li>
-                                )}
+                                <span style={{ fontSize: "32px", marginRight: "10px" }}>🛡️</span>
+                                <h3 style={{ margin: 0, color: "#333" }}>{mech.toUpperCase()} 机制综合风险分析</h3>
+                            </div>
+                            {/* ===== 说明框 ===== */}
+                            <div
+                                style={{
+                                    border: "1px solid #ccc",
+                                    borderRadius: "6px",
+                                    backgroundColor: "#f5f5f5",
+                                    padding: "10px",
+                                    marginBottom: "20px",
+                                    color: "#555",
+                                    fontSize: "0.9rem"
+                                }}
+                            >
+                                本模块展示邮件服务器在该机制下的综合安全情况，包括：
+                                <ul style={{ marginTop: "6px", marginBottom: 0, paddingLeft: "20px" }}>
+                                    <li>配置获取过程安全性（传输协议使用与配置服务器证书验证）</li>
+                                    <li>配置文件词法解析规范性（加密端口、协议规范）</li>
+                                    <li>实际连接结果（明文连接、STARTTLS/TLS连接情况）</li>
+                                    <li>使用不同路径获取到的配置文件的差异性</li>
                                 </ul>
+                                每个部分均会标记潜在安全问题，方便快速判断邮件自动化配置机制在使用中是否存在安全风险。
+                            </div>
+                            
+                            {/* ===== 配置获取过程安全性 ===== */}
+                            {(() => {
+                            // ====== 计算总的安全性 ======
+                            let hasHttp = false;
+                            let hasCertIssue = false;
 
-                                {/* 重定向落点信息 */}
-                                {finalScheme && (
-                                <p style={{ marginTop: "8px", color: finalScheme === "http" ? "#c33" : "#388e3c" }}>
-                                    🔗 最终获取配置使用协议：{finalScheme.toUpperCase()}{" "}
-                                    {finalScheme === "http" && "(明文，存在安全风险)"}
-                                </p>
-                                )}
+                            result.all.forEach(item => {
+                                // 检查是否有 http 协议
+                                if (item.redirects && item.redirects.length > 0) {
+                                const finalRedirect = item.redirects[item.redirects.length - 1].URL;
+                                const finalScheme = finalRedirect ? finalRedirect.split(":")[0].toLowerCase() : null;
+                                if (finalScheme === "http") hasHttp = true;
+                                }
 
-                                {/* 端口使用情况展示9.15_5 */}
-                                {/* {item.score_detail?.ports_usage && item.score_detail.ports_usage.length > 0 && (
-                                <div style={{ marginTop: "10px" }}>
-                                    <h5 style={{ margin: "0 0 6px 0", color: "#333" }}>📡 端口使用情况</h5>
-                                    <ul style={{ margin: 0, paddingLeft: "1.2rem" }}>
-                                    {item.score_detail.ports_usage.map((p, idx2) => (
-                                        <li key={idx2}>
-                                        {p.protocol} : {p.port} → <strong>{p.status}</strong>{" "}
-                                        {p.ssl && `(SSL: ${p.ssl})`}{" "}
-                                        {p.host && <span>({p.host})</span>}
-                                        </li>
+                                // 检查证书问题
+                                if (extractCertIssues(item.cert_info).length > 0) {
+                                hasCertIssue = true;
+                                }
+                            });
+
+                            const hasIssue = hasHttp || hasCertIssue;
+
+                            // ====== 渲染总结果 ======
+                            return (
+                                <StatusModule label="配置获取过程安全性" hasIssue={hasIssue}>
+                                {/* ===== 展开子模块 ===== */}
+                                <StatusModule label="配置获取过程HTTP连接方式" hasIssue={hasHttp}>
+                                    <div style={{
+                                        margin: "4px 0 10px 0",
+                                        padding: "6px",
+                                        backgroundColor: "#eef6f7",
+                                        borderRadius: "4px",
+                                        fontSize: "0.85rem",
+                                        color: "#333"
+                                    }}>
+                                        通过观察配置信息最终是通过 HTTP or HTTPS 协议获取到的，可以进一步判断配置信息的可靠性，防止被恶意篡改过的配置信息带来安全风险。
+                                    </div>
+
+                                    {result.all.map((item, idx) => {
+                                    let finalRedirect = null;
+                                    let finalScheme = null;
+                                    if (item.redirects && item.redirects.length > 0) {
+                                        finalRedirect = item.redirects[item.redirects.length - 1].URL;
+                                        finalScheme = finalRedirect ? finalRedirect.split(":")[0].toLowerCase() : null;
+                                    }
+
+                                    // 协议说明文字
+                                    let protocolDesc = "";
+                                    if (finalScheme === "https") {
+                                        protocolDesc = `最终通过 HTTPS 加密协议获取配置信息，传输安全可靠，可在一定程度上防止被篡改或窃取。`;
+                                    } else if (finalScheme === "http") {
+                                        protocolDesc = `最终通过 HTTP 明文协议获取配置信息，存在被篡改或窃取的风险，不安全。`;
+                                    } else {
+                                        protocolDesc = `未检测到协议信息。`;
+                                    }
+
+                                    return (
+                                        <div
+                                        key={idx}
+                                        style={{
+                                            marginBottom: "6px",
+                                            padding: "6px",
+                                            border: "1px solid #ccc",
+                                            borderRadius: "6px",
+                                            backgroundColor: "#f9f9f9",
+                                        }}
+                                        >
+                                        <strong>路径 {idx + 1}</strong>
+                                        {finalScheme && (
+                                            <p style={{ margin: "4px 0 0 0", color: finalScheme === "http" ? "#c33" : "#388e3c", fontSize: "0.9rem" }}>
+                                                🔗 {protocolDesc}
+                                            </p>
+                                        )}
+                                        </div>
+                                    );
+                                    })}
+                                </StatusModule>
+
+                                <StatusModule label="配置服务器证书验证" hasIssue={hasCertIssue}>
+                                    <div style={{
+                                        margin: "4px 0 10px 0",
+                                        padding: "6px",
+                                        backgroundColor: "#eef6f7",
+                                        borderRadius: "4px",
+                                        fontSize: "0.85rem",
+                                        color: "#333"
+                                    }}>
+                                        通过配置服务器返回的证书进行全面的验证，可以判断服务器身份是否可信，防止中间人攻击或恶意伪造证书造成的安全风险。
+                                    </div>
+                                    {result.all.map((item, idx) => (
+                                    <div
+                                        key={idx}
+                                        style={{
+                                        marginBottom: "6px",
+                                        padding: "6px",
+                                        border: "1px solid #ccc",
+                                        borderRadius: "6px",
+                                        backgroundColor: "#f9f9f9",
+                                        }}
+                                    >
+                                        <strong>路径 {idx + 1}</strong>
+                                        <ul style={{ margin: "4px 0 0 16px", color: "#333" }}>
+                                        {extractCertIssues(item.cert_info).length > 0
+                                            ? extractCertIssues(item.cert_info).map((issue, i) => (
+                                                <li key={i} style={{ color: "#c33" }}>{issue}</li>
+                                            ))
+                                            : <li style={{ color: "#388e3c" }}>✅ 证书验证通过，未发现问题</li>
+                                        }
+                                        </ul>
+                                    </div>
                                     ))}
+                                </StatusModule>
+                                </StatusModule>
+                            );
+                            })()}
+
+                            {/* ===== 渲染端口连接方式 ===== */}
+                            {(() => {
+                            const serverMap = {};
+                            result.all.forEach((item) => {
+                                item.score_detail?.ports_usage?.forEach((p) => {
+                                if (!serverMap[p.host]) serverMap[p.host] = { ports: [] };
+                                if (!serverMap[p.host].ports.some(portObj => portObj.port === p.port && portObj.protocol === p.protocol)) {
+                                    serverMap[p.host].ports.push(p);
+                                }
+                                });
+                            });
+
+                            // 判断是否有不符合规范的加密元素值
+                            const hasLexicalIssue = Object.values(serverMap).some(info =>
+                                info.ports.some(p => p.status !== "standard")
+                            );
+
+                            return (
+                                <StatusModule label="配置文件词法解析规范性" hasIssue={hasLexicalIssue}>
+                                {Object.entries(serverMap).map(([host, info], idx) => {
+                                // 把所有端口拼接成字符串
+                                const portList = info.ports.map(p => p.port).join(", ");
+
+                                return (
+                                    <div
+                                    key={idx}
+                                    style={{
+                                        marginBottom: "6px",
+                                        padding: "6px",
+                                        border: "1px solid #ccc",
+                                        borderRadius: "6px",
+                                        backgroundColor: "#f9f9f9",
+                                    }}
+                                    >
+                                    <strong>
+                                        {host}（端口: {portList}）
+                                    </strong>
+                                    <ul style={{ margin: "4px 0 0 16px" }}>
+                                        {info.ports.map((p, portIdx) => (
+                                        <li key={portIdx}>
+                                            经过词法分析，配置文件中的元素
+                                            <strong style={{ marginLeft: "4px" }}>
+                                            {p.status === "standard" ? "符合规范" : "不符合规范"}
+                                            </strong>
+                                        </li>
+                                        ))}
                                     </ul>
-                                </div>
-                                )} */}
-                                {/* 端口使用情况展示 */}
-                                {item.score_detail?.ports_usage && item.score_detail.ports_usage.length > 0 && (
-                                <div style={{ marginTop: "10px" }}>
-                                    <h5 style={{ margin: "0 0 6px 0", color: "#333" }}>📡 端口使用情况</h5>
-                                    <ul style={{ margin: 0, paddingLeft: "1.2rem" }}>
-                                    {item.score_detail.ports_usage.map((p, idx2) => {
-                                        // 唯一 key，避免多个 path 混淆
-                                        const analyzerKey = `${mech}-${idx}-${p.host}-${p.port}`;
-                                        return (
-                                        <li key={idx2}>
-                                            {p.protocol} : {p.port} → <strong>{p.status}</strong>{" "}
-                                            {p.ssl && `(SSL: ${p.ssl})`}{" "}
-                                            {p.host && <span>({p.host})</span>}
+                                    </div>
+                                );
+                                })}
 
-                                            {/* 🔍 实际连接检测结果提示 */}
-                                            {item.score_detail?.actualconnect_details &&
-                                            item.score_detail?.actualconnect_details.length > 0 &&
-                                            (() => {
-                                                const match = item.score_detail?.actualconnect_details.find(
-                                                (d) =>
-                                                    d.type?.toLowerCase() === p.protocol?.toLowerCase() &&
-                                                    String(d.port) === String(p.port) &&
-                                                    d.host === p.host
-                                                );
-                                                if (match) {
-                                                if (match.plain?.success) {
-                                                    return (
-                                                    <span style={{ color: "red", marginLeft: "8px" }}>
-                                                        ⚠️ 明文可连接
-                                                    </span>
-                                                    );
-                                                } else if (match.tls?.success || match.starttls?.success) {
-                                                    return (
-                                                    <span style={{ color: "green", marginLeft: "8px" }}>
-                                                        ✅ 安全连接可用
-                                                    </span>
-                                                    );
-                                                } else {
-                                                    return (
-                                                    <span style={{ color: "gray", marginLeft: "8px" }}>
-                                                        ❌ 无法连接
-                                                    </span>
-                                                    );
-                                                }
-                                                }
-                                                return null;
-                                            })()}
+                                </StatusModule>
+                            );
+                            })()}
 
-                                            {/* 🔬 深度分析按钮 */}
-                                            <button
-                                            onClick={() => toggleAnalyzer(analyzerKey, p.host, p.port)}
-                                            style={{
-                                                marginLeft: "8px",
-                                                padding: "2px 6px",
-                                                fontSize: "0.8rem",
-                                                borderRadius: "4px",
-                                                border: "1px solid #586c9b",
-                                                background: "#586c9b",
-                                                color: "#fff",
-                                                cursor: "pointer",
-                                            }}
-                                            >
-                                            深度分析
-                                            </button>
+                            {/* ===== 渲染实际连接结果 ===== */}
+                            {(() => {
+                            const serverMap = {};
+                            result.all.forEach(item => {
+                                item.score_detail?.actualconnect_details?.forEach(d => {
+                                if (!serverMap[d.host]) serverMap[d.host] = { actualconnect_details: [] };
+
+                                // 去重：同一个 host 下同 protocol+port 只保留一条
+                                const exists = serverMap[d.host].actualconnect_details.some(
+                                    x => x.type === d.type && x.port === d.port
+                                );
+                                if (!exists) {
+                                    serverMap[d.host].actualconnect_details.push(d);
+                                }
+                                });
+                            });
+
+                        // 判断是否有不安全连接（plain.success === true）
+                            const hasConnectIssue = Object.values(serverMap).some(info =>
+                                info.actualconnect_details.some(d => d.plain?.success)
+                            );
+
+                            return (
+                                <StatusModule label="实际连接结果" hasIssue={hasConnectIssue}>
+                                {Object.entries(serverMap).map(([host, info], idx) => (
+                                    <div
+                                    key={idx}
+                                    style={{
+                                        marginBottom: "6px",
+                                        padding: "6px",
+                                        border: "1px solid #ccc",
+                                        borderRadius: "6px",
+                                        backgroundColor: "#f9f9f9",
+                                    }}
+                                    >
+                                    <strong>{host}</strong>
+                                    <ul style={{ margin: "4px 0 0 16px" }}>
+                                        {info.actualconnect_details.map((d, dIdx) => (
+                                        <li key={dIdx}>
+                                            {d.type.toUpperCase()} : {d.port} →
+                                            {d.plain?.success && <span style={{ color: "red", marginLeft: "8px" }}>⚠️ 明文可连接</span>}
+                                            {(d.tls?.success || d.starttls?.success) && <span style={{ color: "green", marginLeft: "8px" }}>✅ 安全连接可用</span>}
+                                            {!d.plain?.success && !d.tls?.success && !d.starttls?.success && <span style={{ color: "gray", marginLeft: "8px" }}>❌ 无法连接</span>}
 
                                             {/* 🔎 动态展开分析面板 */}
-                                            {showAnalyzerMap[analyzerKey] && (
+                                            {showAnalyzerMap[`${host}-${d.port}`] && (
                                             <div style={{ marginTop: "6px" }}>
-                                                <TlsAnalyzerPanel host={p.host} port={p.port} />
+                                                <TlsAnalyzerPanel host={d.host} port={d.port} />
                                             </div>
                                             )}
                                         </li>
-                                        );
-                                    })}
+                                        ))}
                                     </ul>
-                                </div>
-                                )}
-
-                                
-
-
-
-
-                                {/* 原始证书展开 */}
-                                {item.cert_info?.RawCerts && item.cert_info.RawCerts.length > 0 && (
-                                <div style={{ marginTop: "10px" }}>
-                                    <button
-                                    onClick={() => toggleRawCerts(`${mech}-${idx}`)}
-                                    style={{
-                                        padding: "4px 8px",
-                                        backgroundColor: "#5b73a9",
-                                        color: "#fff",
-                                        border: "none",
-                                        borderRadius: "4px",
-                                        cursor: "pointer",
-                                        fontSize: "0.9rem",
-                                    }}
-                                    >
-                                    {showRawCertsMap[`${mech}-${idx}`] ? "隐藏" : "展开"} 原始证书
-                                    </button>
-
-                                    {showRawCertsMap[`${mech}-${idx}`] && (
-                                    <div
-                                        style={{
-                                        wordBreak: "break-all",
-                                        maxHeight: "200px",
-                                        overflowY: "auto",
-                                        marginTop: "10px",
-                                        background: "#f5f5f5",
-                                        padding: "10px",
-                                        borderRadius: "6px",
-                                        border: "1px solid #ccc",
-                                        fontFamily: "Consolas, Monaco, monospace",
-                                        fontSize: "13px",
-                                        }}
-                                    >
-                                        {item.cert_info.RawCerts.join(", ")}
                                     </div>
-                                    )}
-                                </div>
-                                )}
-                            </div>
+                                ))}
+                                </StatusModule>
                             );
-                        })}
+                            })()}
+
+
                         </div>
 
-
-                        {/* 8.29 */}
+                        {/* 9.17 */}
+                        {/* ===== 机制内部差异性 ===== */}
                         {(() => {
-                            const collectPortsUsage = (allResults) => {
-                                return allResults.map(r => ({
-                                    uri: r.uri || "",
-                                    ports: Array.isArray(r?.score_detail?.ports_usage) ? r.score_detail.ports_usage : []
-                                }));
-                            };
-
-                            const allPorts = collectPortsUsage(result.all);
-                            if (allPorts.length === 0) return null;
-
-                            const keys = allPorts.map(item => ({
-                                uri: item.uri,
-                                ports: item.ports
+                        const collectPortsUsage = (allResults) => {
+                            return allResults.map(r => ({
+                            uri: r.uri || "",
+                            ports: Array.isArray(r?.score_detail?.ports_usage) ? r.score_detail.ports_usage : []
                             }));
+                        };
 
+                        const allPorts = collectPortsUsage(result.all);
+                        if (allPorts.length === 0) return null;
 
-                            // 按 protocol 分组比较差异
-                            const protocolGroups = {};
-                            allPorts.forEach(item => {
-                                item.ports.forEach(p => {
-                                    if (!protocolGroups[p.protocol]) protocolGroups[p.protocol] = [];
-                                    protocolGroups[p.protocol].push({
-                                        uri: item.uri,
-                                        host: p.host,
-                                        port: p.port,
-                                        ssl: p.ssl || "未知 SSL"
-                                    });
-                                });
+                        const keys = allPorts.map(item => ({
+                            uri: item.uri,
+                            ports: item.ports
+                        }));
+
+                        // 按 protocol 分组比较差异
+                        const protocolGroups = {};
+                        allPorts.forEach(item => {
+                            item.ports.forEach(p => {
+                            if (!protocolGroups[p.protocol]) protocolGroups[p.protocol] = [];
+                            protocolGroups[p.protocol].push({
+                                uri: item.uri,
+                                host: p.host,
+                                port: p.port,
+                                ssl: p.ssl || "未知 SSL"
                             });
-
-                            // 判断哪些 protocol 有差异
-                            const diffMap = {}; // { "IMAP": true/false, "POP3": true/false ... }
-                            for (const proto in protocolGroups) {
-                                const values = protocolGroups[proto].map(v => `${v.host}:${v.port} (${v.ssl})`);
-                                if (new Set(values).size > 1) {
-                                    diffMap[proto] = true; // 同协议但 host/port/ssl 不一致
-                                } else {
-                                    diffMap[proto] = false;
-                                }
-                            }
-
-                            // 如果某条路径有某个 protocol 而其他路径没有 → 也算差异
-                            const allProtocols = Object.keys(protocolGroups);
-                            allPorts.forEach(item => {
-                                allProtocols.forEach(proto => {
-                                    const hasProto = item.ports.some(p => p.protocol === proto);
-                                    if (!hasProto) diffMap[proto] = true;
-                                });
                             });
+                        });
 
-                            const hasDiff = Object.values(diffMap).some(v => v);
-                            result.hasInternalDiff = hasDiff; // ✅ 标记机制内部的差异性9.11
-                            if (!hasDiff) return null;
+                        // 判断哪些 protocol 有差异
+                        const diffMap = {};
+                        for (const proto in protocolGroups) {
+                            const values = protocolGroups[proto].map(v => `${v.host}:${v.port} (${v.ssl})`);
+                            diffMap[proto] = new Set(values).size > 1;
+                        }
 
-                            return (
-                                <div style={{ marginTop: "10px", color: "#e74c3c", fontWeight: "bold" }}>
-                                    ⚠️ 检测到该机制下不同路径得到的配置信息中的关键字段不一致：
-                                    <div style={{ marginTop: "10px", color: "#333", fontWeight: "normal" }}>
-                                        {keys.map((item, idx) => (
-                                            <div
-                                                key={idx}
-                                                style={{
-                                                    border: "1px solid #ddd",
-                                                    borderRadius: "8px",
-                                                    padding: "10px",
-                                                    marginBottom: "10px",
-                                                    backgroundColor: "#fff"
-                                                }}
-                                            >
-                                                <div style={{ fontSize: "14px", marginBottom: "6px", fontWeight: "bold" }}>
-                                                    {item.uri || `路径 ${idx + 1}`}
-                                                </div>
-                                                <ul style={{ margin: 0, paddingLeft: "18px" }}>
-                                                    {item.ports.map((p, i) => {
-                                                        const isDiff = diffMap[p.protocol] === true;
-                                                        return (
-                                                            <li
-                                                                key={i}
-                                                                style={{
-                                                                    marginBottom: "4px",
-                                                                    backgroundColor: isDiff ? "#fff3cd" : "transparent",
-                                                                    padding: isDiff ? "4px" : "0",
-                                                                    borderRadius: "4px"
-                                                                }}
-                                                            >
-                                                                {p.protocol} → {p.host}:{p.port} ({p.ssl || "未知 SSL"})
-                                                            </li>
-                                                        );
-                                                    })}
-                                                </ul>
-                                            </div>
-                                        ))}
-                                    </div>
+                        // 如果某条路径有某个 protocol 而其他路径没有 → 也算差异
+                        const allProtocols = Object.keys(protocolGroups);
+                        allPorts.forEach(item => {
+                            allProtocols.forEach(proto => {
+                            const hasProto = item.ports.some(p => p.protocol === proto);
+                            if (!hasProto) diffMap[proto] = true;
+                            });
+                        });
+
+                        const hasDiff = Object.values(diffMap).some(v => v);
+                        result.hasInternalDiff = hasDiff;
+                        if (!hasDiff) return null;
+
+                        return (
+                            <StatusModule
+                            label="机制内部配置差异性"
+                            hasIssue={hasDiff}
+                            >
+                            {/* 说明文字 */}
+                            <div style={{
+                                margin: "4px 0 10px 0",
+                                padding: "6px",
+                                backgroundColor: "#eef6f7",
+                                borderRadius: "4px",
+                                fontSize: "0.85rem",
+                                color: "#333"
+                            }}>
+                                通过比较该机制下不同路径的配置端口和协议，发现部分协议或端口存在不一致。这可能会影响邮件客户端的兼容性或安全性。
+                            </div>
+
+                            {keys.map((item, idx) => (
+                                <div
+                                key={idx}
+                                style={{
+                                    marginBottom: "6px",
+                                    padding: "6px",
+                                    border: "1px solid #ccc",
+                                    borderRadius: "6px",
+                                    backgroundColor: "#f9f9f9"
+                                }}
+                                >
+                                <strong>路径 {idx + 1}</strong>
+                                <ul style={{ margin: "4px 0 0 16px" }}>
+                                    {item.ports.map((p, i) => {
+                                    const isDiff = diffMap[p.protocol] === true;
+                                    return (
+                                        <li
+                                        key={i}
+                                        style={{
+                                            marginBottom: "4px",
+                                            backgroundColor: isDiff ? "#fff3cd" : "transparent",
+                                            padding: isDiff ? "4px" : "0",
+                                            borderRadius: "4px"
+                                        }}
+                                        >
+                                        {p.protocol} → {p.host}:{p.port} ({p.ssl || "未知 SSL"})
+                                        {isDiff && <span style={{ color: "#856404", marginLeft: "6px" }}>⚠️ 与其他路径不一致</span>}
+                                        </li>
+                                    );
+                                    })}
+                                </ul>
                                 </div>
-                            );
+                            ))}
+                            </StatusModule>
+                        );
                         })()}
+
+
+
+
+                        {/* 9.12删原来的配置信息概况 */}
                     </div>
                 )}
-
                 {mech === "srv" && result.srv_records && (
                     <div style={{ marginTop: "2rem" }}>
                         {/* 🔌 配置信息概况 */}
@@ -1602,7 +1869,7 @@ function MainPage() {
                             }}
                             >
                             <span style={{ fontSize: "32px" }}>🔌</span>
-                            <h3 style={{ margin: 0, color: "#333" }}>配置信息概况</h3>
+                            <h3 style={{ margin: 0, color: "#333" }}>最佳配置信息</h3>
                             </div>
 
                             <div
@@ -1909,89 +2176,116 @@ function MainPage() {
                     )
                 ))}
 
-                {/* 折叠主观分析 */}
+                {/* 折叠主观分析9.17 */}
                 {mech === "srv" && (
-                    <>
-                        {/* 分界线标题 */}
-                        <div style={{
+                <>
+                    {/* 分界线标题 */}
+                    <div
+                        style={{
                             borderTop: "2px solid #333",
                             paddingTop: "10px",
                             marginTop: "30px",
                             marginBottom: "20px",
                             display: "flex",
                             alignItems: "center",
-                            cursor: "pointer",
-                            userSelect: "none"
                         }}
-                            onClick={() => toggleAnalysis(mech)}
-                        >
-                            <span style={{ fontSize: "28px", marginRight: "10px" }}>📊</span>
-                            <h3 style={{ margin: 0, color: "#333" }}>
-                                {showAnalysis[mech] ? "收起评分与建议" : "展开评分与建议"}
-                            </h3>
-                        </div>
+                    >
+                        <span style={{ fontSize: "28px", marginRight: "10px" }}>🛡️</span>
+                        <h3 style={{ margin: 0, color: "#333" }}>SRV 机制风险分析</h3>
+                    </div>
 
-                        {showAnalysis[mech] && (
-                            <>
-                                {/* Tab 切换按钮 */}
-                                <div style={{ display: "flex", marginBottom: "1rem" }}>
-                                    {["score", "recommend", "radar"].map(tab => (
-                                        <button
-                                            key={tab}
-                                            onClick={() => changeTab(mech, tab)}
-                                            style={{
-                                                padding: "8px 16px",
-                                                marginRight: "8px",
-                                                backgroundColor: (activeTab[mech] === tab ? "#2980b9" : "#7f8c8d"),
-                                                color: "#fff",
-                                                border: "none",
+                    
+                        <>
+                            {/* SRV 风险分析模块 */}
+                            {result && (() => {
+                                console.log("=== SRV result ===", result); 
+                                const dns = result?.dns_record;
+                                console.log("=== SRV dns_record ===", dns);  
+                                if (!dns) return <p>无有效 SRV 记录</p>;
+
+                                const adBits = {
+                                    IMAP: dns.ADbit_imap,
+                                    IMAPS: dns.ADbit_imaps,
+                                    POP3: dns.ADbit_pop3,
+                                    POP3S: dns.ADbit_pop3s,
+                                    SMTP: dns.ADbit_smtp,
+                                    SMTPS: dns.ADbit_smtps,
+                                };
+
+                                // ====== DNSSEC 总体状态 ======
+                                const adBitsValues = Object.values(adBits);
+                                let hasDnsIssue = false;
+                                const allSkipped = adBitsValues.every(v => v === null || v === undefined);
+                                if (!allSkipped) {
+                                    hasDnsIssue = adBitsValues.some(v => v === false);
+                                }
+
+                                return (
+                                    <div>
+                                        {/* DNSSEC 风险分析 */}
+                                        <StatusModule label="查询过程安全性分析" hasIssue={hasDnsIssue}>
+                                            <div style={{
+                                                margin: "4px 0 10px 0",
+                                                padding: "6px",
+                                                backgroundColor: "#eef6f7",
                                                 borderRadius: "4px",
-                                                cursor: "pointer"
+                                                fontSize: "0.85rem",
+                                                color: "#333"
                                             }}>
-                                            {tabLabelMap[tab]}
-                                        </button>
-                                    ))}
-                                </div>
+                                                SRV 机制主要依赖 DNS 记录获取邮件服务器信息。通过 DNSSEC 检查，可以判断配置可靠性，防止 DNS 劫持或篡改。
+                                            </div>
 
-                                {/* Score Tab */}
-                                {activeTab[mech] === "score" && (
-                                    <>
-                                        {renderScoreBar("加密端口评分", score.encrypted_ports || 0)}
-                                        {renderScoreBar("标准端口评分", score.standard_ports || 0)}
-                                        {renderScoreBar("DNSSEC评分", score.dnssec_score || 0)}
-                                        {renderScoreBar("实际连接评分", score.connect_score || 0)}
-                                        {renderConnectionDetail(detail)}
-                                    </>
-                                )}
+                                            <div style={{ marginTop: "6px" }}>
+                                                <h4 style={{ marginBottom: "6px" }}>DNSSEC 检查结果</h4>
+                                                <ul style={{ margin: 0, paddingLeft: "18px", color: "#333" }}>
+                                                    {Object.entries(adBits).map(([proto, bit], idx) => {
+                                                        let statusText = bit === true ? "✅ DNSSEC 有效" :
+                                                            bit === false ? "❌ DNSSEC 无效" :
+                                                                "⚪ 未检测到结果";
+                                                        return <li key={idx}>{proto} {statusText}</li>;
+                                                    })}
+                                                </ul>
+                                            </div>
+                                        </StatusModule>
 
-                                {/* Recommend Tab */}
-                                {activeTab[mech] === "recommend" && (
-                                    <div style={{ backgroundColor: "#7ab0ceff", padding: "15px", borderRadius: "6px" }}>
-                                        {portsUsage && (() => {
-                                            const rec = getSRVRecommendations(portsUsage, score);
-                                            return (
-                                                <>
-                                                    <h4>🔧 端口使用建议</h4>
-                                                    <ul>
-                                                        {rec.tips.map((tip, i) =>
-                                                            <li key={i}>{tip.text} <b>{tip.impact}</b></li>
-                                                        )}
+                                        {/* 实际连接安全性 - SRV */}
+                                        <StatusModule label="实际连接安全性" hasIssue={(() => {
+                                            const details = result?.score_detail?.actualconnect_details || [];
+                                            return details.some(d => d.plain?.success); // 明文可连接即认为有问题
+                                        })()}>
+                                            {(result?.score_detail?.actualconnect_details || []).map((d, idx) => (
+                                                <div key={idx} style={{
+                                                    marginBottom: "6px",
+                                                    padding: "6px",
+                                                    border: "1px solid #ccc",
+                                                    borderRadius: "6px",
+                                                    backgroundColor: "#f9f9f9",
+                                                }}>
+                                                    <strong>{d.host}</strong>
+                                                    <ul style={{ margin: "4px 0 0 16px" }}>
+                                                        <li>
+                                                            {d.type.toUpperCase()} : {d.port} →
+                                                            {d.plain?.success && <span style={{ color: "red", marginLeft: "8px" }}>⚠️ 明文可连接</span>}
+                                                            {(d.tls?.success || d.starttls?.success) && <span style={{ color: "green", marginLeft: "8px" }}>✅ 安全连接可用</span>}
+                                                            {!d.plain?.success && !d.tls?.success && !d.starttls?.success && <span style={{ color: "gray", marginLeft: "8px" }}>❌ 无法连接</span>}
+
+                                                            {showAnalyzerMap[`${d.host}-${d.port}`] && (
+                                                                <div style={{ marginTop: "6px" }}>
+                                                                    <TlsAnalyzerPanel host={d.host} port={d.port} />
+                                                                </div>
+                                                            )}
+                                                        </li>
                                                     </ul>
-                                                    <p><b>预估改进后评分:</b> {rec.improvedScore}</p>
-                                                </>
-                                            );
-                                        })()}
+                                                </div>
+                                            ))}
+                                        </StatusModule>
                                     </div>
-                                )}
-
-                                {/* Radar Tab */}
-                                {activeTab[mech] === "radar" && defense && (
-                                    <DefenseRadarChart data={defense} />
-                                )}
-                            </>
-                        )}
+                                );
+                            })()}
+                        </>
                     </>
                 )}
+
 
             </div>
         );
@@ -2108,9 +2402,9 @@ function MainPage() {
                 <>
                     <div style={{ width: "100%", maxWidth: "900px", backgroundColor: "#f5f8fa", padding: "2rem", borderRadius: "12px", boxShadow: "0 2px 10px rgba(0,0,0,0.04)", border: "1px solid #eee", marginTop: "1rem" }}>
     
-                        {/* 机制 Tab */}
+                        {/* 机制 Tab9.17 */}
                         <div style={{ display: "flex", gap: "1rem", marginBottom: "1rem", flexWrap: "wrap" }}>
-                            {mechanisms.map((mech) => (
+                        {["overview", ...mechanisms.filter(m => m !== "overview")].map((mech) => (
                                 <div
                                     key={mech}
                                     onClick={() => setCurrentMech(mech)}

@@ -521,7 +521,11 @@ export default function TlsAnalyzerPanel({ host, port }) {
     };
 
     return (
-        <div style={{ marginTop: "1rem", padding: "1rem", backgroundColor: "#81a7adff", color: "#fff", borderRadius: 8 }}>
+        <div style={{ marginTop: "1rem", padding: "1rem", backgroundColor: "#b9d7e8", color: "#fff", borderRadius: 8 }}>
+            {/* 🔹 新增提示文字 9.17*/}
+            <div style={{ marginBottom: "6px", fontSize: "0.85rem", color: "#fff" }}>
+                点击下方按钮，对该邮件服务器进行全面的安全分析
+            </div>
             <div style={{ display: "flex", gap: 8 }}>
                 <button
                     onClick={handleDeepAnalyze}
