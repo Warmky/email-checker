@@ -1,6 +1,7 @@
 package api
 
 import (
+	"backend/internal/cache"
 	"backend/internal/discover"
 	"backend/internal/models"
 	"backend/internal/scoring"
@@ -13,7 +14,7 @@ import (
 )
 
 // 主要的查询几种机制配置的接口
-func CheckAllHandler(w http.ResponseWriter, r *http.Request) { //5.19新增以使得用户无需手动选择机制，三种都查询一遍
+func CheckAllHandler(w http.ResponseWriter, r *http.Request, redisCache *cache.RedisCache) { //5.19新增以使得用户无需手动选择机制，三种都查询一遍
 	models.ProgressBroadcast <- models.ProgressUpdate{Progress: 0, Stage: "start", Message: "开始检测"}
 	email := r.URL.Query().Get("email")
 	if email == "" {
@@ -26,6 +27,32 @@ func CheckAllHandler(w http.ResponseWriter, r *http.Request) { //5.19新增以�
 		return
 	}
 	domain := parts[1]
+
+	//9.18
+	// ==============================
+	// 1. 优先查询 Redis 缓存
+	// ==============================
+	if redisCache != nil {
+		if entry, exists := redisCache.Get(domain); exists {
+			log.Printf("⚡ 缓存命中: %s", domain)
+			// 这里仍然把缓存的结果加入最近记录
+			if scoreMap, ok := entry.Response["bestScore"].(float64); ok {
+				bestScore := int(scoreMap)
+				bestGrade := ""
+				if g, ok := entry.Response["bestGrade"].(string); ok {
+					bestGrade = g
+				}
+				AddRecentScanWithScore(domain, bestScore, bestGrade)
+			}
+			w.Header().Set("Content-Type", "application/json")
+			json.NewEncoder(w).Encode(entry.Response)
+			return
+		}
+	}
+
+	// ==============================
+	// 2. 没缓存，执行原有逻辑
+	// ==============================
 
 	//从三种机制的结果中选出最优的放在recently seen 5.19
 	var bestScore int
@@ -178,11 +205,6 @@ func CheckAllHandler(w http.ResponseWriter, r *http.Request) { //5.19新增以�
 			}
 		}
 	}
-	// else {
-	// 	srvResp = map[string]interface{}{
-	// 		"message": "No SRV records found",
-	// 	}
-	// }  //5.22
 	models.ProgressBroadcast <- models.ProgressUpdate{Progress: 85, Stage: "srv", Message: "SRV 检测完成"}
 	//8.10本地添加GUESS部分
 	models.ProgressBroadcast <- models.ProgressUpdate{Progress: 90, Stage: "guess", Message: "尝试猜测邮件服务器"}
@@ -211,13 +233,6 @@ func CheckAllHandler(w http.ResponseWriter, r *http.Request) { //5.19新增以�
 				bestGrade = grade
 			}
 		}
-
-		// if guessScore["overall"] > bestScore {
-		// 	bestScore = guessScore["overall"]
-		// 	if grade, ok := connectScores["Connection_Grade"].(string); ok {
-		// 		bestGrade = grade
-		// 	}
-		// }
 	} else {
 		guessResp = map[string]interface{}{
 			"message": "No reachable common mail host/port combination found.",
@@ -235,6 +250,17 @@ func CheckAllHandler(w http.ResponseWriter, r *http.Request) { //5.19新增以�
 		"srv":           srvResp,
 		"guess":         guessResp,
 		"recentResults": GetRecentScans(),
+	}
+
+	// ==============================
+	// 3. 将结果写入 Redis 缓存
+	// ==============================
+	if redisCache != nil {
+		_ = redisCache.Set(domain, cache.CacheEntry{
+			TimeStamp: time.Now(),
+			Response:  response,
+		})
+		log.Printf("📝 已缓存: %s", domain)
 	}
 	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(response)

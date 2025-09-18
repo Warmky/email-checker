@@ -1,22 +1,8 @@
  * Serving Flask app 'tls_analyzer'
  * Debug mode: on
-2025-09-18 11:39:21,292 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+2025-09-18 15:24:04,406 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
  * Running on http://127.0.0.1:5002
-2025-09-18 11:39:21,292 [INFO] [33mPress CTRL+C to quit[0m
-2025-09-18 11:39:21,293 [INFO]  * Restarting with stat
-2025-09-18 11:39:21,705 [WARNING]  * Debugger is active!
-2025-09-18 11:39:21,706 [INFO]  * Debugger PIN: 149-742-450
-2025-09-18 11:45:19,254 [INFO] === Starting TLS scan for imap.yandex.com:993 ===
-/home/wzq/.local/lib/python3.12/site-packages/sslyze/plugins/certificate_info/trust_stores/trust_store.py:55: CryptographyDeprecationWarning: Parsed a negative serial number, which is disallowed by RFC 5280. Loading this certificate will cause an exception in the next release of cryptography.
-  self._x509_store = Store(load_pem_x509_certificates(self.path.read_bytes()))
-2025-09-18 11:46:01,527 [INFO] Scan status: ServerScanStatusEnum.COMPLETED
-2025-09-18 11:46:01,528 [INFO] Connectivity: ServerTlsProbingResult(highest_tls_version_supported=<TlsVersionEnum.TLS_1_3: 6>, cipher_suite_supported='TLS_AES_256_GCM_SHA384', client_auth_requirement=<ClientAuthRequirementEnum.DISABLED: 'DISABLED'>, supports_ecdh_key_exchange=True)
-/home/wzq/email-checker/backend/tls_analyzer.py:130: CryptographyDeprecationWarning: Properties that return a naïve datetime object have been deprecated. Please switch to not_valid_before_utc.
-  "not_before": cert.not_valid_before.isoformat(),
-/home/wzq/email-checker/backend/tls_analyzer.py:131: CryptographyDeprecationWarning: Properties that return a naïve datetime object have been deprecated. Please switch to not_valid_after_utc.
-  "not_after": cert.not_valid_after.isoformat(),
-2025-09-18 11:46:01,532 [INFO] === Scan for imap.yandex.com:993 completed ===
-2025-09-18 11:46:01,533 [INFO] 127.0.0.1 - - [18/Sep/2025 11:46:01] "POST /deep-analyze HTTP/1.0" 200 -
-Exception ignored in: <module 'threading' from '/opt/anaconda3/envs/apkpure/lib/python3.12/threading.py'>
-Traceback (most recent call last):
-  File "/opt/anaconda3/envs/apkpure/lib/python3.12/threading.py", line 1604, in _shutdown
+2025-09-18 15:24:04,406 [INFO] [33mPress CTRL+C to quit[0m
+2025-09-18 15:24:04,407 [INFO]  * Restarting with stat
+2025-09-18 15:24:05,010 [WARNING]  * Debugger is active!
+2025-09-18 15:24:05,011 [INFO]  * Debugger PIN: 149-742-450

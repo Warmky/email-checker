@@ -3,7 +3,7 @@ import { PeculiarCertificateViewer } from "@peculiar/certificates-viewer-react";
 
 export default function CertificateChain({ chain }) {
     return (
-        <div style={{ padding: "16px", backgroundColor: "#7dc7adff", borderRadius: "8px" }}>
+        <div style={{ padding: "16px", backgroundColor: "#94bede", borderRadius: "8px" }}>
             <h3 style={{ fontSize: "1.125rem", fontWeight: "bold", marginBottom: "12px" }}>
                 证书链
             </h3>
@@ -50,7 +50,7 @@ function CertificateCard({ cert, level, isLeaf, isRoot }) {
                 borderRadius: "6px",
                 padding: "12px",
                 marginBottom: "8px",
-                backgroundColor: "#a4dfc2ff",
+                backgroundColor: "#94bede",
                 boxShadow: "0 1px 3px rgba(0,0,0,0.1)",
             }}
         >
