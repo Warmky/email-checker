@@ -502,7 +502,7 @@ export default function TlsAnalyzerPanel({ host, port }) {
                     }
 
                     return (
-                        <div key={idx} style={{ marginTop: 0.75, padding: 0.75, background: "#679ba3ff", border: "1px solid #444", borderRadius: 6 }}>
+                        <div key={idx} style={{ marginTop: 0.75, padding: 0.75, background: "#bcdcec", border: "1px solid #444", borderRadius: 6 }}>
                             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline" }}>
                                 <h4 style={{ margin: 0 }}>{f.protocol}</h4>
                                 <span style={{ fontSize: 12, color: f.status === "COMPLETED" ? "#0ba450ff" : f.status === "ERROR" ? "tomato" : "#ccc" }}>

@@ -42,6 +42,38 @@ function MainPage() {
     const [currentMech, setCurrentMech] = useState(firstAvailable);
     const [lastSubmittedEmail, setLastSubmittedEmail] = useState("");
 
+    const [recommendedDomains, setRecommendedDomains] = useState([]);
+    const [checkAllResult, setCheckAllResult] = useState(null); // 保存检测结果或缓存结果
+    const [hasAnyResultState, setHasAnyResult] = useState(false);    // 控制结果区是否渲染
+    useEffect(() => {
+    fetch("/api/recommended")
+        .then(res => res.json())
+        .then(data => setRecommendedDomains(data))
+        .catch(err => console.error(err));
+    }, []);
+    //9.18_2
+    const handleClickRecommended = (domain) => {
+        // 直接使用缓存数据，如果有的话
+        const cached = recommendedDomains.find(d => d.domain === domain);
+        if (cached && cached.response) {
+            setCheckAllResult(cached.response); // 直接填充缓存结果
+            setHasAnyResult(true);
+        } else {
+          // 如果没有缓存，也可以去后端重新查询 /checkAll?email=xxx@domain
+          const email = `user@${domain}`; // 可以默认用 user@domain
+          fetch(`/checkAll?email=${encodeURIComponent(email)}`)
+            .then(res => res.json())
+            .then(data => {
+              setCheckAllResult(data);
+              setHasAnyResult(true);
+            })
+            .catch(err => console.error(err));
+        }
+      };
+
+
+
+
     //9.15 改造输入框
     const [suggestions, setSuggestions] = useState([]);
 
@@ -1471,8 +1503,8 @@ function MainPage() {
 
                         </div>
                         
-                                       {/* 9.17 */}
-                                       <div style={{ marginTop: "2rem" }}>
+                        {/* 9.17 */}
+                        <div style={{ marginTop: "2rem" }}>
                             <div
                                 style={{
                                     borderTop: "2px solid #333",
@@ -2303,10 +2335,10 @@ function MainPage() {
             }}
         >
             <h1 style={{ fontSize: "2.5rem", marginBottom: "1rem", color: "#29323eff" }}>
-            邮件自动化配置检测
+            邮件域名风险检测
             </h1>
 
-            <div style={{ maxWidth: "900px", width: "100%", display: "flex", justifyContent: "flex-start",marginLeft: "30%"}}>
+            <div style={{ maxWidth: "900px", width: "100%", display: "flex", justifyContent: "center", margin: "0 auto"}}>
                 {/* 邮箱输入 + 单个检测按钮 */}
                 <div style={{ display: "flex", alignItems: "center", position: "relative" }}>
                     <input
@@ -2383,6 +2415,37 @@ function MainPage() {
 
                 {/* 批量检测组件 */}
                 <CSVUploadForm hideTitle={true} buttonPadding="1rem 1.2rem" />
+
+                {/* 推荐域名9.18_2 */}
+                {/* <div style={{
+                    marginTop: "2rem",
+                    width: "100%",
+                    display: "flex",
+                    justifyContent: "center",
+                    gap: "1rem",
+                    flexWrap: "wrap"
+                }}>
+                    {recommendedDomains.map(item => (
+                        <div
+                            key={item.domain}
+                            onClick={() => handleClickRecommended(item.domain)}
+                            style={{
+                                padding: "0.6rem 1rem",
+                                borderRadius: "8px",
+                                backgroundColor: "#3c71cdff",
+                                color: "white",
+                                cursor: "pointer",
+                                fontWeight: "bold",
+                                transition: "background 0.3s",
+                            }}
+                            onMouseOver={e => e.currentTarget.style.backgroundColor = "#2e4053"}
+                            onMouseOut={e => e.currentTarget.style.backgroundColor = "#3c71cdff"}
+                        >
+                            {item.domain}
+                        </div>
+                    ))}
+                </div> */}
+
             </div>
 
             {loading && (
