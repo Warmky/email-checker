@@ -71,6 +71,39 @@ function MainPage() {
         }
       };
 
+    //9.23
+    // 预设推荐域名
+    const defaultRecommended = [
+        { domain: "qq.com" },
+        { domain: "outlook.com" },
+        { domain: "gmail.com" },
+        { domain: "yandex.com" },
+        { domain: "163.com" },
+        {domain:"yahoo.com"},
+        {domain:"spammotel.com"}
+    ];
+    const [recommended, setRecommended] = useState([]);
+
+    // useEffect(() => {
+    // fetch("/api/recommended")
+    //     .then(res => res.json())
+    //     .then(data => setRecommended(data))
+    //     .catch(err => console.error("加载推荐域名失败:", err));
+    // }, []);
+    useEffect(() => {
+        fetch("/api/recommended")
+          .then(res => res.json())
+          .then(data => {
+            // 如果后端返回有数据，就覆盖预设
+            if (data && data.length > 0) {
+              setRecommended(data);
+            }
+          })
+          .catch(err => {
+            console.error("加载推荐域名失败:", err);
+            // 如果失败，保持默认数组，不影响UI
+          });
+      }, []);
 
 
 
@@ -105,14 +138,23 @@ function MainPage() {
         setSuggestions([]);
     };
     
-    // 点击检测按钮
-    const handleClick = () => {
-        const targetEmail = email.trim();
-        if (!targetEmail) return; // 空输入不处理
+    // // 点击检测按钮9.23原
+    // const handleClick = () => {
+    //     const targetEmail = email.trim();
+    //     if (!targetEmail) return; // 空输入不处理
     
+    //     handleSearch(targetEmail); // 调你原来的检测函数
+    //     setLastSubmittedEmail(targetEmail); // 保存用户名用于展示
+    // };
+
+    //9.23改后
+    const handleClick = (e, customEmail) => {
+        const targetEmail = customEmail || email.trim();
+        if (!targetEmail) return;
         handleSearch(targetEmail); // 调你原来的检测函数
         setLastSubmittedEmail(targetEmail); // 保存用户名用于展示
     };
+
 
 
     const certLabelMap = {
@@ -2447,6 +2489,44 @@ function MainPage() {
                 </div> */}
 
             </div>
+
+        {/* 9.23 */}
+        {/* 推荐域名区域 - 纯文字风格，每行固定四个 */}
+        <div
+        style={{
+            width: "100%",
+            maxWidth: "900px",
+            marginTop: "2rem",
+            display: "flex",
+            flexWrap: "wrap",         // 自动换行
+            gap: "1.5rem",             // 元素间距
+        }}
+        >
+        {recommended.map((item, idx) => (
+            <span
+            key={idx}
+            onClick={() => {
+                // 点击只触发检测，不放入搜索框
+                handleClick(null, "test@" + item.domain);
+            }}
+            style={{
+                cursor: "pointer",
+                fontSize: "1.1rem",
+                color: "#3c71cd",
+                textDecoration: "underline",
+                transition: "color 0.2s",
+                width: "calc(25% - 1.5rem)", // 每行四个
+                textAlign: "center",
+            }}
+            onMouseOver={(e) => (e.currentTarget.style.color = "#1a4fa0")}
+            onMouseOut={(e) => (e.currentTarget.style.color = "#3c71cd")}
+            >
+            {item.domain}
+            </span>
+        ))}
+        </div>
+
+
 
             {loading && (
                 <div style={{ marginTop: "2rem", textAlign: "center" }}>
