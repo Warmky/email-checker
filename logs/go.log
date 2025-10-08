@@ -1,8 +1,219 @@
-2025/09/23 17:30:57 ✅ Redis 已连接
-2025/09/23 17:30:57 Server is running on :8081
-2025/09/23 17:31:21 ⚡ 缓存命中: outlook.com
-2025/09/23 17:31:21 客户端已连接进度 WebSocket
-2025/09/23 17:31:23 ⚡ 缓存命中: gmail.com
-2025/09/23 17:31:23 客户端已连接进度 WebSocket
-2025/09/23 17:31:26 ⚡ 缓存命中: yandex.com
-2025/09/23 17:31:26 客户端已连接进度 WebSocket
+2025/10/08 15:45:49 ✅ Redis 已连接
+2025/10/08 15:45:49 Server is running on :8081
+flag1: 0
+flag2: 0
+flag3: 0
+Error sending request to https://autodiscover.gmail.com/autodiscover/autodiscover.xml: Post "https://autodiscover.gmail.com/autodiscover/autodiscover.xml": dial tcp: lookup autodiscover.gmail.com on 100.100.2.136:53: no such host
+flag1: 0
+flag2: 0
+flag3: 0
+Error sending request to http://autodiscover.gmail.com/autodiscover/autodiscover.xml: Post "http://autodiscover.gmail.com/autodiscover/autodiscover.xml": dial tcp: lookup autodiscover.gmail.com on 100.100.2.136:53: no such host
+flag1: 0
+flag2: 0
+flag3: 0
+flag1: 0
+flag2: 0
+flag3: 0
+2025/10/08 15:46:16 客户端已连接进度 WebSocket
+MX record for gmail.com: alt1.gmail-smtp-in.l.google.com., the priority is 10
+MX record for gmail.com: alt2.gmail-smtp-in.l.google.com., the priority is 20
+MX record for gmail.com: alt3.gmail-smtp-in.l.google.com., the priority is 30
+MX record for gmail.com: alt4.gmail-smtp-in.l.google.com., the priority is 40
+MX record for gmail.com: gmail-smtp-in.l.google.com., the priority is 5
+fulldomain: l.google.com
+maindomain: google.com
+ProtocolType: imap
+Port: 993
+Hostname: imap.gmail.com
+Running test
+Raw output:
+ {"success": false, "info": null, "error": "OS error : timed out"}
+
+Running test
+Raw output:
+ {"success": false, "info": null, "error": "OS error : timed out"}
+
+Running test
+Raw output:
+ {"success": true, "info": {"error": [], "version": "TLSv1.3", "cipher": ["TLS_AES_256_GCM_SHA384", "TLSv1.3", 256], "tls ca": "-----BEGIN CERTIFICATE-----\nMIIDlTCCAzygAwIBAgIQD6pRa0pn0roS2HAyATy0CTAKBggqhkjOPQQDAjA7MQsw\nCQYDVQQGEwJVUzEeMBwGA1UEChMVR29vZ2xlIFRydXN0IFNlcnZpY2VzMQwwCgYD\nVQQDEwNXRTIwHhcNMjUwOTE1MDgzNjE0WhcNMjUxMjA4MDgzNjEzWjAZMRcwFQYD\nVQQDEw5pbWFwLmdtYWlsLmNvbTBZMBMGByqGSM49AgEGCCqGSM49AwEHA0IABNmD\nyjREG2gcwDJMzZQQ1YTF/cbVb1lpiNkclIN/HZ8gL9SFwSHog//ZcHTaekq0a3qB\nzYN7qjFxGceMP9gyBQejggJCMIICPjAOBgNVHQ8BAf8EBAMCB4AwEwYDVR0lBAww\nCgYIKwYBBQUHAwEwDAYDVR0TAQH/BAIwADAdBgNVHQ4EFgQU9M+3GFVlSDrD+SE8\n58PlFokyLbwwHwYDVR0jBBgwFoAUdb7Ed66J9kQ3fc+xaB8dGuvcNFkwWAYIKwYB\nBQUHAQEETDBKMCEGCCsGAQUFBzABhhVodHRwOi8vby5wa2kuZ29vZy93ZTIwJQYI\nKwYBBQUHMAKGGWh0dHA6Ly9pLnBraS5nb29nL3dlMi5jcnQwGQYDVR0RBBIwEIIO\naW1hcC5nbWFpbC5jb20wEwYDVR0gBAwwCjAIBgZngQwBAgEwNgYDVR0fBC8wLTAr\noCmgJ4YlaHR0cDovL2MucGtpLmdvb2cvd2UyL3lLNW5QaHRIS1FzLmNybDCCAQUG\nCisGAQQB1nkCBAIEgfYEgfMA8QB3AKRCxQZJYGFUjw/U6pz7ei0mRU2HqX8v30VZ\n9idPOoRUAAABmUy7bIkAAAQDAEgwRgIhANWzrNKJ9/0N7M4Cr889Y7YW5wksghTf\nsK7NDezALCfRAiEAgByIisNJeoDbai0e7bnOROKBpiYI+MDGeoBQW85rRoAAdgAS\n8U40vVNyTIQGGcOPP3oT+Oe1YoeInG0wBYTr5YYmOgAAAZlMu2xAAAAEAwBHMEUC\nIQCyrcgjvxLs/24BaN3wjo/ri4/9A6YhVSFS5ILLvFIYlAIgdaqlR4XDVaFGkHwM\nYOwTSoe8KOOPUXrGLtk8s5huRbwwCgYIKoZIzj0EAwIDRwAwRAIgdcsggO/w86on\n8dmMDwt6rm2pVdfvjH2BBbk8n2IezRMCIC0Nb7POEkEbb0F0/QMploEqTOjThE99\n2Gm9CKsTa76k\n-----END CERTIFICATE-----\n", "auth": ["IMAP4REV1", "UNSELECT", "IDLE", "NAMESPACE", "QUOTA", "ID", "XLIST", "CHILDREN", "X-GM-EXT-1", "XYZZY", "SASL-IR", "AUTH=XOAUTH2", "AUTH=PLAIN", "AUTH=PLAIN-CLIENTTOKEN", "AUTH=OAUTHBEARER"]}}
+
+ProtocolType: pop3
+Port: 995
+Hostname: pop.gmail.com
+Running test
+Raw output:
+ {"success": false, "info": null, "error": "OS error : timed out"}
+
+Running test
+Raw output:
+ {"success": false, "info": null, "error": "OS error : timed out"}
+
+Running test
+Raw output:
+ {"success": true, "info": {"error": [], "version": "TLSv1.3", "cipher": ["TLS_AES_256_GCM_SHA384", "TLSv1.3", 256], "tls ca": "-----BEGIN CERTIFICATE-----\nMIIDkjCCAzigAwIBAgIQYLuY+XFNIVcSWs9SRFEA7zAKBggqhkjOPQQDAjA7MQsw\nCQYDVQQGEwJVUzEeMBwGA1UEChMVR29vZ2xlIFRydXN0IFNlcnZpY2VzMQwwCgYD\nVQQDEwNXRTIwHhcNMjUwOTE1MDgzNjE1WhcNMjUxMjA4MDgzNjE0WjAYMRYwFAYD\nVQQDEw1wb3AuZ21haWwuY29tMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEc5X7\nMBAk64KcS5kEfk/KYYl4eTnPnupBzE9WzyhNlZ5EqZkd/ydsNdfBU0yaRc6h4GoF\nxZ8PWYwRrFND9vgHM6OCAj8wggI7MA4GA1UdDwEB/wQEAwIHgDATBgNVHSUEDDAK\nBggrBgEFBQcDATAMBgNVHRMBAf8EAjAAMB0GA1UdDgQWBBSGOJ903/cAwUY0s7aS\nYl+tbDRPPjAfBgNVHSMEGDAWgBR1vsR3ron2RDd9z7FoHx0a69w0WTBYBggrBgEF\nBQcBAQRMMEowIQYIKwYBBQUHMAGGFWh0dHA6Ly9vLnBraS5nb29nL3dlMjAlBggr\nBgEFBQcwAoYZaHR0cDovL2kucGtpLmdvb2cvd2UyLmNydDAYBgNVHREEETAPgg1w\nb3AuZ21haWwuY29tMBMGA1UdIAQMMAowCAYGZ4EMAQIBMDYGA1UdHwQvMC0wK6Ap\noCeGJWh0dHA6Ly9jLnBraS5nb29nL3dlMi94dXp0M1BVOUZfdy5jcmwwggEDBgor\nBgEEAdZ5AgQCBIH0BIHxAO8AdQAS8U40vVNyTIQGGcOPP3oT+Oe1YoeInG0wBYTr\n5YYmOgAAAZlMu25CAAAEAwBGMEQCIF5f/lz3vgNcC/EEufyn2DaVZBBVcXtI6ve3\nMd/erEzyAiAFZMtPgfbQgHgKleAyzjK3luwyP/umXOvNT8vVvrY+vAB2AO08S9bo\nBsKkogBX28sk4jgB31Ev7cSGxXAPIN23Pj/gAAABmUy7bl0AAAQDAEcwRQIhAI4g\nL02s0hg9MgxmdprWfuom7EReLaetFEqw94qo8DoEAiAVPaxVd5d2RhE77uo5sTaI\n6tXs88+o3JcFtYTyd39CXTAKBggqhkjOPQQDAgNIADBFAiEApUDl3G/EyOc15l/8\nB6Q1YrEQ1POsQ5IAK0ZZGuVW9OkCIHqERFiGrt6p46HlwfyTzkj3Q6UcN00gG9Fw\nXEHvYAh3\n-----END CERTIFICATE-----\n", "auth": {"USER": [], "RESP-CODES": [], "EXPIRE": ["0"], "LOGIN-DELAY": ["300"], "TOP": [], "UIDL": [], "X-GOOGLE-RICO": [], "SASL": ["PLAIN", "XOAUTH2", "OAUTHBEARER"]}}}
+
+ProtocolType: smtp
+Port: 465
+Hostname: smtp.gmail.com
+Running test
+Raw output:
+ {"success": false, "info": null, "error": "OS error : Connection unexpectedly closed: timed out"}
+
+Running test
+Raw output:
+ {"success": false, "info": null, "error": "OS error : Connection unexpectedly closed: timed out"}
+
+Running test
+Raw output:
+ {"success": true, "info": {"error": [], "version": "TLSv1.3", "cipher": ["TLS_AES_256_GCM_SHA384", "TLSv1.3", 256], "tls ca": "-----BEGIN CERTIFICATE-----\nMIIDmDCCAz6gAwIBAgIRAKmDX2rqSO14EmdzvQaXFacwCgYIKoZIzj0EAwIwOzEL\nMAkGA1UEBhMCVVMxHjAcBgNVBAoTFUdvb2dsZSBUcnVzdCBTZXJ2aWNlczEMMAoG\nA1UEAxMDV0UyMB4XDTI1MDkxNTA4MzYxNloXDTI1MTIwODA4MzYxNVowGTEXMBUG\nA1UEAxMOc210cC5nbWFpbC5jb20wWTATBgcqhkjOPQIBBggqhkjOPQMBBwNCAASS\npY9Vdvv/Xd4J8M5fDKfsFGoJ0ZfZ5Fhh3IjrIo6y5gkckboHgOIh/IVeXguZ8Zdj\nkCx/vcJiRxAXnFOKV5j4o4ICQzCCAj8wDgYDVR0PAQH/BAQDAgeAMBMGA1UdJQQM\nMAoGCCsGAQUFBwMBMAwGA1UdEwEB/wQCMAAwHQYDVR0OBBYEFPtEbP0sB0dN7rxo\nsSzsJHglRP/HMB8GA1UdIwQYMBaAFHW+xHeuifZEN33PsWgfHRrr3DRZMFgGCCsG\nAQUFBwEBBEwwSjAhBggrBgEFBQcwAYYVaHR0cDovL28ucGtpLmdvb2cvd2UyMCUG\nCCsGAQUFBzAChhlodHRwOi8vaS5wa2kuZ29vZy93ZTIuY3J0MBkGA1UdEQQSMBCC\nDnNtdHAuZ21haWwuY29tMBMGA1UdIAQMMAowCAYGZ4EMAQIBMDYGA1UdHwQvMC0w\nK6ApoCeGJWh0dHA6Ly9jLnBraS5nb29nL3dlMi9kVE0zLTBocFdmRS5jcmwwggEG\nBgorBgEEAdZ5AgQCBIH3BIH0APIAdwAS8U40vVNyTIQGGcOPP3oT+Oe1YoeInG0w\nBYTr5YYmOgAAAZlMu3J6AAAEAwBIMEYCIQC7QYaEhSi3a2N72LHSPCltFVJ8N8XZ\nzuZIfdOrgJahDwIhAJxmkpzzXs69jYR3mbWM6DPmOfAubRFa25/e9L3wZimfAHcA\nGgT/SdBUHUCv9qDDv/HYxGcvTuzuI0BomGsXQC7ciX0AAAGZTLtypQAABAMASDBG\nAiEA4ffRRAfY2dfkvSCoAVcBoYzV5rqPQmPHm8gTpZZbwZ0CIQCmF6yt8bg6mcyV\nGYsZSK0e6PG9/ZEr+SbavJSOkNTCYzAKBggqhkjOPQQDAgNIADBFAiBtmYF8C5Jm\ntzcCKxP31wASURQLZov9Yr7dLvvqq8xWMQIhAP97Vzafzd2DCMopfBG+CSMrgQNh\nnKJccrb8R91SUXzz\n-----END CERTIFICATE-----\n", "enable esmtp": 1, "auth": {"size": "35882577", "8bitmime": "", "auth": " LOGIN PLAIN XOAUTH2 PLAIN-CLIENTTOKEN OAUTHBEARER XOAUTH", "enhancedstatuscodes": "", "pipelining": "", "chunking": "", "smtputf8": ""}}}
+
+ProtocolType: imap
+Port: 993
+Hostname: imap.gmail.com
+Running test
+Raw output:
+ {"success": false, "info": null, "error": "OS error : timed out"}
+
+Running test
+Raw output:
+ {"success": false, "info": null, "error": "OS error : timed out"}
+
+Running test
+Raw output:
+ {"success": true, "info": {"error": [], "version": "TLSv1.3", "cipher": ["TLS_AES_256_GCM_SHA384", "TLSv1.3", 256], "tls ca": "-----BEGIN CERTIFICATE-----\nMIIDlTCCAzygAwIBAgIQD6pRa0pn0roS2HAyATy0CTAKBggqhkjOPQQDAjA7MQsw\nCQYDVQQGEwJVUzEeMBwGA1UEChMVR29vZ2xlIFRydXN0IFNlcnZpY2VzMQwwCgYD\nVQQDEwNXRTIwHhcNMjUwOTE1MDgzNjE0WhcNMjUxMjA4MDgzNjEzWjAZMRcwFQYD\nVQQDEw5pbWFwLmdtYWlsLmNvbTBZMBMGByqGSM49AgEGCCqGSM49AwEHA0IABNmD\nyjREG2gcwDJMzZQQ1YTF/cbVb1lpiNkclIN/HZ8gL9SFwSHog//ZcHTaekq0a3qB\nzYN7qjFxGceMP9gyBQejggJCMIICPjAOBgNVHQ8BAf8EBAMCB4AwEwYDVR0lBAww\nCgYIKwYBBQUHAwEwDAYDVR0TAQH/BAIwADAdBgNVHQ4EFgQU9M+3GFVlSDrD+SE8\n58PlFokyLbwwHwYDVR0jBBgwFoAUdb7Ed66J9kQ3fc+xaB8dGuvcNFkwWAYIKwYB\nBQUHAQEETDBKMCEGCCsGAQUFBzABhhVodHRwOi8vby5wa2kuZ29vZy93ZTIwJQYI\nKwYBBQUHMAKGGWh0dHA6Ly9pLnBraS5nb29nL3dlMi5jcnQwGQYDVR0RBBIwEIIO\naW1hcC5nbWFpbC5jb20wEwYDVR0gBAwwCjAIBgZngQwBAgEwNgYDVR0fBC8wLTAr\noCmgJ4YlaHR0cDovL2MucGtpLmdvb2cvd2UyL3lLNW5QaHRIS1FzLmNybDCCAQUG\nCisGAQQB1nkCBAIEgfYEgfMA8QB3AKRCxQZJYGFUjw/U6pz7ei0mRU2HqX8v30VZ\n9idPOoRUAAABmUy7bIkAAAQDAEgwRgIhANWzrNKJ9/0N7M4Cr889Y7YW5wksghTf\nsK7NDezALCfRAiEAgByIisNJeoDbai0e7bnOROKBpiYI+MDGeoBQW85rRoAAdgAS\n8U40vVNyTIQGGcOPP3oT+Oe1YoeInG0wBYTr5YYmOgAAAZlMu2xAAAAEAwBHMEUC\nIQCyrcgjvxLs/24BaN3wjo/ri4/9A6YhVSFS5ILLvFIYlAIgdaqlR4XDVaFGkHwM\nYOwTSoe8KOOPUXrGLtk8s5huRbwwCgYIKoZIzj0EAwIDRwAwRAIgdcsggO/w86on\n8dmMDwt6rm2pVdfvjH2BBbk8n2IezRMCIC0Nb7POEkEbb0F0/QMploEqTOjThE99\n2Gm9CKsTa76k\n-----END CERTIFICATE-----\n", "auth": ["IMAP4REV1", "UNSELECT", "IDLE", "NAMESPACE", "QUOTA", "ID", "XLIST", "CHILDREN", "X-GM-EXT-1", "XYZZY", "SASL-IR", "AUTH=XOAUTH2", "AUTH=PLAIN", "AUTH=PLAIN-CLIENTTOKEN", "AUTH=OAUTHBEARER"]}}
+
+ProtocolType: pop3
+Port: 995
+Hostname: pop.gmail.com
+Running test
+Raw output:
+ {"success": false, "info": null, "error": "OS error : timed out"}
+
+Running test
+Raw output:
+ {"success": false, "info": null, "error": "OS error : timed out"}
+
+Running test
+Raw output:
+ {"success": true, "info": {"error": [], "version": "TLSv1.3", "cipher": ["TLS_AES_256_GCM_SHA384", "TLSv1.3", 256], "tls ca": "-----BEGIN CERTIFICATE-----\nMIIDkjCCAzigAwIBAgIQYLuY+XFNIVcSWs9SRFEA7zAKBggqhkjOPQQDAjA7MQsw\nCQYDVQQGEwJVUzEeMBwGA1UEChMVR29vZ2xlIFRydXN0IFNlcnZpY2VzMQwwCgYD\nVQQDEwNXRTIwHhcNMjUwOTE1MDgzNjE1WhcNMjUxMjA4MDgzNjE0WjAYMRYwFAYD\nVQQDEw1wb3AuZ21haWwuY29tMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEc5X7\nMBAk64KcS5kEfk/KYYl4eTnPnupBzE9WzyhNlZ5EqZkd/ydsNdfBU0yaRc6h4GoF\nxZ8PWYwRrFND9vgHM6OCAj8wggI7MA4GA1UdDwEB/wQEAwIHgDATBgNVHSUEDDAK\nBggrBgEFBQcDATAMBgNVHRMBAf8EAjAAMB0GA1UdDgQWBBSGOJ903/cAwUY0s7aS\nYl+tbDRPPjAfBgNVHSMEGDAWgBR1vsR3ron2RDd9z7FoHx0a69w0WTBYBggrBgEF\nBQcBAQRMMEowIQYIKwYBBQUHMAGGFWh0dHA6Ly9vLnBraS5nb29nL3dlMjAlBggr\nBgEFBQcwAoYZaHR0cDovL2kucGtpLmdvb2cvd2UyLmNydDAYBgNVHREEETAPgg1w\nb3AuZ21haWwuY29tMBMGA1UdIAQMMAowCAYGZ4EMAQIBMDYGA1UdHwQvMC0wK6Ap\noCeGJWh0dHA6Ly9jLnBraS5nb29nL3dlMi94dXp0M1BVOUZfdy5jcmwwggEDBgor\nBgEEAdZ5AgQCBIH0BIHxAO8AdQAS8U40vVNyTIQGGcOPP3oT+Oe1YoeInG0wBYTr\n5YYmOgAAAZlMu25CAAAEAwBGMEQCIF5f/lz3vgNcC/EEufyn2DaVZBBVcXtI6ve3\nMd/erEzyAiAFZMtPgfbQgHgKleAyzjK3luwyP/umXOvNT8vVvrY+vAB2AO08S9bo\nBsKkogBX28sk4jgB31Ev7cSGxXAPIN23Pj/gAAABmUy7bl0AAAQDAEcwRQIhAI4g\nL02s0hg9MgxmdprWfuom7EReLaetFEqw94qo8DoEAiAVPaxVd5d2RhE77uo5sTaI\n6tXs88+o3JcFtYTyd39CXTAKBggqhkjOPQQDAgNIADBFAiEApUDl3G/EyOc15l/8\nB6Q1YrEQ1POsQ5IAK0ZZGuVW9OkCIHqERFiGrt6p46HlwfyTzkj3Q6UcN00gG9Fw\nXEHvYAh3\n-----END CERTIFICATE-----\n", "auth": {"USER": [], "RESP-CODES": [], "EXPIRE": ["0"], "LOGIN-DELAY": ["300"], "TOP": [], "UIDL": [], "X-GOOGLE-RICO": [], "SASL": ["PLAIN", "XOAUTH2", "OAUTHBEARER"]}}}
+
+ProtocolType: smtp
+Port: 465
+Hostname: smtp.gmail.com
+Running test
+Raw output:
+ {"success": false, "info": null, "error": "OS error : Connection unexpectedly closed: timed out"}
+
+Running test
+Raw output:
+ {"success": false, "info": null, "error": "OS error : Connection unexpectedly closed: timed out"}
+
+Running test
+Raw output:
+ {"success": true, "info": {"error": [], "version": "TLSv1.3", "cipher": ["TLS_AES_256_GCM_SHA384", "TLSv1.3", 256], "tls ca": "-----BEGIN CERTIFICATE-----\nMIIDmDCCAz6gAwIBAgIRAKmDX2rqSO14EmdzvQaXFacwCgYIKoZIzj0EAwIwOzEL\nMAkGA1UEBhMCVVMxHjAcBgNVBAoTFUdvb2dsZSBUcnVzdCBTZXJ2aWNlczEMMAoG\nA1UEAxMDV0UyMB4XDTI1MDkxNTA4MzYxNloXDTI1MTIwODA4MzYxNVowGTEXMBUG\nA1UEAxMOc210cC5nbWFpbC5jb20wWTATBgcqhkjOPQIBBggqhkjOPQMBBwNCAASS\npY9Vdvv/Xd4J8M5fDKfsFGoJ0ZfZ5Fhh3IjrIo6y5gkckboHgOIh/IVeXguZ8Zdj\nkCx/vcJiRxAXnFOKV5j4o4ICQzCCAj8wDgYDVR0PAQH/BAQDAgeAMBMGA1UdJQQM\nMAoGCCsGAQUFBwMBMAwGA1UdEwEB/wQCMAAwHQYDVR0OBBYEFPtEbP0sB0dN7rxo\nsSzsJHglRP/HMB8GA1UdIwQYMBaAFHW+xHeuifZEN33PsWgfHRrr3DRZMFgGCCsG\nAQUFBwEBBEwwSjAhBggrBgEFBQcwAYYVaHR0cDovL28ucGtpLmdvb2cvd2UyMCUG\nCCsGAQUFBzAChhlodHRwOi8vaS5wa2kuZ29vZy93ZTIuY3J0MBkGA1UdEQQSMBCC\nDnNtdHAuZ21haWwuY29tMBMGA1UdIAQMMAowCAYGZ4EMAQIBMDYGA1UdHwQvMC0w\nK6ApoCeGJWh0dHA6Ly9jLnBraS5nb29nL3dlMi9kVE0zLTBocFdmRS5jcmwwggEG\nBgorBgEEAdZ5AgQCBIH3BIH0APIAdwAS8U40vVNyTIQGGcOPP3oT+Oe1YoeInG0w\nBYTr5YYmOgAAAZlMu3J6AAAEAwBIMEYCIQC7QYaEhSi3a2N72LHSPCltFVJ8N8XZ\nzuZIfdOrgJahDwIhAJxmkpzzXs69jYR3mbWM6DPmOfAubRFa25/e9L3wZimfAHcA\nGgT/SdBUHUCv9qDDv/HYxGcvTuzuI0BomGsXQC7ciX0AAAGZTLtypQAABAMASDBG\nAiEA4ffRRAfY2dfkvSCoAVcBoYzV5rqPQmPHm8gTpZZbwZ0CIQCmF6yt8bg6mcyV\nGYsZSK0e6PG9/ZEr+SbavJSOkNTCYzAKBggqhkjOPQQDAgNIADBFAiBtmYF8C5Jm\ntzcCKxP31wASURQLZov9Yr7dLvvqq8xWMQIhAP97Vzafzd2DCMopfBG+CSMrgQNh\nnKJccrb8R91SUXzz\n-----END CERTIFICATE-----\n", "enable esmtp": 1, "auth": {"size": "35882577", "8bitmime": "", "auth": " LOGIN PLAIN XOAUTH2 PLAIN-CLIENTTOKEN OAUTHBEARER XOAUTH", "enhancedstatuscodes": "", "pipelining": "", "chunking": "", "smtputf8": ""}}}
+
+service:_imap._tcp.gmail.com, adBit:false
+service:_imaps._tcp.gmail.com, adBit:false
+service:_pop3._tcp.gmail.com, adBit:false
+service:_pop3s._tcp.gmail.com, adBit:false
+service:_submission._tcp.gmail.com, adBit:false
+service:_submissions._tcp.gmail.com, adBit:false
+Failed to query SRV for _submissions._tcp.gmail.com or no records found: <nil>
+securesecureinsecure[{IMAP 993 secure imap.gmail.com on} {POP3 995 secure pop.gmail.com on} {SMTP 587 insecure smtp.gmail.com off}]Running test
+Raw output:
+ {"success": false, "info": null, "error": "OS error : timed out"}
+
+Running test
+Raw output:
+ {"success": false, "info": null, "error": "OS error : timed out"}
+
+Running test
+Raw output:
+ {"success": true, "info": {"error": ["SSL error: [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: Hostname mismatch, certificate is not valid for 'imap.gmail.com.'. (_ssl.c:1076)"], "version": "TLSv1.3", "cipher": ["TLS_AES_256_GCM_SHA384", "TLSv1.3", 256], "tls ca": "-----BEGIN CERTIFICATE-----\nMIIDlTCCAzygAwIBAgIQD6pRa0pn0roS2HAyATy0CTAKBggqhkjOPQQDAjA7MQsw\nCQYDVQQGEwJVUzEeMBwGA1UEChMVR29vZ2xlIFRydXN0IFNlcnZpY2VzMQwwCgYD\nVQQDEwNXRTIwHhcNMjUwOTE1MDgzNjE0WhcNMjUxMjA4MDgzNjEzWjAZMRcwFQYD\nVQQDEw5pbWFwLmdtYWlsLmNvbTBZMBMGByqGSM49AgEGCCqGSM49AwEHA0IABNmD\nyjREG2gcwDJMzZQQ1YTF/cbVb1lpiNkclIN/HZ8gL9SFwSHog//ZcHTaekq0a3qB\nzYN7qjFxGceMP9gyBQejggJCMIICPjAOBgNVHQ8BAf8EBAMCB4AwEwYDVR0lBAww\nCgYIKwYBBQUHAwEwDAYDVR0TAQH/BAIwADAdBgNVHQ4EFgQU9M+3GFVlSDrD+SE8\n58PlFokyLbwwHwYDVR0jBBgwFoAUdb7Ed66J9kQ3fc+xaB8dGuvcNFkwWAYIKwYB\nBQUHAQEETDBKMCEGCCsGAQUFBzABhhVodHRwOi8vby5wa2kuZ29vZy93ZTIwJQYI\nKwYBBQUHMAKGGWh0dHA6Ly9pLnBraS5nb29nL3dlMi5jcnQwGQYDVR0RBBIwEIIO\naW1hcC5nbWFpbC5jb20wEwYDVR0gBAwwCjAIBgZngQwBAgEwNgYDVR0fBC8wLTAr\noCmgJ4YlaHR0cDovL2MucGtpLmdvb2cvd2UyL3lLNW5QaHRIS1FzLmNybDCCAQUG\nCisGAQQB1nkCBAIEgfYEgfMA8QB3AKRCxQZJYGFUjw/U6pz7ei0mRU2HqX8v30VZ\n9idPOoRUAAABmUy7bIkAAAQDAEgwRgIhANWzrNKJ9/0N7M4Cr889Y7YW5wksghTf\nsK7NDezALCfRAiEAgByIisNJeoDbai0e7bnOROKBpiYI+MDGeoBQW85rRoAAdgAS\n8U40vVNyTIQGGcOPP3oT+Oe1YoeInG0wBYTr5YYmOgAAAZlMu2xAAAAEAwBHMEUC\nIQCyrcgjvxLs/24BaN3wjo/ri4/9A6YhVSFS5ILLvFIYlAIgdaqlR4XDVaFGkHwM\nYOwTSoe8KOOPUXrGLtk8s5huRbwwCgYIKoZIzj0EAwIDRwAwRAIgdcsggO/w86on\n8dmMDwt6rm2pVdfvjH2BBbk8n2IezRMCIC0Nb7POEkEbb0F0/QMploEqTOjThE99\n2Gm9CKsTa76k\n-----END CERTIFICATE-----\n", "auth": ["IMAP4REV1", "UNSELECT", "IDLE", "NAMESPACE", "QUOTA", "ID", "XLIST", "CHILDREN", "X-GM-EXT-1", "XYZZY", "SASL-IR", "AUTH=XOAUTH2", "AUTH=PLAIN", "AUTH=PLAIN-CLIENTTOKEN", "AUTH=OAUTHBEARER"]}}
+
+Plain err: TLS test failed: OS error : timed out
+StartTLS err: TLS test failed: OS error : timed out
+Running test
+Raw output:
+ {"success": false, "info": null, "error": "OS error : timed out"}
+
+Running test
+Raw output:
+ {"success": false, "info": null, "error": "OS error : timed out"}
+
+Running test
+Raw output:
+ {"success": true, "info": {"error": ["SSL error: [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: Hostname mismatch, certificate is not valid for 'pop.gmail.com.'. (_ssl.c:1076)"], "version": "TLSv1.3", "cipher": ["TLS_AES_256_GCM_SHA384", "TLSv1.3", 256], "tls ca": "-----BEGIN CERTIFICATE-----\nMIIDkjCCAzigAwIBAgIQYLuY+XFNIVcSWs9SRFEA7zAKBggqhkjOPQQDAjA7MQsw\nCQYDVQQGEwJVUzEeMBwGA1UEChMVR29vZ2xlIFRydXN0IFNlcnZpY2VzMQwwCgYD\nVQQDEwNXRTIwHhcNMjUwOTE1MDgzNjE1WhcNMjUxMjA4MDgzNjE0WjAYMRYwFAYD\nVQQDEw1wb3AuZ21haWwuY29tMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEc5X7\nMBAk64KcS5kEfk/KYYl4eTnPnupBzE9WzyhNlZ5EqZkd/ydsNdfBU0yaRc6h4GoF\nxZ8PWYwRrFND9vgHM6OCAj8wggI7MA4GA1UdDwEB/wQEAwIHgDATBgNVHSUEDDAK\nBggrBgEFBQcDATAMBgNVHRMBAf8EAjAAMB0GA1UdDgQWBBSGOJ903/cAwUY0s7aS\nYl+tbDRPPjAfBgNVHSMEGDAWgBR1vsR3ron2RDd9z7FoHx0a69w0WTBYBggrBgEF\nBQcBAQRMMEowIQYIKwYBBQUHMAGGFWh0dHA6Ly9vLnBraS5nb29nL3dlMjAlBggr\nBgEFBQcwAoYZaHR0cDovL2kucGtpLmdvb2cvd2UyLmNydDAYBgNVHREEETAPgg1w\nb3AuZ21haWwuY29tMBMGA1UdIAQMMAowCAYGZ4EMAQIBMDYGA1UdHwQvMC0wK6Ap\noCeGJWh0dHA6Ly9jLnBraS5nb29nL3dlMi94dXp0M1BVOUZfdy5jcmwwggEDBgor\nBgEEAdZ5AgQCBIH0BIHxAO8AdQAS8U40vVNyTIQGGcOPP3oT+Oe1YoeInG0wBYTr\n5YYmOgAAAZlMu25CAAAEAwBGMEQCIF5f/lz3vgNcC/EEufyn2DaVZBBVcXtI6ve3\nMd/erEzyAiAFZMtPgfbQgHgKleAyzjK3luwyP/umXOvNT8vVvrY+vAB2AO08S9bo\nBsKkogBX28sk4jgB31Ev7cSGxXAPIN23Pj/gAAABmUy7bl0AAAQDAEcwRQIhAI4g\nL02s0hg9MgxmdprWfuom7EReLaetFEqw94qo8DoEAiAVPaxVd5d2RhE77uo5sTaI\n6tXs88+o3JcFtYTyd39CXTAKBggqhkjOPQQDAgNIADBFAiEApUDl3G/EyOc15l/8\nB6Q1YrEQ1POsQ5IAK0ZZGuVW9OkCIHqERFiGrt6p46HlwfyTzkj3Q6UcN00gG9Fw\nXEHvYAh3\n-----END CERTIFICATE-----\n", "auth": {"USER": [], "RESP-CODES": [], "EXPIRE": ["0"], "LOGIN-DELAY": ["300"], "TOP": [], "UIDL": [], "X-GOOGLE-RICO": [], "SASL": ["PLAIN", "XOAUTH2", "OAUTHBEARER"]}}}
+
+Plain err: TLS test failed: OS error : timed out
+StartTLS err: TLS test failed: OS error : timed out
+Running test
+Raw output:
+ {"success": true, "info": {"error": [], "enable esmtp": 1, "auth": {"size": "35882577", "8bitmime": "", "starttls": "", "enhancedstatuscodes": "", "pipelining": "", "chunking": "", "smtputf8": ""}}}
+
+Running test
+Raw output:
+ {"success": true, "info": {"error": ["SSL error: [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: Hostname mismatch, certificate is not valid for 'smtp.gmail.com.'. (_ssl.c:1076)"], "version": "TLSv1.3", "cipher": ["TLS_AES_256_GCM_SHA384", "TLSv1.3", 256], "tls ca": "-----BEGIN CERTIFICATE-----\nMIIDmDCCAz6gAwIBAgIRAKmDX2rqSO14EmdzvQaXFacwCgYIKoZIzj0EAwIwOzEL\nMAkGA1UEBhMCVVMxHjAcBgNVBAoTFUdvb2dsZSBUcnVzdCBTZXJ2aWNlczEMMAoG\nA1UEAxMDV0UyMB4XDTI1MDkxNTA4MzYxNloXDTI1MTIwODA4MzYxNVowGTEXMBUG\nA1UEAxMOc210cC5nbWFpbC5jb20wWTATBgcqhkjOPQIBBggqhkjOPQMBBwNCAASS\npY9Vdvv/Xd4J8M5fDKfsFGoJ0ZfZ5Fhh3IjrIo6y5gkckboHgOIh/IVeXguZ8Zdj\nkCx/vcJiRxAXnFOKV5j4o4ICQzCCAj8wDgYDVR0PAQH/BAQDAgeAMBMGA1UdJQQM\nMAoGCCsGAQUFBwMBMAwGA1UdEwEB/wQCMAAwHQYDVR0OBBYEFPtEbP0sB0dN7rxo\nsSzsJHglRP/HMB8GA1UdIwQYMBaAFHW+xHeuifZEN33PsWgfHRrr3DRZMFgGCCsG\nAQUFBwEBBEwwSjAhBggrBgEFBQcwAYYVaHR0cDovL28ucGtpLmdvb2cvd2UyMCUG\nCCsGAQUFBzAChhlodHRwOi8vaS5wa2kuZ29vZy93ZTIuY3J0MBkGA1UdEQQSMBCC\nDnNtdHAuZ21haWwuY29tMBMGA1UdIAQMMAowCAYGZ4EMAQIBMDYGA1UdHwQvMC0w\nK6ApoCeGJWh0dHA6Ly9jLnBraS5nb29nL3dlMi9kVE0zLTBocFdmRS5jcmwwggEG\nBgorBgEEAdZ5AgQCBIH3BIH0APIAdwAS8U40vVNyTIQGGcOPP3oT+Oe1YoeInG0w\nBYTr5YYmOgAAAZlMu3J6AAAEAwBIMEYCIQC7QYaEhSi3a2N72LHSPCltFVJ8N8XZ\nzuZIfdOrgJahDwIhAJxmkpzzXs69jYR3mbWM6DPmOfAubRFa25/e9L3wZimfAHcA\nGgT/SdBUHUCv9qDDv/HYxGcvTuzuI0BomGsXQC7ciX0AAAGZTLtypQAABAMASDBG\nAiEA4ffRRAfY2dfkvSCoAVcBoYzV5rqPQmPHm8gTpZZbwZ0CIQCmF6yt8bg6mcyV\nGYsZSK0e6PG9/ZEr+SbavJSOkNTCYzAKBggqhkjOPQQDAgNIADBFAiBtmYF8C5Jm\ntzcCKxP31wASURQLZov9Yr7dLvvqq8xWMQIhAP97Vzafzd2DCMopfBG+CSMrgQNh\nnKJccrb8R91SUXzz\n-----END CERTIFICATE-----\n", "enable esmtp": 1, "auth": {"size": "35882577", "8bitmime": "", "auth": " LOGIN PLAIN XOAUTH2 PLAIN-CLIENTTOKEN OAUTHBEARER XOAUTH", "enhancedstatuscodes": "", "pipelining": "", "chunking": "", "smtputf8": ""}}}
+
+Running test
+Raw output:
+ {"success": false, "info": null, "error": "SSL error: [SSL: WRONG_VERSION_NUMBER] wrong version number (_ssl.c:1076)"}
+
+TLS err: TLS test failed: SSL error: [SSL: WRONG_VERSION_NUMBER] wrong version number (_ssl.c:1076)
+[smtp.gmail.com:587 imap.gmail.com:993 smtp.gmail.com:465 pop.gmail.com:995]Running test
+Raw output:
+ {"success": true, "info": {"error": [], "enable esmtp": 1, "auth": {"size": "35882577", "8bitmime": "", "starttls": "", "enhancedstatuscodes": "", "pipelining": "", "chunking": "", "smtputf8": ""}}}
+
+Running test
+Raw output:
+ {"success": true, "info": {"error": [], "version": "TLSv1.3", "cipher": ["TLS_AES_256_GCM_SHA384", "TLSv1.3", 256], "tls ca": "-----BEGIN CERTIFICATE-----\nMIIDmDCCAz6gAwIBAgIRAKmDX2rqSO14EmdzvQaXFacwCgYIKoZIzj0EAwIwOzEL\nMAkGA1UEBhMCVVMxHjAcBgNVBAoTFUdvb2dsZSBUcnVzdCBTZXJ2aWNlczEMMAoG\nA1UEAxMDV0UyMB4XDTI1MDkxNTA4MzYxNloXDTI1MTIwODA4MzYxNVowGTEXMBUG\nA1UEAxMOc210cC5nbWFpbC5jb20wWTATBgcqhkjOPQIBBggqhkjOPQMBBwNCAASS\npY9Vdvv/Xd4J8M5fDKfsFGoJ0ZfZ5Fhh3IjrIo6y5gkckboHgOIh/IVeXguZ8Zdj\nkCx/vcJiRxAXnFOKV5j4o4ICQzCCAj8wDgYDVR0PAQH/BAQDAgeAMBMGA1UdJQQM\nMAoGCCsGAQUFBwMBMAwGA1UdEwEB/wQCMAAwHQYDVR0OBBYEFPtEbP0sB0dN7rxo\nsSzsJHglRP/HMB8GA1UdIwQYMBaAFHW+xHeuifZEN33PsWgfHRrr3DRZMFgGCCsG\nAQUFBwEBBEwwSjAhBggrBgEFBQcwAYYVaHR0cDovL28ucGtpLmdvb2cvd2UyMCUG\nCCsGAQUFBzAChhlodHRwOi8vaS5wa2kuZ29vZy93ZTIuY3J0MBkGA1UdEQQSMBCC\nDnNtdHAuZ21haWwuY29tMBMGA1UdIAQMMAowCAYGZ4EMAQIBMDYGA1UdHwQvMC0w\nK6ApoCeGJWh0dHA6Ly9jLnBraS5nb29nL3dlMi9kVE0zLTBocFdmRS5jcmwwggEG\nBgorBgEEAdZ5AgQCBIH3BIH0APIAdwAS8U40vVNyTIQGGcOPP3oT+Oe1YoeInG0w\nBYTr5YYmOgAAAZlMu3J6AAAEAwBIMEYCIQC7QYaEhSi3a2N72LHSPCltFVJ8N8XZ\nzuZIfdOrgJahDwIhAJxmkpzzXs69jYR3mbWM6DPmOfAubRFa25/e9L3wZimfAHcA\nGgT/SdBUHUCv9qDDv/HYxGcvTuzuI0BomGsXQC7ciX0AAAGZTLtypQAABAMASDBG\nAiEA4ffRRAfY2dfkvSCoAVcBoYzV5rqPQmPHm8gTpZZbwZ0CIQCmF6yt8bg6mcyV\nGYsZSK0e6PG9/ZEr+SbavJSOkNTCYzAKBggqhkjOPQQDAgNIADBFAiBtmYF8C5Jm\ntzcCKxP31wASURQLZov9Yr7dLvvqq8xWMQIhAP97Vzafzd2DCMopfBG+CSMrgQNh\nnKJccrb8R91SUXzz\n-----END CERTIFICATE-----\n", "enable esmtp": 1, "auth": {"size": "35882577", "8bitmime": "", "auth": " LOGIN PLAIN XOAUTH2 PLAIN-CLIENTTOKEN OAUTHBEARER XOAUTH", "enhancedstatuscodes": "", "pipelining": "", "chunking": "", "smtputf8": ""}}}
+
+Running test
+Raw output:
+ {"success": false, "info": null, "error": "SSL error: [SSL: WRONG_VERSION_NUMBER] wrong version number (_ssl.c:1076)"}
+
+TLS err: TLS test failed: SSL error: [SSL: WRONG_VERSION_NUMBER] wrong version number (_ssl.c:1076)
+Running test
+Raw output:
+ {"success": false, "info": null, "error": "OS error : timed out"}
+
+Running test
+Raw output:
+ {"success": false, "info": null, "error": "OS error : timed out"}
+
+Running test
+Raw output:
+ {"success": true, "info": {"error": [], "version": "TLSv1.3", "cipher": ["TLS_AES_256_GCM_SHA384", "TLSv1.3", 256], "tls ca": "-----BEGIN CERTIFICATE-----\nMIIDlTCCAzygAwIBAgIQD6pRa0pn0roS2HAyATy0CTAKBggqhkjOPQQDAjA7MQsw\nCQYDVQQGEwJVUzEeMBwGA1UEChMVR29vZ2xlIFRydXN0IFNlcnZpY2VzMQwwCgYD\nVQQDEwNXRTIwHhcNMjUwOTE1MDgzNjE0WhcNMjUxMjA4MDgzNjEzWjAZMRcwFQYD\nVQQDEw5pbWFwLmdtYWlsLmNvbTBZMBMGByqGSM49AgEGCCqGSM49AwEHA0IABNmD\nyjREG2gcwDJMzZQQ1YTF/cbVb1lpiNkclIN/HZ8gL9SFwSHog//ZcHTaekq0a3qB\nzYN7qjFxGceMP9gyBQejggJCMIICPjAOBgNVHQ8BAf8EBAMCB4AwEwYDVR0lBAww\nCgYIKwYBBQUHAwEwDAYDVR0TAQH/BAIwADAdBgNVHQ4EFgQU9M+3GFVlSDrD+SE8\n58PlFokyLbwwHwYDVR0jBBgwFoAUdb7Ed66J9kQ3fc+xaB8dGuvcNFkwWAYIKwYB\nBQUHAQEETDBKMCEGCCsGAQUFBzABhhVodHRwOi8vby5wa2kuZ29vZy93ZTIwJQYI\nKwYBBQUHMAKGGWh0dHA6Ly9pLnBraS5nb29nL3dlMi5jcnQwGQYDVR0RBBIwEIIO\naW1hcC5nbWFpbC5jb20wEwYDVR0gBAwwCjAIBgZngQwBAgEwNgYDVR0fBC8wLTAr\noCmgJ4YlaHR0cDovL2MucGtpLmdvb2cvd2UyL3lLNW5QaHRIS1FzLmNybDCCAQUG\nCisGAQQB1nkCBAIEgfYEgfMA8QB3AKRCxQZJYGFUjw/U6pz7ei0mRU2HqX8v30VZ\n9idPOoRUAAABmUy7bIkAAAQDAEgwRgIhANWzrNKJ9/0N7M4Cr889Y7YW5wksghTf\nsK7NDezALCfRAiEAgByIisNJeoDbai0e7bnOROKBpiYI+MDGeoBQW85rRoAAdgAS\n8U40vVNyTIQGGcOPP3oT+Oe1YoeInG0wBYTr5YYmOgAAAZlMu2xAAAAEAwBHMEUC\nIQCyrcgjvxLs/24BaN3wjo/ri4/9A6YhVSFS5ILLvFIYlAIgdaqlR4XDVaFGkHwM\nYOwTSoe8KOOPUXrGLtk8s5huRbwwCgYIKoZIzj0EAwIDRwAwRAIgdcsggO/w86on\n8dmMDwt6rm2pVdfvjH2BBbk8n2IezRMCIC0Nb7POEkEbb0F0/QMploEqTOjThE99\n2Gm9CKsTa76k\n-----END CERTIFICATE-----\n", "auth": ["IMAP4REV1", "UNSELECT", "IDLE", "NAMESPACE", "QUOTA", "ID", "XLIST", "CHILDREN", "X-GM-EXT-1", "XYZZY", "SASL-IR", "AUTH=XOAUTH2", "AUTH=PLAIN", "AUTH=PLAIN-CLIENTTOKEN", "AUTH=OAUTHBEARER"]}}
+
+Plain err: TLS test failed: OS error : timed out
+StartTLS err: TLS test failed: OS error : timed out
+Running test
+Raw output:
+ {"success": false, "info": null, "error": "OS error : Connection unexpectedly closed: timed out"}
+
+Running test
+Raw output:
+ {"success": false, "info": null, "error": "OS error : Connection unexpectedly closed: timed out"}
+
+Running test
+Raw output:
+ {"success": true, "info": {"error": [], "version": "TLSv1.3", "cipher": ["TLS_AES_256_GCM_SHA384", "TLSv1.3", 256], "tls ca": "-----BEGIN CERTIFICATE-----\nMIIDmDCCAz6gAwIBAgIRAKmDX2rqSO14EmdzvQaXFacwCgYIKoZIzj0EAwIwOzEL\nMAkGA1UEBhMCVVMxHjAcBgNVBAoTFUdvb2dsZSBUcnVzdCBTZXJ2aWNlczEMMAoG\nA1UEAxMDV0UyMB4XDTI1MDkxNTA4MzYxNloXDTI1MTIwODA4MzYxNVowGTEXMBUG\nA1UEAxMOc210cC5nbWFpbC5jb20wWTATBgcqhkjOPQIBBggqhkjOPQMBBwNCAASS\npY9Vdvv/Xd4J8M5fDKfsFGoJ0ZfZ5Fhh3IjrIo6y5gkckboHgOIh/IVeXguZ8Zdj\nkCx/vcJiRxAXnFOKV5j4o4ICQzCCAj8wDgYDVR0PAQH/BAQDAgeAMBMGA1UdJQQM\nMAoGCCsGAQUFBwMBMAwGA1UdEwEB/wQCMAAwHQYDVR0OBBYEFPtEbP0sB0dN7rxo\nsSzsJHglRP/HMB8GA1UdIwQYMBaAFHW+xHeuifZEN33PsWgfHRrr3DRZMFgGCCsG\nAQUFBwEBBEwwSjAhBggrBgEFBQcwAYYVaHR0cDovL28ucGtpLmdvb2cvd2UyMCUG\nCCsGAQUFBzAChhlodHRwOi8vaS5wa2kuZ29vZy93ZTIuY3J0MBkGA1UdEQQSMBCC\nDnNtdHAuZ21haWwuY29tMBMGA1UdIAQMMAowCAYGZ4EMAQIBMDYGA1UdHwQvMC0w\nK6ApoCeGJWh0dHA6Ly9jLnBraS5nb29nL3dlMi9kVE0zLTBocFdmRS5jcmwwggEG\nBgorBgEEAdZ5AgQCBIH3BIH0APIAdwAS8U40vVNyTIQGGcOPP3oT+Oe1YoeInG0w\nBYTr5YYmOgAAAZlMu3J6AAAEAwBIMEYCIQC7QYaEhSi3a2N72LHSPCltFVJ8N8XZ\nzuZIfdOrgJahDwIhAJxmkpzzXs69jYR3mbWM6DPmOfAubRFa25/e9L3wZimfAHcA\nGgT/SdBUHUCv9qDDv/HYxGcvTuzuI0BomGsXQC7ciX0AAAGZTLtypQAABAMASDBG\nAiEA4ffRRAfY2dfkvSCoAVcBoYzV5rqPQmPHm8gTpZZbwZ0CIQCmF6yt8bg6mcyV\nGYsZSK0e6PG9/ZEr+SbavJSOkNTCYzAKBggqhkjOPQQDAgNIADBFAiBtmYF8C5Jm\ntzcCKxP31wASURQLZov9Yr7dLvvqq8xWMQIhAP97Vzafzd2DCMopfBG+CSMrgQNh\nnKJccrb8R91SUXzz\n-----END CERTIFICATE-----\n", "enable esmtp": 1, "auth": {"size": "35882577", "8bitmime": "", "auth": " LOGIN PLAIN XOAUTH2 PLAIN-CLIENTTOKEN OAUTHBEARER XOAUTH", "enhancedstatuscodes": "", "pipelining": "", "chunking": "", "smtputf8": ""}}}
+
+Plain err: TLS test failed: OS error : Connection unexpectedly closed: timed out
+StartTLS err: TLS test failed: OS error : Connection unexpectedly closed: timed out
+Running test
+Raw output:
+ {"success": false, "info": null, "error": "OS error : timed out"}
+
+Running test
+Raw output:
+ {"success": false, "info": null, "error": "OS error : timed out"}
+
+Running test
+Raw output:
+ {"success": true, "info": {"error": [], "version": "TLSv1.3", "cipher": ["TLS_AES_256_GCM_SHA384", "TLSv1.3", 256], "tls ca": "-----BEGIN CERTIFICATE-----\nMIIDkjCCAzigAwIBAgIQYLuY+XFNIVcSWs9SRFEA7zAKBggqhkjOPQQDAjA7MQsw\nCQYDVQQGEwJVUzEeMBwGA1UEChMVR29vZ2xlIFRydXN0IFNlcnZpY2VzMQwwCgYD\nVQQDEwNXRTIwHhcNMjUwOTE1MDgzNjE1WhcNMjUxMjA4MDgzNjE0WjAYMRYwFAYD\nVQQDEw1wb3AuZ21haWwuY29tMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEc5X7\nMBAk64KcS5kEfk/KYYl4eTnPnupBzE9WzyhNlZ5EqZkd/ydsNdfBU0yaRc6h4GoF\nxZ8PWYwRrFND9vgHM6OCAj8wggI7MA4GA1UdDwEB/wQEAwIHgDATBgNVHSUEDDAK\nBggrBgEFBQcDATAMBgNVHRMBAf8EAjAAMB0GA1UdDgQWBBSGOJ903/cAwUY0s7aS\nYl+tbDRPPjAfBgNVHSMEGDAWgBR1vsR3ron2RDd9z7FoHx0a69w0WTBYBggrBgEF\nBQcBAQRMMEowIQYIKwYBBQUHMAGGFWh0dHA6Ly9vLnBraS5nb29nL3dlMjAlBggr\nBgEFBQcwAoYZaHR0cDovL2kucGtpLmdvb2cvd2UyLmNydDAYBgNVHREEETAPgg1w\nb3AuZ21haWwuY29tMBMGA1UdIAQMMAowCAYGZ4EMAQIBMDYGA1UdHwQvMC0wK6Ap\noCeGJWh0dHA6Ly9jLnBraS5nb29nL3dlMi94dXp0M1BVOUZfdy5jcmwwggEDBgor\nBgEEAdZ5AgQCBIH0BIHxAO8AdQAS8U40vVNyTIQGGcOPP3oT+Oe1YoeInG0wBYTr\n5YYmOgAAAZlMu25CAAAEAwBGMEQCIF5f/lz3vgNcC/EEufyn2DaVZBBVcXtI6ve3\nMd/erEzyAiAFZMtPgfbQgHgKleAyzjK3luwyP/umXOvNT8vVvrY+vAB2AO08S9bo\nBsKkogBX28sk4jgB31Ev7cSGxXAPIN23Pj/gAAABmUy7bl0AAAQDAEcwRQIhAI4g\nL02s0hg9MgxmdprWfuom7EReLaetFEqw94qo8DoEAiAVPaxVd5d2RhE77uo5sTaI\n6tXs88+o3JcFtYTyd39CXTAKBggqhkjOPQQDAgNIADBFAiEApUDl3G/EyOc15l/8\nB6Q1YrEQ1POsQ5IAK0ZZGuVW9OkCIHqERFiGrt6p46HlwfyTzkj3Q6UcN00gG9Fw\nXEHvYAh3\n-----END CERTIFICATE-----\n", "auth": {"USER": [], "RESP-CODES": [], "EXPIRE": ["0"], "LOGIN-DELAY": ["300"], "TOP": [], "UIDL": [], "X-GOOGLE-RICO": [], "SASL": ["PLAIN", "XOAUTH2", "OAUTHBEARER"]}}}
+
+Plain err: TLS test failed: OS error : timed out
+StartTLS err: TLS test failed: OS error : timed out
+2025/10/08 15:47:19 📝 已缓存: gmail.com
+2025/10/08 15:47:19 WebSocket 关闭: websocket: close 1005 (no status)

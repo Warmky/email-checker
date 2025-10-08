@@ -5,6 +5,13 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
+  /* === 添加背景图设置 === */
+  background-image: url('./assets/bg-tech.png'); /* 这里替换为你的文件名 */
+  background-size: cover;              /* 背景自适应屏幕 */
+  background-position: center center;  /* 居中对齐 */
+  background-attachment: fixed;        /* 背景固定，不随滚动移动 */
+  background-repeat: no-repeat;        /* 不重复平铺 */
 }
 
 code {
