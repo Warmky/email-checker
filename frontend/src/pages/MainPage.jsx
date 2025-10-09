@@ -988,7 +988,7 @@ function MainPage() {
                                             <li key={mech}>机制 <b>{mech}</b> 内部存在配置差异</li>
                                         )
                                     )}
-                                    {consistencyScore <= 50 && <li>不同机制之间存在配置差异</li>}
+                                    {consistencyScore === 50 && <li>不同机制之间存在配置差异</li>}
                                     {consistencyScore === 100 && <li>所有机制配置完全一致</li>}
                                 </ul>
                             </CollapsibleModule>
@@ -1908,108 +1908,113 @@ function MainPage() {
                         {/* 9.17 */}
                         {/* ===== 机制内部差异性 ===== */}
                         {(() => {
-                        const collectPortsUsage = (allResults) => {
-                            return allResults.map(r => ({
-                            uri: r.uri || "",
-                            ports: Array.isArray(r?.score_detail?.ports_usage) ? r.score_detail.ports_usage : []
-                            }));
-                        };
+                            const collectPortsUsage = (allResults) => {
+                                return allResults.map(r => ({
+                                uri: r.uri || "",
+                                ports: Array.isArray(r?.score_detail?.ports_usage) ? r.score_detail.ports_usage : []
+                                }));
+                            };
 
-                        const allPorts = collectPortsUsage(result.all);
-                        if (allPorts.length === 0) return null;
+                            const allPorts = collectPortsUsage(result.all);
+                            if (allPorts.length === 0) return null;
 
-                        const keys = allPorts.map(item => ({
-                            uri: item.uri,
-                            ports: item.ports
-                        }));
-
-                        // 按 protocol 分组比较差异
-                        const protocolGroups = {};
-                        allPorts.forEach(item => {
-                            item.ports.forEach(p => {
-                            if (!protocolGroups[p.protocol]) protocolGroups[p.protocol] = [];
-                            protocolGroups[p.protocol].push({
-                                uri: item.uri,
-                                host: p.host,
-                                port: p.port,
-                                ssl: p.ssl || "未知 SSL"
+                            // 按 protocol → [路径1配置集合, 路径2配置集合...]
+                            const protocolGroups = {};
+                            allPorts.forEach(item => {
+                                item.ports.forEach(p => {
+                                if (!protocolGroups[p.protocol]) protocolGroups[p.protocol] = [];
+                                });
                             });
+
+                            // 每条路径的协议配置去重
+                            allPorts.forEach(item => {
+                                const pathIndex = allPorts.indexOf(item);
+                                for (const proto in protocolGroups) {
+                                const portsOfProto = item.ports
+                                    .filter(p => p.protocol === proto)
+                                    .map(p => `${p.host}:${p.port} (${p.ssl})`);
+                                const unique = [...new Set(portsOfProto)];
+                                protocolGroups[proto][pathIndex] = unique;
+                                }
                             });
-                        });
 
-                        // 判断哪些 protocol 有差异
-                        const diffMap = {};
-                        for (const proto in protocolGroups) {
-                            const values = protocolGroups[proto].map(v => `${v.host}:${v.port} (${v.ssl})`);
-                            diffMap[proto] = new Set(values).size > 1;
-                        }
+                            // 比较路径间是否一致
+                            const diffMap = {};
+                            for (const proto in protocolGroups) {
+                                const sets = protocolGroups[proto].map(arr => (arr || []).sort().join(";"));
+                                diffMap[proto] = new Set(sets).size > 1;
+                            }
 
-                        // 如果某条路径有某个 protocol 而其他路径没有 → 也算差异
-                        const allProtocols = Object.keys(protocolGroups);
-                        allPorts.forEach(item => {
-                            allProtocols.forEach(proto => {
-                            const hasProto = item.ports.some(p => p.protocol === proto);
-                            if (!hasProto) diffMap[proto] = true;
+                            // 如果某条路径没有某协议，也算差异
+                            const allProtocols = Object.keys(protocolGroups);
+                            allPorts.forEach(item => {
+                                allProtocols.forEach(proto => {
+                                const hasProto = item.ports.some(p => p.protocol === proto);
+                                if (!hasProto) diffMap[proto] = true;
+                                });
                             });
-                        });
 
-                        const hasDiff = Object.values(diffMap).some(v => v);
-                        result.hasInternalDiff = hasDiff;
-                        if (!hasDiff) return null;
+                            const hasDiff = Object.values(diffMap).some(v => v);
+                            result.hasInternalDiff = hasDiff;
+                            if (!hasDiff) return null;
 
-                        return (
-                            <StatusModule
-                            label="机制内部配置差异性"
-                            hasIssue={hasDiff}
-                            >
-                            {/* 说明文字 */}
-                            <div style={{
-                                margin: "4px 0 10px 0",
-                                padding: "6px",
-                                backgroundColor: "#eef6f7",
-                                borderRadius: "4px",
-                                fontSize: "0.85rem",
-                                color: "#333"
-                            }}>
-                                通过比较该机制下不同路径的配置端口和协议，发现部分协议或端口存在不一致。这可能会影响邮件客户端的兼容性或安全性。
-                            </div>
-
-                            {keys.map((item, idx) => (
+                            return (
+                                <StatusModule label="机制内部配置差异性" hasIssue={hasDiff}>
                                 <div
-                                key={idx}
-                                style={{
-                                    marginBottom: "6px",
+                                    style={{
+                                    margin: "4px 0 10px 0",
                                     padding: "6px",
-                                    border: "1px solid #ccc",
-                                    borderRadius: "6px",
-                                    backgroundColor: "#f9f9f9"
-                                }}
+                                    backgroundColor: "#eef6f7",
+                                    borderRadius: "4px",
+                                    fontSize: "0.85rem",
+                                    color: "#333"
+                                    }}
                                 >
-                                <strong>路径 {idx + 1}</strong>
-                                <ul style={{ margin: "4px 0 0 16px" }}>
-                                    {item.ports.map((p, i) => {
-                                    const isDiff = diffMap[p.protocol] === true;
-                                    return (
-                                        <li
-                                        key={i}
-                                        style={{
-                                            marginBottom: "4px",
-                                            backgroundColor: isDiff ? "#fff3cd" : "transparent",
-                                            padding: isDiff ? "4px" : "0",
-                                            borderRadius: "4px"
-                                        }}
-                                        >
-                                        {p.protocol} → {p.host}:{p.port} ({p.ssl || "未知 SSL"})
-                                        {isDiff && <span style={{ color: "#856404", marginLeft: "6px" }}>⚠️ 与其他路径不一致</span>}
-                                        </li>
-                                    );
-                                    })}
-                                </ul>
+                                    通过比较该机制下不同路径的配置端口和协议，发现部分协议或端口存在不一致。这可能会影响邮件客户端的兼容性或安全性。
                                 </div>
-                            ))}
-                            </StatusModule>
-                        );
+
+                                {allPorts.map((item, idx) => (
+                                    <div
+                                    key={idx}
+                                    style={{
+                                        marginBottom: "6px",
+                                        padding: "6px",
+                                        border: "1px solid #ccc",
+                                        borderRadius: "6px",
+                                        backgroundColor: "#f9f9f9"
+                                    }}
+                                    >
+                                    <strong>路径 {idx + 1}</strong>
+                                    <ul style={{ margin: "4px 0 0 16px" }}>
+                                        {item.ports.map((p, i) => {
+                                        const proto = p.protocol;
+                                        const isDiff = diffMap[proto] === true;
+                                        return (
+                                            <li
+                                            key={i}
+                                            style={{
+                                                marginBottom: "4px",
+                                                backgroundColor: isDiff ? "#fff3cd" : "transparent",
+                                                padding: isDiff ? "4px" : "0",
+                                                borderRadius: "4px"
+                                            }}
+                                            >
+                                            {p.protocol} → {p.host}:{p.port} ({p.ssl || "未知 SSL"})
+                                            {isDiff && (
+                                                <span style={{ color: "#856404", marginLeft: "6px" }}>
+                                                ⚠️ 与其他路径不一致
+                                                </span>
+                                            )}
+                                            </li>
+                                        );
+                                        })}
+                                    </ul>
+                                    </div>
+                                ))}
+                                </StatusModule>
+                            );
                         })()}
+
 
 
 
