@@ -706,24 +706,52 @@ function MainPage() {
 
         // 9.17
         if (mech === "overview") {
+
+            // ===== 先判断是否有任何真实数据10.9 =====
+            const hasData = Object.values(results).some(r => r && (
+                (r.all && r.all.length > 0) || 
+                (r.score_detail && Object.keys(r.score_detail).length > 0)
+            ));
+            if (!hasData) {
+                return <p style={{ color: "gray", marginTop: "2rem" }}>No data to display for overview</p>;
+            }
+
             // ===== 1️⃣ 配置信息差异性 =====
             const comparisonMap = comparePortsUsage(results); // 比较不同机制间
-            let consistencyScore = 100;
-
-            Object.entries(comparisonMap).forEach(([_, mechData]) => {
-                const fields = ["host", "ssl"];
-                const isConsistent = fields.every((field) => {
-                    const values = Object.values(mechData)
-                        .map((m) => m[field])
-                        .filter(Boolean);
-                    return values.length <= 1 || values.every((v) => v === values[0]);
+            //let consistencyScore = 100;
+            let consistencyScore = 0;
+            if (Object.keys(comparisonMap).length > 0){
+                consistencyScore = 100;
+                Object.entries(comparisonMap).forEach(([_, mechData]) => {
+                    const fields = ["host", "ssl"];
+                    const isConsistent = fields.every((field) => {
+                        const values = Object.values(mechData)
+                            .map((m) => m[field])
+                            .filter(Boolean);
+                        return values.length <= 1 || values.every((v) => v === values[0]);
+                    });
+                    if (!isConsistent) consistencyScore = 50;
                 });
-                if (!isConsistent) consistencyScore = 50;
-            });
 
-            Object.entries(results).forEach(([mech, res]) => {
-                if (res?.hasInternalDiff) consistencyScore = 30;
-            });
+                Object.entries(results).forEach(([mech, res]) => {
+                    if (res?.hasInternalDiff) consistencyScore = 30;
+                });
+            }
+
+            // Object.entries(comparisonMap).forEach(([_, mechData]) => {
+            //     const fields = ["host", "ssl"];
+            //     const isConsistent = fields.every((field) => {
+            //         const values = Object.values(mechData)
+            //             .map((m) => m[field])
+            //             .filter(Boolean);
+            //         return values.length <= 1 || values.every((v) => v === values[0]);
+            //     });
+            //     if (!isConsistent) consistencyScore = 50;
+            // });
+
+            // Object.entries(results).forEach(([mech, res]) => {
+            //     if (res?.hasInternalDiff) consistencyScore = 30;
+            // });
 
             // ===== 2️⃣ 配置信息获取过程安全性 =====
             const mechanismList = ["autodiscover", "autoconfig"];
@@ -731,9 +759,14 @@ function MainPage() {
             const certIssues = {};
 
             mechanismList.forEach(m => {
-                httpIssues[m] = results[m]?.score_detail?.http_insecure || false;
-                const certInfo = results[m]?.cert_info;
-                certIssues[m] = certInfo ? getCertGrade(certInfo).issues.length > 0 : false;
+                if (results[m]){
+                    httpIssues[m] = results[m]?.score_detail?.http_insecure || false;
+                    const certInfo = results[m]?.cert_info;
+                    certIssues[m] = certInfo ? getCertGrade(certInfo).issues.length > 0 : false;
+                }
+                // httpIssues[m] = results[m]?.score_detail?.http_insecure || false;
+                // const certInfo = results[m]?.cert_info;
+                // certIssues[m] = certInfo ? getCertGrade(certInfo).issues.length > 0 : false;
             });
 
             // ===== SRV 机制风险分析 =====
@@ -762,52 +795,105 @@ function MainPage() {
                 srvIssue = true;
             }
 
-            let configScore = 100;
-            mechanismList.forEach(m => {
-                if (httpIssues[m]) configScore -= 10;
-                if (certIssues[m]) configScore -= 30;
-            });
-            if (srvIssue) configScore -= 20;
-            if (configScore < 0) configScore = 0;
-
-            let connectScore = 100;
-            ["autodiscover","autoconfig","srv"].forEach(m => {
-                const mech = results[m];
-                if (!mech) return;
-                const allDetails = [];
-                if (mech.all) {
-                    mech.all.forEach(item =>
-                        item.score_detail?.actualconnect_details?.forEach(d => allDetails.push(d))
-                    );
-                } else {
-                    mech.score_detail?.actualconnect_details?.forEach(d => allDetails.push(d));
-                }
-
-                allDetails.forEach(d => {
-                    if (d.plain?.success) connectScore -= 40;
-                    if (!d.plain?.success && !d.tls?.success && !d.starttls?.success) connectScore -= 50;
+            //let configScore = 100; //10.9
+            let configScore = 0;
+            if (mechanismList.some(m => results[m])){
+                configScore = 100;
+                mechanismList.forEach(m => {
+                    if (httpIssues[m]) configScore -= 10;
+                    if (certIssues[m]) configScore -= 30;
                 });
-            });
-            if (connectScore < 0) connectScore = 0;
+                if (srvIssue) configScore -= 20;
+                if (configScore < 0) configScore = 1;
+            }
+            // mechanismList.forEach(m => {
+            //     if (httpIssues[m]) configScore -= 10;
+            //     if (certIssues[m]) configScore -= 30;
+            // });
+            // if (srvIssue) configScore -= 20;
+            // if (configScore < 0) configScore = 0;
 
-            let lexScore = 100;
-            ["autodiscover","autoconfig"].forEach(m => {
-                const mech = results[m];
-                if (!mech) return;
-                const allPorts = [];
-                if (mech.all) {
-                    mech.all.forEach(item => item.score_detail?.ports_usage?.forEach(p => allPorts.push(p)));
-                } else {
-                    mech.score_detail?.ports_usage?.forEach(p => allPorts.push(p));
-                }
-                if (allPorts.some(p => p.status !== "standard")) lexScore = 60;
-            });
+            let connectScore = 0;
+            if (["autodiscover","autoconfig","srv"].some(m => results[m])) {
+                connectScore = 100;
+                ["autodiscover","autoconfig","srv"].forEach(m => {
+                    const mech = results[m];
+                    if (!mech) return;
+
+                    const allDetails = [];
+                    if (mech.all) {
+                        mech.all.forEach(item =>
+                            item.score_detail?.actualconnect_details?.forEach(d => allDetails.push(d))
+                        );
+                    } else if (mech.score_detail?.actualconnect_details) {
+                        mech.score_detail.actualconnect_details.forEach(d => allDetails.push(d));
+                    }
+
+                    allDetails.forEach(d => {
+                        if (d.plain?.success) connectScore -= 40;
+                        if (!d.plain?.success && !d.tls?.success && !d.starttls?.success) connectScore -= 50;
+                    });
+                });
+                // if (connectScore < 0) connectScore = 0;
+                if (connectScore < 0) connectScore = 1;
+                if (connectScore > 100) connectScore = 100;
+            }
+
+            // let connectScore = 100;
+            // ["autodiscover","autoconfig","srv"].forEach(m => {
+            //     const mech = results[m];
+            //     if (!mech) return;
+            //     const allDetails = [];
+            //     if (mech.all) {
+            //         mech.all.forEach(item =>
+            //             item.score_detail?.actualconnect_details?.forEach(d => allDetails.push(d))
+            //         );
+            //     } else {
+            //         mech.score_detail?.actualconnect_details?.forEach(d => allDetails.push(d));
+            //     }
+
+            //     allDetails.forEach(d => {
+            //         if (d.plain?.success) connectScore -= 40;
+            //         if (!d.plain?.success && !d.tls?.success && !d.starttls?.success) connectScore -= 50;
+            //     });
+            // });
+            // if (connectScore < 0) connectScore = 0;
+
+            let lexScore = 0;
+            if (["autodiscover","autoconfig"].some(m => results[m])) {
+                lexScore = 100;
+                ["autodiscover","autoconfig"].forEach(m => {
+                    const mech = results[m];
+                    if (!mech) return;
+                    const allPorts = [];
+                    if (mech.all) {
+                        mech.all.forEach(item => item.score_detail?.ports_usage?.forEach(p => allPorts.push(p)));
+                    } else if (mech.score_detail?.ports_usage) {
+                        mech.score_detail.ports_usage.forEach(p => allPorts.push(p));
+                    }
+                    if (allPorts.some(p => p.status !== "standard")) lexScore = 60;
+                });
+            }
+
+            // let lexScore = 100;
+            // ["autodiscover","autoconfig"].forEach(m => {
+            //     const mech = results[m];
+            //     if (!mech) return;
+            //     const allPorts = [];
+            //     if (mech.all) {
+            //         mech.all.forEach(item => item.score_detail?.ports_usage?.forEach(p => allPorts.push(p)));
+            //     } else {
+            //         mech.score_detail?.ports_usage?.forEach(p => allPorts.push(p));
+            //     }
+            //     if (allPorts.some(p => p.status !== "standard")) lexScore = 60;
+            // });
 
 
             
 
             // ===== 整体配置获取过程问题 =====
-            const configIssue = mechanismList.some(m => httpIssues[m] || certIssues[m]) || srvIssue;
+            //10.9const configIssue = mechanismList.some(m => httpIssues[m] || certIssues[m]) || srvIssue;
+            const configIssue = mechanismList.some(m => results[m] && (httpIssues[m] || certIssues[m])) || srvIssue;
 
             // ===== 分数转等级和颜色 =====
             const getGradeInfo = (score) => {
@@ -882,7 +968,8 @@ function MainPage() {
                         </div>
 
                         <div style={{ display: "flex", alignItems: "flex-start", marginBottom: "20px", width: "100%"}}>
-                            {gradeBox(consistencyScore)}
+                            {/* {gradeBox(consistencyScore)}10.9 */}
+                            {consistencyScore > 0 ? gradeBox(consistencyScore) : <div style={{ marginRight: "20px" }}>⚪ 无检测结果</div>}
                             <CollapsibleModule
                                 label="配置信息差异性"
                                 score={consistencyScore}
@@ -966,12 +1053,13 @@ function MainPage() {
 
                         <div style={{ display: "flex", alignItems: "stretch", marginBottom: "20px", width: "100%" }}>
                             {/* 左侧评级框 */}
-                            {gradeBox(configScore)}
-
+                            {/* {gradeBox(configScore)}10.9 */}
+                            {configScore > 0 ? gradeBox(configScore) : <div style={{ marginRight: "20px" }}>⚪ 无检测结果</div>}
                             {/* 右侧 StatusModule */}
                             <div style={{ flex: 1, minWidth: 0}}>
                                 <StatusModule label="配置获取过程安全性" hasIssue={configIssue}>
                                     {mechanismList.map(m => (
+                                        results[m] ? (
                                         <div key={m} style={{ marginBottom: "10px" }}>
                                             <StatusModule label={`${m} HTTP连接方式`} hasIssue={httpIssues[m]}>
                                                 <div style={{
@@ -1003,6 +1091,7 @@ function MainPage() {
                                                 </div>
                                             </StatusModule>
                                         </div>
+                                        ) : <div key={m} style={{ marginBottom: "10px" }}>{m.toUpperCase()} ⚪ 无检测结果</div>
                                     ))}
 
                                     <StatusModule label="SRV 配置查询过程风险分析" hasIssue={srvIssue}>
@@ -1027,7 +1116,8 @@ function MainPage() {
                             <h3 style={{ margin: 0, color: "#333" }}>实际连接安全性</h3>
                         </div>
                         <div style={{ display: "flex", alignItems: "flex-start", marginBottom: "20px", width: "100%" }}>
-                            {gradeBox(connectScore)}
+                            {/* {gradeBox(connectScore)} */}
+                            {connectScore > 0 ? gradeBox(connectScore) : <div style={{ marginRight: "20px" }}>⚪ 无检测结果</div>}
                             {/* 右侧 StatusModule */}
                             <div style={{ flex: 1, minWidth: 0 }}>
                                 <StatusModule
@@ -1132,7 +1222,8 @@ function MainPage() {
                         </div>
 
                         <div style={{ display: "flex", alignItems: "flex-start", marginBottom: "20px", width: "100%" }}>
-                            {gradeBox(lexScore)}
+                            {/* {gradeBox(lexScore)} */}
+                            {lexScore > 0 ? gradeBox(lexScore) : <div style={{ marginRight: "20px" }}>⚪ 无检测结果</div>}
 
                             <div style={{ flex: 1, minWidth: 0 }}>
                                 <StatusModule
@@ -2365,6 +2456,7 @@ function MainPage() {
         );
     };
     const hasAnyResult = Object.values(results).some((r) => r && Object.keys(r).length > 0);{/*7.28 */}
+    
 
     return (
         <div
@@ -2543,7 +2635,22 @@ function MainPage() {
 
             {hasAnyResult && (
                 <>
-                    <div style={{ width: "100%", maxWidth: "900px", backgroundColor: "#f5f8fa", padding: "2rem", borderRadius: "12px", boxShadow: "0 2px 10px rgba(0,0,0,0.04)", border: "1px solid #eee", marginTop: "1rem" }}>
+                    {/*10.8 <div style={{ width: "100%", maxWidth: "900px", backgroundColor: "#f5f8fa", padding: "2rem", borderRadius: "12px", boxShadow: "0 2px 10px rgba(0,0,0,0.04)", border: "1px solid #eee", marginTop: "1rem" }}> */}
+                    <div
+                        style={{
+                            width: "100%",
+                            maxWidth: "900px",
+                            backgroundColor: "rgba(255, 255, 255, 0.55)", // ← 更透明（55%）
+                            backdropFilter: "blur(12px)",                  // ← 稍微加强模糊
+                            padding: "2rem",
+                            borderRadius: "16px",
+                            boxShadow: "0 4px 20px rgba(0,0,0,0.08)",      // ← 柔和阴影
+                            border: "1px solid rgba(255, 255, 255, 0.4)",  // ← 白色边框线条
+                            marginTop: "1rem"
+                        }}
+                    >
+
+
     
                         {/* 机制 Tab9.17 */}
                         <div style={{ display: "flex", gap: "1rem", marginBottom: "1rem", flexWrap: "wrap" }}>

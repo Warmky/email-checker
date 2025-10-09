@@ -3,6 +3,7 @@ package api
 import (
 	"backend/internal/cache"
 	"encoding/json"
+	"log"
 	"net/http"
 )
 
@@ -39,6 +40,7 @@ func RecommendedDomainsHandler(w http.ResponseWriter, r *http.Request, redisCach
 				resp = entry.Response
 			}
 		}
+		log.Printf("[RecommendedDomainsHandler] %s -> %+v", domain, resp)
 		results = append(results, map[string]interface{}{
 			"domain":   domain,
 			"response": resp,

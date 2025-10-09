@@ -1,76 +1,65 @@
-2025/10/08 15:45:49 ✅ Redis 已连接
-2025/10/08 15:45:49 Server is running on :8081
+2025/10/09 21:00:06 ✅ Redis 已连接
+2025/10/09 21:00:06 Server is running on :8081
+2025/10/09 21:00:24 ⚡ 缓存命中: outlook.com
+2025/10/09 21:00:24 客户端已连接进度 WebSocket
+2025/10/09 21:00:34 ⚡ 缓存命中: yandex.com
+2025/10/09 21:00:34 客户端已连接进度 WebSocket
+2025/10/09 21:00:49 客户端已连接进度 WebSocket
+flag1now:1
+Redirect to: https://yahoo.com/autodiscover/autodiscover.xml
+flag1now:2
+Redirect to: https://www.yahoo.com/autodiscover/autodiscover.xml
+flag1: 2
+flag2: 0
+flag3: 0
+Error sending request to https://autodiscover.yahoo.com/autodiscover/autodiscover.xml: Post "https://autodiscover.yahoo.com/autodiscover/autodiscover.xml": dial tcp: lookup autodiscover.yahoo.com on 100.100.2.136:53: no such host
 flag1: 0
 flag2: 0
 flag3: 0
-Error sending request to https://autodiscover.gmail.com/autodiscover/autodiscover.xml: Post "https://autodiscover.gmail.com/autodiscover/autodiscover.xml": dial tcp: lookup autodiscover.gmail.com on 100.100.2.136:53: no such host
+Error sending request to http://autodiscover.yahoo.com/autodiscover/autodiscover.xml: Post "http://autodiscover.yahoo.com/autodiscover/autodiscover.xml": dial tcp: lookup autodiscover.yahoo.com on 100.100.2.136:53: no such host
 flag1: 0
 flag2: 0
 flag3: 0
-Error sending request to http://autodiscover.gmail.com/autodiscover/autodiscover.xml: Post "http://autodiscover.gmail.com/autodiscover/autodiscover.xml": dial tcp: lookup autodiscover.gmail.com on 100.100.2.136:53: no such host
-flag1: 0
+2025/10/09 21:00:51 ⚡ 缓存命中: 163.com
+flag1now:1
+Redirect to: https://www.yahoo.com/autodiscover/autodiscover.xml
+flag1: 1
 flag2: 0
 flag3: 0
-flag1: 0
-flag2: 0
-flag3: 0
-2025/10/08 15:46:16 客户端已连接进度 WebSocket
-MX record for gmail.com: alt1.gmail-smtp-in.l.google.com., the priority is 10
-MX record for gmail.com: alt2.gmail-smtp-in.l.google.com., the priority is 20
-MX record for gmail.com: alt3.gmail-smtp-in.l.google.com., the priority is 30
-MX record for gmail.com: alt4.gmail-smtp-in.l.google.com., the priority is 40
-MX record for gmail.com: gmail-smtp-in.l.google.com., the priority is 5
-fulldomain: l.google.com
-maindomain: google.com
+Redirect to: https://yahoo.com/autodiscover/autodiscover.xml
+2025/10/09 21:00:52 客户端已连接进度 WebSocket
+Redirect to: https://www.yahoo.com/autodiscover/autodiscover.xml
+Redirect to: https://www.yahoo.com/autodiscover/autodiscover.xml
+MX record for yahoo.com: mta5.am0.yahoodns.net., the priority is 1
+MX record for yahoo.com: mta6.am0.yahoodns.net., the priority is 1
+MX record for yahoo.com: mta7.am0.yahoodns.net., the priority is 1
+fulldomain: am0.yahoodns.net
+maindomain: yahoodns.net
 ProtocolType: imap
 Port: 993
-Hostname: imap.gmail.com
+Hostname: imap.mail.yahoo.com
 Running test
 Raw output:
  {"success": false, "info": null, "error": "OS error : timed out"}
 
 Running test
+2025/10/09 21:00:58 WebSocket 关闭: websocket: close 1001 (going away)
+2025/10/09 21:00:58 WebSocket 关闭: websocket: close 1001 (going away)
+2025/10/09 21:00:58 WebSocket 关闭: websocket: close 1001 (going away)
+2025/10/09 21:00:58 WebSocket 关闭: websocket: close 1001 (going away)
 Raw output:
  {"success": false, "info": null, "error": "OS error : timed out"}
 
 Running test
 Raw output:
- {"success": true, "info": {"error": [], "version": "TLSv1.3", "cipher": ["TLS_AES_256_GCM_SHA384", "TLSv1.3", 256], "tls ca": "-----BEGIN CERTIFICATE-----\nMIIDlTCCAzygAwIBAgIQD6pRa0pn0roS2HAyATy0CTAKBggqhkjOPQQDAjA7MQsw\nCQYDVQQGEwJVUzEeMBwGA1UEChMVR29vZ2xlIFRydXN0IFNlcnZpY2VzMQwwCgYD\nVQQDEwNXRTIwHhcNMjUwOTE1MDgzNjE0WhcNMjUxMjA4MDgzNjEzWjAZMRcwFQYD\nVQQDEw5pbWFwLmdtYWlsLmNvbTBZMBMGByqGSM49AgEGCCqGSM49AwEHA0IABNmD\nyjREG2gcwDJMzZQQ1YTF/cbVb1lpiNkclIN/HZ8gL9SFwSHog//ZcHTaekq0a3qB\nzYN7qjFxGceMP9gyBQejggJCMIICPjAOBgNVHQ8BAf8EBAMCB4AwEwYDVR0lBAww\nCgYIKwYBBQUHAwEwDAYDVR0TAQH/BAIwADAdBgNVHQ4EFgQU9M+3GFVlSDrD+SE8\n58PlFokyLbwwHwYDVR0jBBgwFoAUdb7Ed66J9kQ3fc+xaB8dGuvcNFkwWAYIKwYB\nBQUHAQEETDBKMCEGCCsGAQUFBzABhhVodHRwOi8vby5wa2kuZ29vZy93ZTIwJQYI\nKwYBBQUHMAKGGWh0dHA6Ly9pLnBraS5nb29nL3dlMi5jcnQwGQYDVR0RBBIwEIIO\naW1hcC5nbWFpbC5jb20wEwYDVR0gBAwwCjAIBgZngQwBAgEwNgYDVR0fBC8wLTAr\noCmgJ4YlaHR0cDovL2MucGtpLmdvb2cvd2UyL3lLNW5QaHRIS1FzLmNybDCCAQUG\nCisGAQQB1nkCBAIEgfYEgfMA8QB3AKRCxQZJYGFUjw/U6pz7ei0mRU2HqX8v30VZ\n9idPOoRUAAABmUy7bIkAAAQDAEgwRgIhANWzrNKJ9/0N7M4Cr889Y7YW5wksghTf\nsK7NDezALCfRAiEAgByIisNJeoDbai0e7bnOROKBpiYI+MDGeoBQW85rRoAAdgAS\n8U40vVNyTIQGGcOPP3oT+Oe1YoeInG0wBYTr5YYmOgAAAZlMu2xAAAAEAwBHMEUC\nIQCyrcgjvxLs/24BaN3wjo/ri4/9A6YhVSFS5ILLvFIYlAIgdaqlR4XDVaFGkHwM\nYOwTSoe8KOOPUXrGLtk8s5huRbwwCgYIKoZIzj0EAwIDRwAwRAIgdcsggO/w86on\n8dmMDwt6rm2pVdfvjH2BBbk8n2IezRMCIC0Nb7POEkEbb0F0/QMploEqTOjThE99\n2Gm9CKsTa76k\n-----END CERTIFICATE-----\n", "auth": ["IMAP4REV1", "UNSELECT", "IDLE", "NAMESPACE", "QUOTA", "ID", "XLIST", "CHILDREN", "X-GM-EXT-1", "XYZZY", "SASL-IR", "AUTH=XOAUTH2", "AUTH=PLAIN", "AUTH=PLAIN-CLIENTTOKEN", "AUTH=OAUTHBEARER"]}}
-
-ProtocolType: pop3
-Port: 995
-Hostname: pop.gmail.com
-Running test
-Raw output:
- {"success": false, "info": null, "error": "OS error : timed out"}
-
-Running test
-Raw output:
- {"success": false, "info": null, "error": "OS error : timed out"}
-
-Running test
-Raw output:
- {"success": true, "info": {"error": [], "version": "TLSv1.3", "cipher": ["TLS_AES_256_GCM_SHA384", "TLSv1.3", 256], "tls ca": "-----BEGIN CERTIFICATE-----\nMIIDkjCCAzigAwIBAgIQYLuY+XFNIVcSWs9SRFEA7zAKBggqhkjOPQQDAjA7MQsw\nCQYDVQQGEwJVUzEeMBwGA1UEChMVR29vZ2xlIFRydXN0IFNlcnZpY2VzMQwwCgYD\nVQQDEwNXRTIwHhcNMjUwOTE1MDgzNjE1WhcNMjUxMjA4MDgzNjE0WjAYMRYwFAYD\nVQQDEw1wb3AuZ21haWwuY29tMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEc5X7\nMBAk64KcS5kEfk/KYYl4eTnPnupBzE9WzyhNlZ5EqZkd/ydsNdfBU0yaRc6h4GoF\nxZ8PWYwRrFND9vgHM6OCAj8wggI7MA4GA1UdDwEB/wQEAwIHgDATBgNVHSUEDDAK\nBggrBgEFBQcDATAMBgNVHRMBAf8EAjAAMB0GA1UdDgQWBBSGOJ903/cAwUY0s7aS\nYl+tbDRPPjAfBgNVHSMEGDAWgBR1vsR3ron2RDd9z7FoHx0a69w0WTBYBggrBgEF\nBQcBAQRMMEowIQYIKwYBBQUHMAGGFWh0dHA6Ly9vLnBraS5nb29nL3dlMjAlBggr\nBgEFBQcwAoYZaHR0cDovL2kucGtpLmdvb2cvd2UyLmNydDAYBgNVHREEETAPgg1w\nb3AuZ21haWwuY29tMBMGA1UdIAQMMAowCAYGZ4EMAQIBMDYGA1UdHwQvMC0wK6Ap\noCeGJWh0dHA6Ly9jLnBraS5nb29nL3dlMi94dXp0M1BVOUZfdy5jcmwwggEDBgor\nBgEEAdZ5AgQCBIH0BIHxAO8AdQAS8U40vVNyTIQGGcOPP3oT+Oe1YoeInG0wBYTr\n5YYmOgAAAZlMu25CAAAEAwBGMEQCIF5f/lz3vgNcC/EEufyn2DaVZBBVcXtI6ve3\nMd/erEzyAiAFZMtPgfbQgHgKleAyzjK3luwyP/umXOvNT8vVvrY+vAB2AO08S9bo\nBsKkogBX28sk4jgB31Ev7cSGxXAPIN23Pj/gAAABmUy7bl0AAAQDAEcwRQIhAI4g\nL02s0hg9MgxmdprWfuom7EReLaetFEqw94qo8DoEAiAVPaxVd5d2RhE77uo5sTaI\n6tXs88+o3JcFtYTyd39CXTAKBggqhkjOPQQDAgNIADBFAiEApUDl3G/EyOc15l/8\nB6Q1YrEQ1POsQ5IAK0ZZGuVW9OkCIHqERFiGrt6p46HlwfyTzkj3Q6UcN00gG9Fw\nXEHvYAh3\n-----END CERTIFICATE-----\n", "auth": {"USER": [], "RESP-CODES": [], "EXPIRE": ["0"], "LOGIN-DELAY": ["300"], "TOP": [], "UIDL": [], "X-GOOGLE-RICO": [], "SASL": ["PLAIN", "XOAUTH2", "OAUTHBEARER"]}}}
-
-ProtocolType: smtp
-Port: 465
-Hostname: smtp.gmail.com
-Running test
-Raw output:
- {"success": false, "info": null, "error": "OS error : Connection unexpectedly closed: timed out"}
-
-Running test
-Raw output:
- {"success": false, "info": null, "error": "OS error : Connection unexpectedly closed: timed out"}
-
-Running test
-Raw output:
- {"success": true, "info": {"error": [], "version": "TLSv1.3", "cipher": ["TLS_AES_256_GCM_SHA384", "TLSv1.3", 256], "tls ca": "-----BEGIN CERTIFICATE-----\nMIIDmDCCAz6gAwIBAgIRAKmDX2rqSO14EmdzvQaXFacwCgYIKoZIzj0EAwIwOzEL\nMAkGA1UEBhMCVVMxHjAcBgNVBAoTFUdvb2dsZSBUcnVzdCBTZXJ2aWNlczEMMAoG\nA1UEAxMDV0UyMB4XDTI1MDkxNTA4MzYxNloXDTI1MTIwODA4MzYxNVowGTEXMBUG\nA1UEAxMOc210cC5nbWFpbC5jb20wWTATBgcqhkjOPQIBBggqhkjOPQMBBwNCAASS\npY9Vdvv/Xd4J8M5fDKfsFGoJ0ZfZ5Fhh3IjrIo6y5gkckboHgOIh/IVeXguZ8Zdj\nkCx/vcJiRxAXnFOKV5j4o4ICQzCCAj8wDgYDVR0PAQH/BAQDAgeAMBMGA1UdJQQM\nMAoGCCsGAQUFBwMBMAwGA1UdEwEB/wQCMAAwHQYDVR0OBBYEFPtEbP0sB0dN7rxo\nsSzsJHglRP/HMB8GA1UdIwQYMBaAFHW+xHeuifZEN33PsWgfHRrr3DRZMFgGCCsG\nAQUFBwEBBEwwSjAhBggrBgEFBQcwAYYVaHR0cDovL28ucGtpLmdvb2cvd2UyMCUG\nCCsGAQUFBzAChhlodHRwOi8vaS5wa2kuZ29vZy93ZTIuY3J0MBkGA1UdEQQSMBCC\nDnNtdHAuZ21haWwuY29tMBMGA1UdIAQMMAowCAYGZ4EMAQIBMDYGA1UdHwQvMC0w\nK6ApoCeGJWh0dHA6Ly9jLnBraS5nb29nL3dlMi9kVE0zLTBocFdmRS5jcmwwggEG\nBgorBgEEAdZ5AgQCBIH3BIH0APIAdwAS8U40vVNyTIQGGcOPP3oT+Oe1YoeInG0w\nBYTr5YYmOgAAAZlMu3J6AAAEAwBIMEYCIQC7QYaEhSi3a2N72LHSPCltFVJ8N8XZ\nzuZIfdOrgJahDwIhAJxmkpzzXs69jYR3mbWM6DPmOfAubRFa25/e9L3wZimfAHcA\nGgT/SdBUHUCv9qDDv/HYxGcvTuzuI0BomGsXQC7ciX0AAAGZTLtypQAABAMASDBG\nAiEA4ffRRAfY2dfkvSCoAVcBoYzV5rqPQmPHm8gTpZZbwZ0CIQCmF6yt8bg6mcyV\nGYsZSK0e6PG9/ZEr+SbavJSOkNTCYzAKBggqhkjOPQQDAgNIADBFAiBtmYF8C5Jm\ntzcCKxP31wASURQLZov9Yr7dLvvqq8xWMQIhAP97Vzafzd2DCMopfBG+CSMrgQNh\nnKJccrb8R91SUXzz\n-----END CERTIFICATE-----\n", "enable esmtp": 1, "auth": {"size": "35882577", "8bitmime": "", "auth": " LOGIN PLAIN XOAUTH2 PLAIN-CLIENTTOKEN OAUTHBEARER XOAUTH", "enhancedstatuscodes": "", "pipelining": "", "chunking": "", "smtputf8": ""}}}
+ {"success": true, "info": {"error": [], "version": "TLSv1.3", "cipher": ["TLS_AES_256_GCM_SHA384", "TLSv1.3", 256], "tls ca": "-----BEGIN CERTIFICATE-----\nMIIG4zCCBcugAwIBAgIQCFwriGafb6IWybE4NL+QMDANBgkqhkiG9w0BAQsFADBw\nMQswCQYDVQQGEwJVUzEVMBMGA1UEChMMRGlnaUNlcnQgSW5jMRkwFwYDVQQLExB3\nd3cuZGlnaWNlcnQuY29tMS8wLQYDVQQDEyZEaWdpQ2VydCBTSEEyIEhpZ2ggQXNz\ndXJhbmNlIFNlcnZlciBDQTAeFw0yNTA5MzAwMDAwMDBaFw0yNjAzMjUyMzU5NTla\nMHExCzAJBgNVBAYTAlVTMREwDwYDVQQIEwhOZXcgWW9yazERMA8GA1UEBxMITmV3\nIFlvcmsxHDAaBgNVBAoTE1lhaG9vIEhvbGRpbmdzIEluYy4xHjAcBgNVBAMMFSou\naW1hcC5tYWlsLnlhaG9vLmNvbTCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoC\nggEBAL7EypEG9sospXRjT6cQ9auOGrbPqE1wCLvJ5lGSKuwBE4OG0zNQXDROb6sf\n/T8K8GbMsMbn9hDZMZv+wF87FQ9J8gLmLLIm6hEArzs3d3nsqTq7biZ6B18ntKof\n1kG+53z6nXs4rVd1tIDtB+j8/JdqXVecetc7TjH3laxFDDGsx/HWU1BFdKlBVPZ/\nJs9JtxAKEDY06/tu5VWdTtFYgL3pQalZooMpbwKkt/Lyxq2+ONEfLTjrhkn+LMML\nI4l3FmtRrHsrl3uq5fFqSdoIltFJiQG5rc7jmta5LVLA5at7mz2aLprZysPI4B0s\nCOgL3+S+YpDRsLsIcWroh0Vl/q0CAwEAAaOCA3YwggNyMB8GA1UdIwQYMBaAFFFo\n/5CvAgd1PMzZZWRiohK4WXI7MB0GA1UdDgQWBBTCuRabp5gaYQjPfT8Z9y9tpMtZ\npTA1BgNVHREELjAsghUqLmltYXAubWFpbC55YWhvby5jb22CE2ltYXAubWFpbC55\nYWhvby5jb20wPgYDVR0gBDcwNTAzBgZngQwBAgIwKTAnBggrBgEFBQcCARYbaHR0\ncDovL3d3dy5kaWdpY2VydC5jb20vQ1BTMA4GA1UdDwEB/wQEAwIFoDAdBgNVHSUE\nFjAUBggrBgEFBQcDAQYIKwYBBQUHAwIwdQYDVR0fBG4wbDA0oDKgMIYuaHR0cDov\nL2NybDMuZGlnaWNlcnQuY29tL3NoYTItaGEtc2VydmVyLWc2LmNybDA0oDKgMIYu\naHR0cDovL2NybDQuZGlnaWNlcnQuY29tL3NoYTItaGEtc2VydmVyLWc2LmNybDCB\ngwYIKwYBBQUHAQEEdzB1MCQGCCsGAQUFBzABhhhodHRwOi8vb2NzcC5kaWdpY2Vy\ndC5jb20wTQYIKwYBBQUHMAKGQWh0dHA6Ly9jYWNlcnRzLmRpZ2ljZXJ0LmNvbS9E\naWdpQ2VydFNIQTJIaWdoQXNzdXJhbmNlU2VydmVyQ0EuY3J0MAwGA1UdEwEB/wQC\nMAAwggF9BgorBgEEAdZ5AgQCBIIBbQSCAWkBZwB1AA5XlLzzrqk+MxssmQez95Df\nm8I9cTIl3SGpJaxhxU4hAAABmZfxeYkAAAQDAEYwRAIgGQrP9bwCv/h793qClKFw\nmmI7JbIQmlE+jbnQrCx56RkCIA9Fljw0czGYo4A7nNtSQeGmUP/b78+UlvRd+Ihf\nqUgkAHcAZBHEbKQS7KeJHKICLgC8q08oB9QeNSer6v7VA8l9zfAAAAGZl/F5uQAA\nBAMASDBGAiEAsii15iVEm0qT9D4geoirXexImW14rXsA0TIYeCh5HjsCIQDOkS+7\nWrmU19ihoWs9oswJ8azLmdbeMgMzsXXpjDt2ggB1AEmcm2neHXzs/DbezYdkprhb\nrwqHgBnRVVL76esp3fjDAAABmZfxecwAAAQDAEYwRAIgQcmoYy2rPsTxPaNVbk62\n92ihKuJ5kNIs6Jqf9WcrPtkCIFt9tlGUa55djzlLCTKw7+707byTBkvc8IiMHwST\neUNqMA0GCSqGSIb3DQEBCwUAA4IBAQAeOOpnKGQ2YU9iOrTWclCsa4EZZqXMovYU\nwcqJwaPZYD0rXN+zr2PUlNwqE+Pa3YSdhHjTkivERS4JaXvnSeALho0VdyU3f6rg\n3zQs4w7QYIt1NyUby1NALS/VzF8VzM55+5VBtqb0VdClb+35+KSoa3G13v82LN1U\nEgc2LDflWjmXat1SffOc1GIf2xSR1eDn2RTG474AR+TmuBGSKMqbTG9FMEtBKXNj\nrqDWPGykqh1xHEr6wnHD2hLiENbE0/ISfwt5IbsLN9sTyp0I8u/vYC2O5+5SNLMt\nQdmwlsKQOxyHMYXOK96qaPVFMo/y7RGpD5xtuw27WUJlOq+6Alt0\n-----END CERTIFICATE-----\n", "auth": ["IMAP4REV1", "SASL-IR", "AUTH=PLAIN", "AUTH=XOAUTH2", "AUTH=OAUTHBEARER", "ID", "MOVE", "NAMESPACE", "XYMHIGHESTMODSEQ", "UIDPLUS", "LITERAL+", "CHILDREN", "UNSELECT", "X-MSG-EXT", "OBJECTID", "IDLE", "ENABLE", "UIDONLY", "X-ALL-MAIL", "X-UIDONLY", "LIST-EXTENDED", "LIST-STATUS", "SPECIAL-USE", "PARTIAL", "APPENDLIMIT=41697280"]}}
 
 ProtocolType: imap
 Port: 993
-Hostname: imap.gmail.com
+Hostname: export.imap.mail.yahoo.com
 Running test
+2025/10/09 21:01:01 ⚡ 缓存命中: 163.com
+2025/10/09 21:01:01 客户端已连接进度 WebSocket
 Raw output:
  {"success": false, "info": null, "error": "OS error : timed out"}
 
@@ -79,27 +68,103 @@ Raw output:
  {"success": false, "info": null, "error": "OS error : timed out"}
 
 Running test
+2025/10/09 21:01:04 WebSocket 关闭: websocket: close 1001 (going away)
 Raw output:
- {"success": true, "info": {"error": [], "version": "TLSv1.3", "cipher": ["TLS_AES_256_GCM_SHA384", "TLSv1.3", 256], "tls ca": "-----BEGIN CERTIFICATE-----\nMIIDlTCCAzygAwIBAgIQD6pRa0pn0roS2HAyATy0CTAKBggqhkjOPQQDAjA7MQsw\nCQYDVQQGEwJVUzEeMBwGA1UEChMVR29vZ2xlIFRydXN0IFNlcnZpY2VzMQwwCgYD\nVQQDEwNXRTIwHhcNMjUwOTE1MDgzNjE0WhcNMjUxMjA4MDgzNjEzWjAZMRcwFQYD\nVQQDEw5pbWFwLmdtYWlsLmNvbTBZMBMGByqGSM49AgEGCCqGSM49AwEHA0IABNmD\nyjREG2gcwDJMzZQQ1YTF/cbVb1lpiNkclIN/HZ8gL9SFwSHog//ZcHTaekq0a3qB\nzYN7qjFxGceMP9gyBQejggJCMIICPjAOBgNVHQ8BAf8EBAMCB4AwEwYDVR0lBAww\nCgYIKwYBBQUHAwEwDAYDVR0TAQH/BAIwADAdBgNVHQ4EFgQU9M+3GFVlSDrD+SE8\n58PlFokyLbwwHwYDVR0jBBgwFoAUdb7Ed66J9kQ3fc+xaB8dGuvcNFkwWAYIKwYB\nBQUHAQEETDBKMCEGCCsGAQUFBzABhhVodHRwOi8vby5wa2kuZ29vZy93ZTIwJQYI\nKwYBBQUHMAKGGWh0dHA6Ly9pLnBraS5nb29nL3dlMi5jcnQwGQYDVR0RBBIwEIIO\naW1hcC5nbWFpbC5jb20wEwYDVR0gBAwwCjAIBgZngQwBAgEwNgYDVR0fBC8wLTAr\noCmgJ4YlaHR0cDovL2MucGtpLmdvb2cvd2UyL3lLNW5QaHRIS1FzLmNybDCCAQUG\nCisGAQQB1nkCBAIEgfYEgfMA8QB3AKRCxQZJYGFUjw/U6pz7ei0mRU2HqX8v30VZ\n9idPOoRUAAABmUy7bIkAAAQDAEgwRgIhANWzrNKJ9/0N7M4Cr889Y7YW5wksghTf\nsK7NDezALCfRAiEAgByIisNJeoDbai0e7bnOROKBpiYI+MDGeoBQW85rRoAAdgAS\n8U40vVNyTIQGGcOPP3oT+Oe1YoeInG0wBYTr5YYmOgAAAZlMu2xAAAAEAwBHMEUC\nIQCyrcgjvxLs/24BaN3wjo/ri4/9A6YhVSFS5ILLvFIYlAIgdaqlR4XDVaFGkHwM\nYOwTSoe8KOOPUXrGLtk8s5huRbwwCgYIKoZIzj0EAwIDRwAwRAIgdcsggO/w86on\n8dmMDwt6rm2pVdfvjH2BBbk8n2IezRMCIC0Nb7POEkEbb0F0/QMploEqTOjThE99\n2Gm9CKsTa76k\n-----END CERTIFICATE-----\n", "auth": ["IMAP4REV1", "UNSELECT", "IDLE", "NAMESPACE", "QUOTA", "ID", "XLIST", "CHILDREN", "X-GM-EXT-1", "XYZZY", "SASL-IR", "AUTH=XOAUTH2", "AUTH=PLAIN", "AUTH=PLAIN-CLIENTTOKEN", "AUTH=OAUTHBEARER"]}}
+ {"success": true, "info": {"error": [], "version": "TLSv1.3", "cipher": ["TLS_AES_256_GCM_SHA384", "TLSv1.3", 256], "tls ca": "-----BEGIN CERTIFICATE-----\nMIIG4zCCBcugAwIBAgIQCFwriGafb6IWybE4NL+QMDANBgkqhkiG9w0BAQsFADBw\nMQswCQYDVQQGEwJVUzEVMBMGA1UEChMMRGlnaUNlcnQgSW5jMRkwFwYDVQQLExB3\nd3cuZGlnaWNlcnQuY29tMS8wLQYDVQQDEyZEaWdpQ2VydCBTSEEyIEhpZ2ggQXNz\ndXJhbmNlIFNlcnZlciBDQTAeFw0yNTA5MzAwMDAwMDBaFw0yNjAzMjUyMzU5NTla\nMHExCzAJBgNVBAYTAlVTMREwDwYDVQQIEwhOZXcgWW9yazERMA8GA1UEBxMITmV3\nIFlvcmsxHDAaBgNVBAoTE1lhaG9vIEhvbGRpbmdzIEluYy4xHjAcBgNVBAMMFSou\naW1hcC5tYWlsLnlhaG9vLmNvbTCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoC\nggEBAL7EypEG9sospXRjT6cQ9auOGrbPqE1wCLvJ5lGSKuwBE4OG0zNQXDROb6sf\n/T8K8GbMsMbn9hDZMZv+wF87FQ9J8gLmLLIm6hEArzs3d3nsqTq7biZ6B18ntKof\n1kG+53z6nXs4rVd1tIDtB+j8/JdqXVecetc7TjH3laxFDDGsx/HWU1BFdKlBVPZ/\nJs9JtxAKEDY06/tu5VWdTtFYgL3pQalZooMpbwKkt/Lyxq2+ONEfLTjrhkn+LMML\nI4l3FmtRrHsrl3uq5fFqSdoIltFJiQG5rc7jmta5LVLA5at7mz2aLprZysPI4B0s\nCOgL3+S+YpDRsLsIcWroh0Vl/q0CAwEAAaOCA3YwggNyMB8GA1UdIwQYMBaAFFFo\n/5CvAgd1PMzZZWRiohK4WXI7MB0GA1UdDgQWBBTCuRabp5gaYQjPfT8Z9y9tpMtZ\npTA1BgNVHREELjAsghUqLmltYXAubWFpbC55YWhvby5jb22CE2ltYXAubWFpbC55\nYWhvby5jb20wPgYDVR0gBDcwNTAzBgZngQwBAgIwKTAnBggrBgEFBQcCARYbaHR0\ncDovL3d3dy5kaWdpY2VydC5jb20vQ1BTMA4GA1UdDwEB/wQEAwIFoDAdBgNVHSUE\nFjAUBggrBgEFBQcDAQYIKwYBBQUHAwIwdQYDVR0fBG4wbDA0oDKgMIYuaHR0cDov\nL2NybDMuZGlnaWNlcnQuY29tL3NoYTItaGEtc2VydmVyLWc2LmNybDA0oDKgMIYu\naHR0cDovL2NybDQuZGlnaWNlcnQuY29tL3NoYTItaGEtc2VydmVyLWc2LmNybDCB\ngwYIKwYBBQUHAQEEdzB1MCQGCCsGAQUFBzABhhhodHRwOi8vb2NzcC5kaWdpY2Vy\ndC5jb20wTQYIKwYBBQUHMAKGQWh0dHA6Ly9jYWNlcnRzLmRpZ2ljZXJ0LmNvbS9E\naWdpQ2VydFNIQTJIaWdoQXNzdXJhbmNlU2VydmVyQ0EuY3J0MAwGA1UdEwEB/wQC\nMAAwggF9BgorBgEEAdZ5AgQCBIIBbQSCAWkBZwB1AA5XlLzzrqk+MxssmQez95Df\nm8I9cTIl3SGpJaxhxU4hAAABmZfxeYkAAAQDAEYwRAIgGQrP9bwCv/h793qClKFw\nmmI7JbIQmlE+jbnQrCx56RkCIA9Fljw0czGYo4A7nNtSQeGmUP/b78+UlvRd+Ihf\nqUgkAHcAZBHEbKQS7KeJHKICLgC8q08oB9QeNSer6v7VA8l9zfAAAAGZl/F5uQAA\nBAMASDBGAiEAsii15iVEm0qT9D4geoirXexImW14rXsA0TIYeCh5HjsCIQDOkS+7\nWrmU19ihoWs9oswJ8azLmdbeMgMzsXXpjDt2ggB1AEmcm2neHXzs/DbezYdkprhb\nrwqHgBnRVVL76esp3fjDAAABmZfxecwAAAQDAEYwRAIgQcmoYy2rPsTxPaNVbk62\n92ihKuJ5kNIs6Jqf9WcrPtkCIFt9tlGUa55djzlLCTKw7+707byTBkvc8IiMHwST\neUNqMA0GCSqGSIb3DQEBCwUAA4IBAQAeOOpnKGQ2YU9iOrTWclCsa4EZZqXMovYU\nwcqJwaPZYD0rXN+zr2PUlNwqE+Pa3YSdhHjTkivERS4JaXvnSeALho0VdyU3f6rg\n3zQs4w7QYIt1NyUby1NALS/VzF8VzM55+5VBtqb0VdClb+35+KSoa3G13v82LN1U\nEgc2LDflWjmXat1SffOc1GIf2xSR1eDn2RTG474AR+TmuBGSKMqbTG9FMEtBKXNj\nrqDWPGykqh1xHEr6wnHD2hLiENbE0/ISfwt5IbsLN9sTyp0I8u/vYC2O5+5SNLMt\nQdmwlsKQOxyHMYXOK96qaPVFMo/y7RGpD5xtuw27WUJlOq+6Alt0\n-----END CERTIFICATE-----\n", "auth": ["IMAP4REV1", "SASL-IR", "AUTH=PLAIN", "AUTH=XOAUTH2", "AUTH=OAUTHBEARER", "ID", "MOVE", "NAMESPACE", "XYMHIGHESTMODSEQ", "UIDPLUS", "LITERAL+", "CHILDREN", "UNSELECT", "X-MSG-EXT", "OBJECTID", "IDLE", "ENABLE", "UIDONLY", "X-ALL-MAIL", "X-UIDONLY", "LIST-EXTENDED", "LIST-STATUS", "SPECIAL-USE", "PARTIAL", "APPENDLIMIT=41697280"]}}
 
 ProtocolType: pop3
 Port: 995
-Hostname: pop.gmail.com
+Hostname: pop.mail.yahoo.com
 Running test
+2025/10/09 21:01:06 ⚡ 缓存命中: gmail.com
+2025/10/09 21:01:06 客户端已连接进度 WebSocket
+Raw output:
+ {"success": false, "info": null, "error": "OS error : timed out"}
+
+Running test
+2025/10/09 21:01:07 ⚡ 缓存命中: 163.com
+2025/10/09 21:01:07 客户端已连接进度 WebSocket
 Raw output:
  {"success": false, "info": null, "error": "OS error : timed out"}
 
 Running test
 Raw output:
- {"success": false, "info": null, "error": "OS error : timed out"}
-
-Running test
-Raw output:
- {"success": true, "info": {"error": [], "version": "TLSv1.3", "cipher": ["TLS_AES_256_GCM_SHA384", "TLSv1.3", 256], "tls ca": "-----BEGIN CERTIFICATE-----\nMIIDkjCCAzigAwIBAgIQYLuY+XFNIVcSWs9SRFEA7zAKBggqhkjOPQQDAjA7MQsw\nCQYDVQQGEwJVUzEeMBwGA1UEChMVR29vZ2xlIFRydXN0IFNlcnZpY2VzMQwwCgYD\nVQQDEwNXRTIwHhcNMjUwOTE1MDgzNjE1WhcNMjUxMjA4MDgzNjE0WjAYMRYwFAYD\nVQQDEw1wb3AuZ21haWwuY29tMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEc5X7\nMBAk64KcS5kEfk/KYYl4eTnPnupBzE9WzyhNlZ5EqZkd/ydsNdfBU0yaRc6h4GoF\nxZ8PWYwRrFND9vgHM6OCAj8wggI7MA4GA1UdDwEB/wQEAwIHgDATBgNVHSUEDDAK\nBggrBgEFBQcDATAMBgNVHRMBAf8EAjAAMB0GA1UdDgQWBBSGOJ903/cAwUY0s7aS\nYl+tbDRPPjAfBgNVHSMEGDAWgBR1vsR3ron2RDd9z7FoHx0a69w0WTBYBggrBgEF\nBQcBAQRMMEowIQYIKwYBBQUHMAGGFWh0dHA6Ly9vLnBraS5nb29nL3dlMjAlBggr\nBgEFBQcwAoYZaHR0cDovL2kucGtpLmdvb2cvd2UyLmNydDAYBgNVHREEETAPgg1w\nb3AuZ21haWwuY29tMBMGA1UdIAQMMAowCAYGZ4EMAQIBMDYGA1UdHwQvMC0wK6Ap\noCeGJWh0dHA6Ly9jLnBraS5nb29nL3dlMi94dXp0M1BVOUZfdy5jcmwwggEDBgor\nBgEEAdZ5AgQCBIH0BIHxAO8AdQAS8U40vVNyTIQGGcOPP3oT+Oe1YoeInG0wBYTr\n5YYmOgAAAZlMu25CAAAEAwBGMEQCIF5f/lz3vgNcC/EEufyn2DaVZBBVcXtI6ve3\nMd/erEzyAiAFZMtPgfbQgHgKleAyzjK3luwyP/umXOvNT8vVvrY+vAB2AO08S9bo\nBsKkogBX28sk4jgB31Ev7cSGxXAPIN23Pj/gAAABmUy7bl0AAAQDAEcwRQIhAI4g\nL02s0hg9MgxmdprWfuom7EReLaetFEqw94qo8DoEAiAVPaxVd5d2RhE77uo5sTaI\n6tXs88+o3JcFtYTyd39CXTAKBggqhkjOPQQDAgNIADBFAiEApUDl3G/EyOc15l/8\nB6Q1YrEQ1POsQ5IAK0ZZGuVW9OkCIHqERFiGrt6p46HlwfyTzkj3Q6UcN00gG9Fw\nXEHvYAh3\n-----END CERTIFICATE-----\n", "auth": {"USER": [], "RESP-CODES": [], "EXPIRE": ["0"], "LOGIN-DELAY": ["300"], "TOP": [], "UIDL": [], "X-GOOGLE-RICO": [], "SASL": ["PLAIN", "XOAUTH2", "OAUTHBEARER"]}}}
+ {"success": true, "info": {"error": [], "version": "TLSv1.3", "cipher": ["TLS_AES_256_GCM_SHA384", "TLSv1.3", 256], "tls ca": "-----BEGIN CERTIFICATE-----\nMIII8zCCB9ugAwIBAgIQBrckFVyIWI1T1f6qYSy6xDANBgkqhkiG9w0BAQsFADBw\nMQswCQYDVQQGEwJVUzEVMBMGA1UEChMMRGlnaUNlcnQgSW5jMRkwFwYDVQQLExB3\nd3cuZGlnaWNlcnQuY29tMS8wLQYDVQQDEyZEaWdpQ2VydCBTSEEyIEhpZ2ggQXNz\ndXJhbmNlIFNlcnZlciBDQTAeFw0yNTA1MjAwMDAwMDBaFw0yNTExMTIyMzU5NTla\nMHUxCzAJBgNVBAYTAlVTMREwDwYDVQQIEwhOZXcgWW9yazERMA8GA1UEBxMITmV3\nIFlvcmsxHDAaBgNVBAoTE1lhaG9vIEhvbGRpbmdzIEluYy4xIjAgBgNVBAMTGWxl\nZ2FjeS5wb3AubWFpbC55YWhvby5jb20wggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAw\nggEKAoIBAQCtGNd2/zbq547QZld9im23i+dkkeX2KPRvbx2R148Yoe/aAndMDY1t\no95ArSUbN6/0nF07JAK0AobblGtv71Y8yGJzmR/9p/qDjiA8gnoMLbPXzsQ2M6vS\nobhOIuCY7lVA2KV+tcRr2FgCsOGSojliJT6FvhhoF645mZh3fDHoT4Yi3y6M4PP1\nSfV6PkF55IcM3/sGbzvFZbWFlAcmyZfFlofj4gH2IeHdCahty0i7WJpWtJQaTqv9\nb4iBjX3AyuPBhECBjrlXvf4LxipVfkStHuci+ZNtW7hxZNoEbhlcAnXGi1YB5qQw\nJSJxcDwyS8wKXXvxmWQCVBQw0JWZvuDlAgMBAAGjggWCMIIFfjAfBgNVHSMEGDAW\ngBRRaP+QrwIHdTzM2WVkYqISuFlyOzAdBgNVHQ4EFgQUOjHTAFcEtbYJnErqWPps\ne0zzdRwwggI9BgNVHREEggI0MIICMIIZbGVnYWN5LnBvcC5tYWlsLnlhaG9vLmNv\nbYIScG9wLm1haWwueWFob28uY29tghQqLnBvcC5tYWlsLnlhaG9vLmNvbYIVcG9w\nLmJpem1haWwueWFob28uY29tghVwb3AubWFpbC55YWhvby5jb20uYXKCFXBvcC5t\nYWlsLnlhaG9vLmNvbS5hdYIVcG9wLm1haWwueWFob28uY29tLmJyghVwb3AubWFp\nbC55YWhvby5jb20uaGuCFXBvcC5tYWlsLnlhaG9vLmNvbS5teYIVcG9wLm1haWwu\neWFob28uY29tLnBoghVwb3AubWFpbC55YWhvby5jb20uc2eCFXBvcC5tYWlsLnlh\naG9vLmNvbS50d4IVcG9wLm1haWwueWFob28uY29tLnZughRwb3AubWFpbC55YWhv\nby5jby5pZIIUcG9wLm1haWwueWFob28uY28uaW6CFHBvcC5tYWlsLnlhaG9vLmNv\nLmtyghRwb3AubWFpbC55YWhvby5jby50aIIUcG9wLm1haWwueWFob28uY28udWuC\nEXBvcC5tYWlsLnlhaG9vLmNhghFwb3AubWFpbC55YWhvby5kZYIRcG9wLm1haWwu\neWFob28uZnKCEXBvcC5tYWlsLnlhaG9vLmlughFwb3AubWFpbC55YWhvby5pdIIT\ncG9wLmNvcnJlby55YWhvby5lc4IOcG9wLnk3bWFpbC5jb22CEXBvcC5hdHQueWFo\nb28uY29tMD4GA1UdIAQ3MDUwMwYGZ4EMAQICMCkwJwYIKwYBBQUHAgEWG2h0dHA6\nLy93d3cuZGlnaWNlcnQuY29tL0NQUzAOBgNVHQ8BAf8EBAMCBaAwHQYDVR0lBBYw\nFAYIKwYBBQUHAwEGCCsGAQUFBwMCMHUGA1UdHwRuMGwwNKAyoDCGLmh0dHA6Ly9j\ncmwzLmRpZ2ljZXJ0LmNvbS9zaGEyLWhhLXNlcnZlci1nNi5jcmwwNKAyoDCGLmh0\ndHA6Ly9jcmw0LmRpZ2ljZXJ0LmNvbS9zaGEyLWhhLXNlcnZlci1nNi5jcmwwgYMG\nCCsGAQUFBwEBBHcwdTAkBggrBgEFBQcwAYYYaHR0cDovL29jc3AuZGlnaWNlcnQu\nY29tME0GCCsGAQUFBzAChkFodHRwOi8vY2FjZXJ0cy5kaWdpY2VydC5jb20vRGln\naUNlcnRTSEEySGlnaEFzc3VyYW5jZVNlcnZlckNBLmNydDAMBgNVHRMBAf8EAjAA\nMIIBfwYKKwYBBAHWeQIEAgSCAW8EggFrAWkAdQDd3Mo0ldfhFgXnlTL6x5/4PRxQ\n39sAOhQSdgosrLvIKgAAAZbrri4IAAAEAwBGMEQCIDZGcbaVEqUo/rPPMUpnw0Ld\n8SDIpY4qtOnYSYB2bKuWAiBE7W4Ul9EpLj0UnHt7B0tXwesTMRJBdQ6wKqNK34Jc\n4gB3AO08S9boBsKkogBX28sk4jgB31Ev7cSGxXAPIN23Pj/gAAABluuuLeMAAAQD\nAEgwRgIhAJFhrCTxzxl2GDcU5r3EKfpSPxVUycNi1A/3YEq0ZPtVAiEAzNvVdJzK\ned9V293kKbiG5oEozzeIB1Uzo3/qXRqiN8AAdwCkQsUGSWBhVI8P1Oqc+3otJkVN\nh6l/L99FWfYnTzqEVAAAAZbrri31AAAEAwBIMEYCIQCLCH8iEK49Z/5zy4jxvuIk\nqeUM3nQrcZmbl8IBmKbUSAIhAMBkfBSeoKMI8XVGVVv/xb2gS7cK1IiwBa8tLEGv\nGCJeMA0GCSqGSIb3DQEBCwUAA4IBAQA+ajBCucS9d0TLRqNypoxnpZrD104IPSgH\nREB9+lec6zTa/W7G8AphIvOkkuMHqcjE9MxrAD0J9WP7BQKwQQL98j53yXtNRh+Q\nga2CCO81y5v7u5+1qfSp1ezWgMfR6mHGFil4fxjcBF0kWiOZaDEklRX6YMbrLECZ\nRzvKF3TY0uzIO1ME+KPcChHwLMXhDEbQysn8xvQye6PviAYH8pGcBDqRJp72jjTU\nh2fMSns9NAdsVXfkB/AkvBQgaIWI94FrcOyUo2LOxe6AQW26F0L+hm13fDKuKJ97\neq3xd+F7TnGe/pqr0Xhxo5e+fwqfSLMT7JWeftM7daL5JhP26dZC\n-----END CERTIFICATE-----\n", "auth": {"IMPLEMENTATION": ["jpop-0.1"], "EXPIRE-NEVER": [], "PIPELINING": [], "RESP-CODES": [], "TOP": [], "UIDL": [], "USER": [], "SASL": ["PLAIN", "XOAUTH2"]}}}
 
 ProtocolType: smtp
 Port: 465
-Hostname: smtp.gmail.com
+Hostname: smtp.mail.yahoo.com
+Running test
+2025/10/09 21:01:09 WebSocket 关闭: websocket: close 1001 (going away)
+2025/10/09 21:01:10 WebSocket 关闭: websocket: close 1001 (going away)
+Raw output:
+ {"success": false, "info": null, "error": "OS error : Connection unexpectedly closed: timed out"}
+
+Running test
+2025/10/09 21:01:11 ⚡ 缓存命中: yandex.com
+2025/10/09 21:01:11 客户端已连接进度 WebSocket
+2025/10/09 21:01:12 ⚡ 缓存命中: spammotel.com
+2025/10/09 21:01:12 客户端已连接进度 WebSocket
+Raw output:
+ {"success": false, "info": null, "error": "OS error : Connection unexpectedly closed: timed out"}
+
+Running test
+Raw output:
+ {"success": true, "info": {"error": [], "version": "TLSv1.3", "cipher": ["TLS_AES_128_GCM_SHA256", "TLSv1.3", 128], "tls ca": "-----BEGIN CERTIFICATE-----\nMIIIwDCCB6igAwIBAgIQD4G+WKXfEGkt2U/98nr9DTANBgkqhkiG9w0BAQsFADBw\nMQswCQYDVQQGEwJVUzEVMBMGA1UEChMMRGlnaUNlcnQgSW5jMRkwFwYDVQQLExB3\nd3cuZGlnaWNlcnQuY29tMS8wLQYDVQQDEyZEaWdpQ2VydCBTSEEyIEhpZ2ggQXNz\ndXJhbmNlIFNlcnZlciBDQTAeFw0yNTA1MjAwMDAwMDBaFw0yNTExMTIyMzU5NTla\nMG8xCzAJBgNVBAYTAlVTMREwDwYDVQQIEwhOZXcgWW9yazERMA8GA1UEBxMITmV3\nIFlvcmsxHDAaBgNVBAoTE1lhaG9vIEhvbGRpbmdzIEluYy4xHDAaBgNVBAMTE3Nt\ndHAubWFpbC55YWhvby5jb20wggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIB\nAQDNoGhIA9iYXos4ia7+Q4NoT7uXyC54GiibhsmrTHlaI0zkENkShVVjgUARNBxS\nmGX0x/yaczxTNJpcuBmIP7LwdcFoZIu8jShX7zw2/1MZMDDSzPe5C0ZKLGtpbbAi\nHe+COPd9R1dmt18UQAyQAVYx2hbzU8kGN4uolGF25CTZAzZgAb/k+VRfwKgBN/bH\nF+kqRtOZUleKYDpFXn2zgSOuUjkvG9+HCHF0yf2VvEd6YGFX+j6MMwMFS45ozkt4\nvMosQbXFj3yTttWSO7RvcM2z75Ienh8ArmVemMBHYdJumNL2L/EemYzide0YPhdL\n5NZpkTLqVkkOi/EOccdwiBRtAgMBAAGjggVVMIIFUTAfBgNVHSMEGDAWgBRRaP+Q\nrwIHdTzM2WVkYqISuFlyOzAdBgNVHQ4EFgQUN3VlhPAXlbKW+WOjsKWbB/uXmagw\nggIQBgNVHREEggIHMIICA4ITc210cC5tYWlsLnlhaG9vLmNvbYIWc210cC5tYWls\nLnlhaG9vLmNvbS5hcoIWc210cC5tYWlsLnlhaG9vLmNvbS5hdYIWc210cC5tYWls\nLnlhaG9vLmNvbS5icoIWc210cC5tYWlsLnlhaG9vLmNvbS5jboIWc210cC5tYWls\nLnlhaG9vLmNvbS5oa4IWc210cC5tYWlsLnlhaG9vLmNvbS5teYIWc210cC5tYWls\nLnlhaG9vLmNvbS5waIIWc210cC5tYWlsLnlhaG9vLmNvbS5zZ4IWc210cC5tYWls\nLnlhaG9vLmNvbS50d4IWc210cC5tYWlsLnlhaG9vLmNvbS52boIVc210cC5tYWls\nLnlhaG9vLmNvLmlkghVzbXRwLm1haWwueWFob28uY28uaW6CFXNtdHAubWFpbC55\nYWhvby5jby5rcoIVc210cC5tYWlsLnlhaG9vLmNvLnRoghVzbXRwLm1haWwueWFo\nb28uY28udWuCEnNtdHAubWFpbC55YWhvby5jYYISc210cC5tYWlsLnlhaG9vLmNu\nghJzbXRwLm1haWwueWFob28uZGWCEnNtdHAubWFpbC55YWhvby5mcoISc210cC5t\nYWlsLnlhaG9vLml0gg9zbXRwLnk3bWFpbC5jb22CFHNtdHAuY29ycmVvLnlhaG9v\nLmVzMD4GA1UdIAQ3MDUwMwYGZ4EMAQICMCkwJwYIKwYBBQUHAgEWG2h0dHA6Ly93\nd3cuZGlnaWNlcnQuY29tL0NQUzAOBgNVHQ8BAf8EBAMCBaAwHQYDVR0lBBYwFAYI\nKwYBBQUHAwEGCCsGAQUFBwMCMHUGA1UdHwRuMGwwNKAyoDCGLmh0dHA6Ly9jcmwz\nLmRpZ2ljZXJ0LmNvbS9zaGEyLWhhLXNlcnZlci1nNi5jcmwwNKAyoDCGLmh0dHA6\nLy9jcmw0LmRpZ2ljZXJ0LmNvbS9zaGEyLWhhLXNlcnZlci1nNi5jcmwwgYMGCCsG\nAQUFBwEBBHcwdTAkBggrBgEFBQcwAYYYaHR0cDovL29jc3AuZGlnaWNlcnQuY29t\nME0GCCsGAQUFBzAChkFodHRwOi8vY2FjZXJ0cy5kaWdpY2VydC5jb20vRGlnaUNl\ncnRTSEEySGlnaEFzc3VyYW5jZVNlcnZlckNBLmNydDAMBgNVHRMBAf8EAjAAMIIB\nfwYKKwYBBAHWeQIEAgSCAW8EggFrAWkAdgAS8U40vVNyTIQGGcOPP3oT+Oe1YoeI\nnG0wBYTr5YYmOgAAAZbsD569AAAEAwBHMEUCIF1s8ORblm9P2mnFLxPGZZlUnU27\nNzCB1U6oK0PVtDRqAiEAtY+htXoSYAJAi8Z8JbvywnFXubNcfTEzBs2H28HJ/3IA\ndwDtPEvW6AbCpKIAV9vLJOI4Ad9RL+3EhsVwDyDdtz4/4AAAAZbsD576AAAEAwBI\nMEYCIQDndPR4GOObBJLEl7KV8vdaKroZ2GvPW5tpJjIEH6fR7AIhAOZ940tqN4ET\n8B6wlR005QvDFb857UPYnHVdmztf+vapAHYApELFBklgYVSPD9TqnPt6LSZFTYep\nfy/fRVn2J086hFQAAAGW7A+fCgAABAMARzBFAiBjW7vn8kiV4Hknrp/HuMHSuk8o\n5zKuo07R7FG5eqvmEwIhALcJylDMuD+nwqM//S9QB53oo7J9kF6w6imN5nSfI5V4\nMA0GCSqGSIb3DQEBCwUAA4IBAQADAPrVBaoTPKfDV4azwJ8ygeG9+qC71SJaxKge\nDHHLyIbYm6C7eV3TXuQ/OZwwBGTBUTqguhQ/38tYn7kpLnsQjqgWdPUL2cT2nO0p\nfT4eIt9v0qbEjyU4xIuGVLhNCQs3qHXh9UbPO81mdS5jExDQKCoBB1LUKzP3nAee\nlsECPuy4a0KnlGJNsS7LMBoqnFzRHiDIRrXhfxl3uWkUy+12rQo2dIOwCz/dR4QB\nlukoIGWqm13ae5jCtGTBY6bh/Lkd+luNNiRbTwAi60Zwzt16gQvc12gzKiGbZcw7\nOF5bnIaBnGxeo49K3hdQOzmI+In5WPpTjOKGpJToqWfscC0o\n-----END CERTIFICATE-----\n", "enable esmtp": 1, "auth": {"pipelining": "", "enhancedstatuscodes": "", "8bitmime": "", "size": "41697280", "auth": " PLAIN LOGIN XOAUTH2 OAUTHBEARER"}}}
+
+ProtocolType: imap
+Port: 993
+Hostname: imap.mail.yahoo.com
+Running test
+Raw output:
+ {"success": false, "info": null, "error": "OS error : timed out"}
+
+Running test
+2025/10/09 21:01:16 ⚡ 缓存命中: 163.com
+2025/10/09 21:01:16 客户端已连接进度 WebSocket
+Raw output:
+ {"success": false, "info": null, "error": "OS error : timed out"}
+
+Running test
+Raw output:
+ {"success": true, "info": {"error": [], "version": "TLSv1.3", "cipher": ["TLS_AES_256_GCM_SHA384", "TLSv1.3", 256], "tls ca": "-----BEGIN CERTIFICATE-----\nMIIG4zCCBcugAwIBAgIQCFwriGafb6IWybE4NL+QMDANBgkqhkiG9w0BAQsFADBw\nMQswCQYDVQQGEwJVUzEVMBMGA1UEChMMRGlnaUNlcnQgSW5jMRkwFwYDVQQLExB3\nd3cuZGlnaWNlcnQuY29tMS8wLQYDVQQDEyZEaWdpQ2VydCBTSEEyIEhpZ2ggQXNz\ndXJhbmNlIFNlcnZlciBDQTAeFw0yNTA5MzAwMDAwMDBaFw0yNjAzMjUyMzU5NTla\nMHExCzAJBgNVBAYTAlVTMREwDwYDVQQIEwhOZXcgWW9yazERMA8GA1UEBxMITmV3\nIFlvcmsxHDAaBgNVBAoTE1lhaG9vIEhvbGRpbmdzIEluYy4xHjAcBgNVBAMMFSou\naW1hcC5tYWlsLnlhaG9vLmNvbTCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoC\nggEBAL7EypEG9sospXRjT6cQ9auOGrbPqE1wCLvJ5lGSKuwBE4OG0zNQXDROb6sf\n/T8K8GbMsMbn9hDZMZv+wF87FQ9J8gLmLLIm6hEArzs3d3nsqTq7biZ6B18ntKof\n1kG+53z6nXs4rVd1tIDtB+j8/JdqXVecetc7TjH3laxFDDGsx/HWU1BFdKlBVPZ/\nJs9JtxAKEDY06/tu5VWdTtFYgL3pQalZooMpbwKkt/Lyxq2+ONEfLTjrhkn+LMML\nI4l3FmtRrHsrl3uq5fFqSdoIltFJiQG5rc7jmta5LVLA5at7mz2aLprZysPI4B0s\nCOgL3+S+YpDRsLsIcWroh0Vl/q0CAwEAAaOCA3YwggNyMB8GA1UdIwQYMBaAFFFo\n/5CvAgd1PMzZZWRiohK4WXI7MB0GA1UdDgQWBBTCuRabp5gaYQjPfT8Z9y9tpMtZ\npTA1BgNVHREELjAsghUqLmltYXAubWFpbC55YWhvby5jb22CE2ltYXAubWFpbC55\nYWhvby5jb20wPgYDVR0gBDcwNTAzBgZngQwBAgIwKTAnBggrBgEFBQcCARYbaHR0\ncDovL3d3dy5kaWdpY2VydC5jb20vQ1BTMA4GA1UdDwEB/wQEAwIFoDAdBgNVHSUE\nFjAUBggrBgEFBQcDAQYIKwYBBQUHAwIwdQYDVR0fBG4wbDA0oDKgMIYuaHR0cDov\nL2NybDMuZGlnaWNlcnQuY29tL3NoYTItaGEtc2VydmVyLWc2LmNybDA0oDKgMIYu\naHR0cDovL2NybDQuZGlnaWNlcnQuY29tL3NoYTItaGEtc2VydmVyLWc2LmNybDCB\ngwYIKwYBBQUHAQEEdzB1MCQGCCsGAQUFBzABhhhodHRwOi8vb2NzcC5kaWdpY2Vy\ndC5jb20wTQYIKwYBBQUHMAKGQWh0dHA6Ly9jYWNlcnRzLmRpZ2ljZXJ0LmNvbS9E\naWdpQ2VydFNIQTJIaWdoQXNzdXJhbmNlU2VydmVyQ0EuY3J0MAwGA1UdEwEB/wQC\nMAAwggF9BgorBgEEAdZ5AgQCBIIBbQSCAWkBZwB1AA5XlLzzrqk+MxssmQez95Df\nm8I9cTIl3SGpJaxhxU4hAAABmZfxeYkAAAQDAEYwRAIgGQrP9bwCv/h793qClKFw\nmmI7JbIQmlE+jbnQrCx56RkCIA9Fljw0czGYo4A7nNtSQeGmUP/b78+UlvRd+Ihf\nqUgkAHcAZBHEbKQS7KeJHKICLgC8q08oB9QeNSer6v7VA8l9zfAAAAGZl/F5uQAA\nBAMASDBGAiEAsii15iVEm0qT9D4geoirXexImW14rXsA0TIYeCh5HjsCIQDOkS+7\nWrmU19ihoWs9oswJ8azLmdbeMgMzsXXpjDt2ggB1AEmcm2neHXzs/DbezYdkprhb\nrwqHgBnRVVL76esp3fjDAAABmZfxecwAAAQDAEYwRAIgQcmoYy2rPsTxPaNVbk62\n92ihKuJ5kNIs6Jqf9WcrPtkCIFt9tlGUa55djzlLCTKw7+707byTBkvc8IiMHwST\neUNqMA0GCSqGSIb3DQEBCwUAA4IBAQAeOOpnKGQ2YU9iOrTWclCsa4EZZqXMovYU\nwcqJwaPZYD0rXN+zr2PUlNwqE+Pa3YSdhHjTkivERS4JaXvnSeALho0VdyU3f6rg\n3zQs4w7QYIt1NyUby1NALS/VzF8VzM55+5VBtqb0VdClb+35+KSoa3G13v82LN1U\nEgc2LDflWjmXat1SffOc1GIf2xSR1eDn2RTG474AR+TmuBGSKMqbTG9FMEtBKXNj\nrqDWPGykqh1xHEr6wnHD2hLiENbE0/ISfwt5IbsLN9sTyp0I8u/vYC2O5+5SNLMt\nQdmwlsKQOxyHMYXOK96qaPVFMo/y7RGpD5xtuw27WUJlOq+6Alt0\n-----END CERTIFICATE-----\n", "auth": ["IMAP4REV1", "SASL-IR", "AUTH=PLAIN", "AUTH=XOAUTH2", "AUTH=OAUTHBEARER", "ID", "MOVE", "NAMESPACE", "XYMHIGHESTMODSEQ", "UIDPLUS", "LITERAL+", "CHILDREN", "UNSELECT", "X-MSG-EXT", "OBJECTID", "IDLE", "ENABLE", "UIDONLY", "X-ALL-MAIL", "X-UIDONLY", "LIST-EXTENDED", "LIST-STATUS", "SPECIAL-USE", "PARTIAL", "APPENDLIMIT=41697280"]}}
+
+ProtocolType: imap
+Port: 993
+Hostname: export.imap.mail.yahoo.com
+Running test
+2025/10/09 21:01:20 WebSocket 关闭: websocket: close 1001 (going away)
+2025/10/09 21:01:20 WebSocket 关闭: websocket: close 1001 (going away)
+2025/10/09 21:01:20 WebSocket 关闭: websocket: close 1001 (going away)
+Raw output:
+ {"success": false, "info": null, "error": "OS error : timed out"}
+
+Running test
+Raw output:
+ {"success": false, "info": null, "error": "OS error : timed out"}
+
+Running test
+Raw output:
+ {"success": true, "info": {"error": [], "version": "TLSv1.3", "cipher": ["TLS_AES_256_GCM_SHA384", "TLSv1.3", 256], "tls ca": "-----BEGIN CERTIFICATE-----\nMIIG4zCCBcugAwIBAgIQCFwriGafb6IWybE4NL+QMDANBgkqhkiG9w0BAQsFADBw\nMQswCQYDVQQGEwJVUzEVMBMGA1UEChMMRGlnaUNlcnQgSW5jMRkwFwYDVQQLExB3\nd3cuZGlnaWNlcnQuY29tMS8wLQYDVQQDEyZEaWdpQ2VydCBTSEEyIEhpZ2ggQXNz\ndXJhbmNlIFNlcnZlciBDQTAeFw0yNTA5MzAwMDAwMDBaFw0yNjAzMjUyMzU5NTla\nMHExCzAJBgNVBAYTAlVTMREwDwYDVQQIEwhOZXcgWW9yazERMA8GA1UEBxMITmV3\nIFlvcmsxHDAaBgNVBAoTE1lhaG9vIEhvbGRpbmdzIEluYy4xHjAcBgNVBAMMFSou\naW1hcC5tYWlsLnlhaG9vLmNvbTCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoC\nggEBAL7EypEG9sospXRjT6cQ9auOGrbPqE1wCLvJ5lGSKuwBE4OG0zNQXDROb6sf\n/T8K8GbMsMbn9hDZMZv+wF87FQ9J8gLmLLIm6hEArzs3d3nsqTq7biZ6B18ntKof\n1kG+53z6nXs4rVd1tIDtB+j8/JdqXVecetc7TjH3laxFDDGsx/HWU1BFdKlBVPZ/\nJs9JtxAKEDY06/tu5VWdTtFYgL3pQalZooMpbwKkt/Lyxq2+ONEfLTjrhkn+LMML\nI4l3FmtRrHsrl3uq5fFqSdoIltFJiQG5rc7jmta5LVLA5at7mz2aLprZysPI4B0s\nCOgL3+S+YpDRsLsIcWroh0Vl/q0CAwEAAaOCA3YwggNyMB8GA1UdIwQYMBaAFFFo\n/5CvAgd1PMzZZWRiohK4WXI7MB0GA1UdDgQWBBTCuRabp5gaYQjPfT8Z9y9tpMtZ\npTA1BgNVHREELjAsghUqLmltYXAubWFpbC55YWhvby5jb22CE2ltYXAubWFpbC55\nYWhvby5jb20wPgYDVR0gBDcwNTAzBgZngQwBAgIwKTAnBggrBgEFBQcCARYbaHR0\ncDovL3d3dy5kaWdpY2VydC5jb20vQ1BTMA4GA1UdDwEB/wQEAwIFoDAdBgNVHSUE\nFjAUBggrBgEFBQcDAQYIKwYBBQUHAwIwdQYDVR0fBG4wbDA0oDKgMIYuaHR0cDov\nL2NybDMuZGlnaWNlcnQuY29tL3NoYTItaGEtc2VydmVyLWc2LmNybDA0oDKgMIYu\naHR0cDovL2NybDQuZGlnaWNlcnQuY29tL3NoYTItaGEtc2VydmVyLWc2LmNybDCB\ngwYIKwYBBQUHAQEEdzB1MCQGCCsGAQUFBzABhhhodHRwOi8vb2NzcC5kaWdpY2Vy\ndC5jb20wTQYIKwYBBQUHMAKGQWh0dHA6Ly9jYWNlcnRzLmRpZ2ljZXJ0LmNvbS9E\naWdpQ2VydFNIQTJIaWdoQXNzdXJhbmNlU2VydmVyQ0EuY3J0MAwGA1UdEwEB/wQC\nMAAwggF9BgorBgEEAdZ5AgQCBIIBbQSCAWkBZwB1AA5XlLzzrqk+MxssmQez95Df\nm8I9cTIl3SGpJaxhxU4hAAABmZfxeYkAAAQDAEYwRAIgGQrP9bwCv/h793qClKFw\nmmI7JbIQmlE+jbnQrCx56RkCIA9Fljw0czGYo4A7nNtSQeGmUP/b78+UlvRd+Ihf\nqUgkAHcAZBHEbKQS7KeJHKICLgC8q08oB9QeNSer6v7VA8l9zfAAAAGZl/F5uQAA\nBAMASDBGAiEAsii15iVEm0qT9D4geoirXexImW14rXsA0TIYeCh5HjsCIQDOkS+7\nWrmU19ihoWs9oswJ8azLmdbeMgMzsXXpjDt2ggB1AEmcm2neHXzs/DbezYdkprhb\nrwqHgBnRVVL76esp3fjDAAABmZfxecwAAAQDAEYwRAIgQcmoYy2rPsTxPaNVbk62\n92ihKuJ5kNIs6Jqf9WcrPtkCIFt9tlGUa55djzlLCTKw7+707byTBkvc8IiMHwST\neUNqMA0GCSqGSIb3DQEBCwUAA4IBAQAeOOpnKGQ2YU9iOrTWclCsa4EZZqXMovYU\nwcqJwaPZYD0rXN+zr2PUlNwqE+Pa3YSdhHjTkivERS4JaXvnSeALho0VdyU3f6rg\n3zQs4w7QYIt1NyUby1NALS/VzF8VzM55+5VBtqb0VdClb+35+KSoa3G13v82LN1U\nEgc2LDflWjmXat1SffOc1GIf2xSR1eDn2RTG474AR+TmuBGSKMqbTG9FMEtBKXNj\nrqDWPGykqh1xHEr6wnHD2hLiENbE0/ISfwt5IbsLN9sTyp0I8u/vYC2O5+5SNLMt\nQdmwlsKQOxyHMYXOK96qaPVFMo/y7RGpD5xtuw27WUJlOq+6Alt0\n-----END CERTIFICATE-----\n", "auth": ["IMAP4REV1", "SASL-IR", "AUTH=PLAIN", "AUTH=XOAUTH2", "AUTH=OAUTHBEARER", "ID", "MOVE", "NAMESPACE", "XYMHIGHESTMODSEQ", "UIDPLUS", "LITERAL+", "CHILDREN", "UNSELECT", "X-MSG-EXT", "OBJECTID", "IDLE", "ENABLE", "UIDONLY", "X-ALL-MAIL", "X-UIDONLY", "LIST-EXTENDED", "LIST-STATUS", "SPECIAL-USE", "PARTIAL", "APPENDLIMIT=41697280"]}}
+
+ProtocolType: pop3
+Port: 995
+Hostname: pop.mail.yahoo.com
+Running test
+Raw output:
+ {"success": false, "info": null, "error": "OS error : timed out"}
+
+Running test
+Raw output:
+ {"success": false, "info": null, "error": "OS error : timed out"}
+
+Running test
+Raw output:
+ {"success": true, "info": {"error": [], "version": "TLSv1.3", "cipher": ["TLS_AES_256_GCM_SHA384", "TLSv1.3", 256], "tls ca": "-----BEGIN CERTIFICATE-----\nMIII8zCCB9ugAwIBAgIQBrckFVyIWI1T1f6qYSy6xDANBgkqhkiG9w0BAQsFADBw\nMQswCQYDVQQGEwJVUzEVMBMGA1UEChMMRGlnaUNlcnQgSW5jMRkwFwYDVQQLExB3\nd3cuZGlnaWNlcnQuY29tMS8wLQYDVQQDEyZEaWdpQ2VydCBTSEEyIEhpZ2ggQXNz\ndXJhbmNlIFNlcnZlciBDQTAeFw0yNTA1MjAwMDAwMDBaFw0yNTExMTIyMzU5NTla\nMHUxCzAJBgNVBAYTAlVTMREwDwYDVQQIEwhOZXcgWW9yazERMA8GA1UEBxMITmV3\nIFlvcmsxHDAaBgNVBAoTE1lhaG9vIEhvbGRpbmdzIEluYy4xIjAgBgNVBAMTGWxl\nZ2FjeS5wb3AubWFpbC55YWhvby5jb20wggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAw\nggEKAoIBAQCtGNd2/zbq547QZld9im23i+dkkeX2KPRvbx2R148Yoe/aAndMDY1t\no95ArSUbN6/0nF07JAK0AobblGtv71Y8yGJzmR/9p/qDjiA8gnoMLbPXzsQ2M6vS\nobhOIuCY7lVA2KV+tcRr2FgCsOGSojliJT6FvhhoF645mZh3fDHoT4Yi3y6M4PP1\nSfV6PkF55IcM3/sGbzvFZbWFlAcmyZfFlofj4gH2IeHdCahty0i7WJpWtJQaTqv9\nb4iBjX3AyuPBhECBjrlXvf4LxipVfkStHuci+ZNtW7hxZNoEbhlcAnXGi1YB5qQw\nJSJxcDwyS8wKXXvxmWQCVBQw0JWZvuDlAgMBAAGjggWCMIIFfjAfBgNVHSMEGDAW\ngBRRaP+QrwIHdTzM2WVkYqISuFlyOzAdBgNVHQ4EFgQUOjHTAFcEtbYJnErqWPps\ne0zzdRwwggI9BgNVHREEggI0MIICMIIZbGVnYWN5LnBvcC5tYWlsLnlhaG9vLmNv\nbYIScG9wLm1haWwueWFob28uY29tghQqLnBvcC5tYWlsLnlhaG9vLmNvbYIVcG9w\nLmJpem1haWwueWFob28uY29tghVwb3AubWFpbC55YWhvby5jb20uYXKCFXBvcC5t\nYWlsLnlhaG9vLmNvbS5hdYIVcG9wLm1haWwueWFob28uY29tLmJyghVwb3AubWFp\nbC55YWhvby5jb20uaGuCFXBvcC5tYWlsLnlhaG9vLmNvbS5teYIVcG9wLm1haWwu\neWFob28uY29tLnBoghVwb3AubWFpbC55YWhvby5jb20uc2eCFXBvcC5tYWlsLnlh\naG9vLmNvbS50d4IVcG9wLm1haWwueWFob28uY29tLnZughRwb3AubWFpbC55YWhv\nby5jby5pZIIUcG9wLm1haWwueWFob28uY28uaW6CFHBvcC5tYWlsLnlhaG9vLmNv\nLmtyghRwb3AubWFpbC55YWhvby5jby50aIIUcG9wLm1haWwueWFob28uY28udWuC\nEXBvcC5tYWlsLnlhaG9vLmNhghFwb3AubWFpbC55YWhvby5kZYIRcG9wLm1haWwu\neWFob28uZnKCEXBvcC5tYWlsLnlhaG9vLmlughFwb3AubWFpbC55YWhvby5pdIIT\ncG9wLmNvcnJlby55YWhvby5lc4IOcG9wLnk3bWFpbC5jb22CEXBvcC5hdHQueWFo\nb28uY29tMD4GA1UdIAQ3MDUwMwYGZ4EMAQICMCkwJwYIKwYBBQUHAgEWG2h0dHA6\nLy93d3cuZGlnaWNlcnQuY29tL0NQUzAOBgNVHQ8BAf8EBAMCBaAwHQYDVR0lBBYw\nFAYIKwYBBQUHAwEGCCsGAQUFBwMCMHUGA1UdHwRuMGwwNKAyoDCGLmh0dHA6Ly9j\ncmwzLmRpZ2ljZXJ0LmNvbS9zaGEyLWhhLXNlcnZlci1nNi5jcmwwNKAyoDCGLmh0\ndHA6Ly9jcmw0LmRpZ2ljZXJ0LmNvbS9zaGEyLWhhLXNlcnZlci1nNi5jcmwwgYMG\nCCsGAQUFBwEBBHcwdTAkBggrBgEFBQcwAYYYaHR0cDovL29jc3AuZGlnaWNlcnQu\nY29tME0GCCsGAQUFBzAChkFodHRwOi8vY2FjZXJ0cy5kaWdpY2VydC5jb20vRGln\naUNlcnRTSEEySGlnaEFzc3VyYW5jZVNlcnZlckNBLmNydDAMBgNVHRMBAf8EAjAA\nMIIBfwYKKwYBBAHWeQIEAgSCAW8EggFrAWkAdQDd3Mo0ldfhFgXnlTL6x5/4PRxQ\n39sAOhQSdgosrLvIKgAAAZbrri4IAAAEAwBGMEQCIDZGcbaVEqUo/rPPMUpnw0Ld\n8SDIpY4qtOnYSYB2bKuWAiBE7W4Ul9EpLj0UnHt7B0tXwesTMRJBdQ6wKqNK34Jc\n4gB3AO08S9boBsKkogBX28sk4jgB31Ev7cSGxXAPIN23Pj/gAAABluuuLeMAAAQD\nAEgwRgIhAJFhrCTxzxl2GDcU5r3EKfpSPxVUycNi1A/3YEq0ZPtVAiEAzNvVdJzK\ned9V293kKbiG5oEozzeIB1Uzo3/qXRqiN8AAdwCkQsUGSWBhVI8P1Oqc+3otJkVN\nh6l/L99FWfYnTzqEVAAAAZbrri31AAAEAwBIMEYCIQCLCH8iEK49Z/5zy4jxvuIk\nqeUM3nQrcZmbl8IBmKbUSAIhAMBkfBSeoKMI8XVGVVv/xb2gS7cK1IiwBa8tLEGv\nGCJeMA0GCSqGSIb3DQEBCwUAA4IBAQA+ajBCucS9d0TLRqNypoxnpZrD104IPSgH\nREB9+lec6zTa/W7G8AphIvOkkuMHqcjE9MxrAD0J9WP7BQKwQQL98j53yXtNRh+Q\nga2CCO81y5v7u5+1qfSp1ezWgMfR6mHGFil4fxjcBF0kWiOZaDEklRX6YMbrLECZ\nRzvKF3TY0uzIO1ME+KPcChHwLMXhDEbQysn8xvQye6PviAYH8pGcBDqRJp72jjTU\nh2fMSns9NAdsVXfkB/AkvBQgaIWI94FrcOyUo2LOxe6AQW26F0L+hm13fDKuKJ97\neq3xd+F7TnGe/pqr0Xhxo5e+fwqfSLMT7JWeftM7daL5JhP26dZC\n-----END CERTIFICATE-----\n", "auth": {"IMPLEMENTATION": ["jpop-0.1"], "EXPIRE-NEVER": [], "PIPELINING": [], "RESP-CODES": [], "TOP": [], "UIDL": [], "USER": [], "SASL": ["PLAIN", "XOAUTH2"]}}}
+
+ProtocolType: smtp
+Port: 465
+Hostname: smtp.mail.yahoo.com
 Running test
 Raw output:
  {"success": false, "info": null, "error": "OS error : Connection unexpectedly closed: timed out"}
@@ -110,16 +175,168 @@ Raw output:
 
 Running test
 Raw output:
- {"success": true, "info": {"error": [], "version": "TLSv1.3", "cipher": ["TLS_AES_256_GCM_SHA384", "TLSv1.3", 256], "tls ca": "-----BEGIN CERTIFICATE-----\nMIIDmDCCAz6gAwIBAgIRAKmDX2rqSO14EmdzvQaXFacwCgYIKoZIzj0EAwIwOzEL\nMAkGA1UEBhMCVVMxHjAcBgNVBAoTFUdvb2dsZSBUcnVzdCBTZXJ2aWNlczEMMAoG\nA1UEAxMDV0UyMB4XDTI1MDkxNTA4MzYxNloXDTI1MTIwODA4MzYxNVowGTEXMBUG\nA1UEAxMOc210cC5nbWFpbC5jb20wWTATBgcqhkjOPQIBBggqhkjOPQMBBwNCAASS\npY9Vdvv/Xd4J8M5fDKfsFGoJ0ZfZ5Fhh3IjrIo6y5gkckboHgOIh/IVeXguZ8Zdj\nkCx/vcJiRxAXnFOKV5j4o4ICQzCCAj8wDgYDVR0PAQH/BAQDAgeAMBMGA1UdJQQM\nMAoGCCsGAQUFBwMBMAwGA1UdEwEB/wQCMAAwHQYDVR0OBBYEFPtEbP0sB0dN7rxo\nsSzsJHglRP/HMB8GA1UdIwQYMBaAFHW+xHeuifZEN33PsWgfHRrr3DRZMFgGCCsG\nAQUFBwEBBEwwSjAhBggrBgEFBQcwAYYVaHR0cDovL28ucGtpLmdvb2cvd2UyMCUG\nCCsGAQUFBzAChhlodHRwOi8vaS5wa2kuZ29vZy93ZTIuY3J0MBkGA1UdEQQSMBCC\nDnNtdHAuZ21haWwuY29tMBMGA1UdIAQMMAowCAYGZ4EMAQIBMDYGA1UdHwQvMC0w\nK6ApoCeGJWh0dHA6Ly9jLnBraS5nb29nL3dlMi9kVE0zLTBocFdmRS5jcmwwggEG\nBgorBgEEAdZ5AgQCBIH3BIH0APIAdwAS8U40vVNyTIQGGcOPP3oT+Oe1YoeInG0w\nBYTr5YYmOgAAAZlMu3J6AAAEAwBIMEYCIQC7QYaEhSi3a2N72LHSPCltFVJ8N8XZ\nzuZIfdOrgJahDwIhAJxmkpzzXs69jYR3mbWM6DPmOfAubRFa25/e9L3wZimfAHcA\nGgT/SdBUHUCv9qDDv/HYxGcvTuzuI0BomGsXQC7ciX0AAAGZTLtypQAABAMASDBG\nAiEA4ffRRAfY2dfkvSCoAVcBoYzV5rqPQmPHm8gTpZZbwZ0CIQCmF6yt8bg6mcyV\nGYsZSK0e6PG9/ZEr+SbavJSOkNTCYzAKBggqhkjOPQQDAgNIADBFAiBtmYF8C5Jm\ntzcCKxP31wASURQLZov9Yr7dLvvqq8xWMQIhAP97Vzafzd2DCMopfBG+CSMrgQNh\nnKJccrb8R91SUXzz\n-----END CERTIFICATE-----\n", "enable esmtp": 1, "auth": {"size": "35882577", "8bitmime": "", "auth": " LOGIN PLAIN XOAUTH2 PLAIN-CLIENTTOKEN OAUTHBEARER XOAUTH", "enhancedstatuscodes": "", "pipelining": "", "chunking": "", "smtputf8": ""}}}
+ {"success": true, "info": {"error": [], "version": "TLSv1.3", "cipher": ["TLS_AES_128_GCM_SHA256", "TLSv1.3", 128], "tls ca": "-----BEGIN CERTIFICATE-----\nMIIIwDCCB6igAwIBAgIQD4G+WKXfEGkt2U/98nr9DTANBgkqhkiG9w0BAQsFADBw\nMQswCQYDVQQGEwJVUzEVMBMGA1UEChMMRGlnaUNlcnQgSW5jMRkwFwYDVQQLExB3\nd3cuZGlnaWNlcnQuY29tMS8wLQYDVQQDEyZEaWdpQ2VydCBTSEEyIEhpZ2ggQXNz\ndXJhbmNlIFNlcnZlciBDQTAeFw0yNTA1MjAwMDAwMDBaFw0yNTExMTIyMzU5NTla\nMG8xCzAJBgNVBAYTAlVTMREwDwYDVQQIEwhOZXcgWW9yazERMA8GA1UEBxMITmV3\nIFlvcmsxHDAaBgNVBAoTE1lhaG9vIEhvbGRpbmdzIEluYy4xHDAaBgNVBAMTE3Nt\ndHAubWFpbC55YWhvby5jb20wggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIB\nAQDNoGhIA9iYXos4ia7+Q4NoT7uXyC54GiibhsmrTHlaI0zkENkShVVjgUARNBxS\nmGX0x/yaczxTNJpcuBmIP7LwdcFoZIu8jShX7zw2/1MZMDDSzPe5C0ZKLGtpbbAi\nHe+COPd9R1dmt18UQAyQAVYx2hbzU8kGN4uolGF25CTZAzZgAb/k+VRfwKgBN/bH\nF+kqRtOZUleKYDpFXn2zgSOuUjkvG9+HCHF0yf2VvEd6YGFX+j6MMwMFS45ozkt4\nvMosQbXFj3yTttWSO7RvcM2z75Ienh8ArmVemMBHYdJumNL2L/EemYzide0YPhdL\n5NZpkTLqVkkOi/EOccdwiBRtAgMBAAGjggVVMIIFUTAfBgNVHSMEGDAWgBRRaP+Q\nrwIHdTzM2WVkYqISuFlyOzAdBgNVHQ4EFgQUN3VlhPAXlbKW+WOjsKWbB/uXmagw\nggIQBgNVHREEggIHMIICA4ITc210cC5tYWlsLnlhaG9vLmNvbYIWc210cC5tYWls\nLnlhaG9vLmNvbS5hcoIWc210cC5tYWlsLnlhaG9vLmNvbS5hdYIWc210cC5tYWls\nLnlhaG9vLmNvbS5icoIWc210cC5tYWlsLnlhaG9vLmNvbS5jboIWc210cC5tYWls\nLnlhaG9vLmNvbS5oa4IWc210cC5tYWlsLnlhaG9vLmNvbS5teYIWc210cC5tYWls\nLnlhaG9vLmNvbS5waIIWc210cC5tYWlsLnlhaG9vLmNvbS5zZ4IWc210cC5tYWls\nLnlhaG9vLmNvbS50d4IWc210cC5tYWlsLnlhaG9vLmNvbS52boIVc210cC5tYWls\nLnlhaG9vLmNvLmlkghVzbXRwLm1haWwueWFob28uY28uaW6CFXNtdHAubWFpbC55\nYWhvby5jby5rcoIVc210cC5tYWlsLnlhaG9vLmNvLnRoghVzbXRwLm1haWwueWFo\nb28uY28udWuCEnNtdHAubWFpbC55YWhvby5jYYISc210cC5tYWlsLnlhaG9vLmNu\nghJzbXRwLm1haWwueWFob28uZGWCEnNtdHAubWFpbC55YWhvby5mcoISc210cC5t\nYWlsLnlhaG9vLml0gg9zbXRwLnk3bWFpbC5jb22CFHNtdHAuY29ycmVvLnlhaG9v\nLmVzMD4GA1UdIAQ3MDUwMwYGZ4EMAQICMCkwJwYIKwYBBQUHAgEWG2h0dHA6Ly93\nd3cuZGlnaWNlcnQuY29tL0NQUzAOBgNVHQ8BAf8EBAMCBaAwHQYDVR0lBBYwFAYI\nKwYBBQUHAwEGCCsGAQUFBwMCMHUGA1UdHwRuMGwwNKAyoDCGLmh0dHA6Ly9jcmwz\nLmRpZ2ljZXJ0LmNvbS9zaGEyLWhhLXNlcnZlci1nNi5jcmwwNKAyoDCGLmh0dHA6\nLy9jcmw0LmRpZ2ljZXJ0LmNvbS9zaGEyLWhhLXNlcnZlci1nNi5jcmwwgYMGCCsG\nAQUFBwEBBHcwdTAkBggrBgEFBQcwAYYYaHR0cDovL29jc3AuZGlnaWNlcnQuY29t\nME0GCCsGAQUFBzAChkFodHRwOi8vY2FjZXJ0cy5kaWdpY2VydC5jb20vRGlnaUNl\ncnRTSEEySGlnaEFzc3VyYW5jZVNlcnZlckNBLmNydDAMBgNVHRMBAf8EAjAAMIIB\nfwYKKwYBBAHWeQIEAgSCAW8EggFrAWkAdgAS8U40vVNyTIQGGcOPP3oT+Oe1YoeI\nnG0wBYTr5YYmOgAAAZbsD569AAAEAwBHMEUCIF1s8ORblm9P2mnFLxPGZZlUnU27\nNzCB1U6oK0PVtDRqAiEAtY+htXoSYAJAi8Z8JbvywnFXubNcfTEzBs2H28HJ/3IA\ndwDtPEvW6AbCpKIAV9vLJOI4Ad9RL+3EhsVwDyDdtz4/4AAAAZbsD576AAAEAwBI\nMEYCIQDndPR4GOObBJLEl7KV8vdaKroZ2GvPW5tpJjIEH6fR7AIhAOZ940tqN4ET\n8B6wlR005QvDFb857UPYnHVdmztf+vapAHYApELFBklgYVSPD9TqnPt6LSZFTYep\nfy/fRVn2J086hFQAAAGW7A+fCgAABAMARzBFAiBjW7vn8kiV4Hknrp/HuMHSuk8o\n5zKuo07R7FG5eqvmEwIhALcJylDMuD+nwqM//S9QB53oo7J9kF6w6imN5nSfI5V4\nMA0GCSqGSIb3DQEBCwUAA4IBAQADAPrVBaoTPKfDV4azwJ8ygeG9+qC71SJaxKge\nDHHLyIbYm6C7eV3TXuQ/OZwwBGTBUTqguhQ/38tYn7kpLnsQjqgWdPUL2cT2nO0p\nfT4eIt9v0qbEjyU4xIuGVLhNCQs3qHXh9UbPO81mdS5jExDQKCoBB1LUKzP3nAee\nlsECPuy4a0KnlGJNsS7LMBoqnFzRHiDIRrXhfxl3uWkUy+12rQo2dIOwCz/dR4QB\nlukoIGWqm13ae5jCtGTBY6bh/Lkd+luNNiRbTwAi60Zwzt16gQvc12gzKiGbZcw7\nOF5bnIaBnGxeo49K3hdQOzmI+In5WPpTjOKGpJToqWfscC0o\n-----END CERTIFICATE-----\n", "enable esmtp": 1, "auth": {"pipelining": "", "enhancedstatuscodes": "", "8bitmime": "", "size": "41697280", "auth": " PLAIN LOGIN XOAUTH2 OAUTHBEARER"}}}
 
-service:_imap._tcp.gmail.com, adBit:false
-service:_imaps._tcp.gmail.com, adBit:false
-service:_pop3._tcp.gmail.com, adBit:false
-service:_pop3s._tcp.gmail.com, adBit:false
-service:_submission._tcp.gmail.com, adBit:false
-service:_submissions._tcp.gmail.com, adBit:false
-Failed to query SRV for _submissions._tcp.gmail.com or no records found: <nil>
-securesecureinsecure[{IMAP 993 secure imap.gmail.com on} {POP3 995 secure pop.gmail.com on} {SMTP 587 insecure smtp.gmail.com off}]Running test
+ProtocolType: imap
+Port: 993
+Hostname: imap.mail.yahoo.com
+Running test
+Raw output:
+ {"success": false, "info": null, "error": "OS error : timed out"}
+
+Running test
+Raw output:
+ {"success": false, "info": null, "error": "OS error : timed out"}
+
+Running test
+Raw output:
+ {"success": true, "info": {"error": [], "version": "TLSv1.3", "cipher": ["TLS_AES_256_GCM_SHA384", "TLSv1.3", 256], "tls ca": "-----BEGIN CERTIFICATE-----\nMIIG4zCCBcugAwIBAgIQCFwriGafb6IWybE4NL+QMDANBgkqhkiG9w0BAQsFADBw\nMQswCQYDVQQGEwJVUzEVMBMGA1UEChMMRGlnaUNlcnQgSW5jMRkwFwYDVQQLExB3\nd3cuZGlnaWNlcnQuY29tMS8wLQYDVQQDEyZEaWdpQ2VydCBTSEEyIEhpZ2ggQXNz\ndXJhbmNlIFNlcnZlciBDQTAeFw0yNTA5MzAwMDAwMDBaFw0yNjAzMjUyMzU5NTla\nMHExCzAJBgNVBAYTAlVTMREwDwYDVQQIEwhOZXcgWW9yazERMA8GA1UEBxMITmV3\nIFlvcmsxHDAaBgNVBAoTE1lhaG9vIEhvbGRpbmdzIEluYy4xHjAcBgNVBAMMFSou\naW1hcC5tYWlsLnlhaG9vLmNvbTCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoC\nggEBAL7EypEG9sospXRjT6cQ9auOGrbPqE1wCLvJ5lGSKuwBE4OG0zNQXDROb6sf\n/T8K8GbMsMbn9hDZMZv+wF87FQ9J8gLmLLIm6hEArzs3d3nsqTq7biZ6B18ntKof\n1kG+53z6nXs4rVd1tIDtB+j8/JdqXVecetc7TjH3laxFDDGsx/HWU1BFdKlBVPZ/\nJs9JtxAKEDY06/tu5VWdTtFYgL3pQalZooMpbwKkt/Lyxq2+ONEfLTjrhkn+LMML\nI4l3FmtRrHsrl3uq5fFqSdoIltFJiQG5rc7jmta5LVLA5at7mz2aLprZysPI4B0s\nCOgL3+S+YpDRsLsIcWroh0Vl/q0CAwEAAaOCA3YwggNyMB8GA1UdIwQYMBaAFFFo\n/5CvAgd1PMzZZWRiohK4WXI7MB0GA1UdDgQWBBTCuRabp5gaYQjPfT8Z9y9tpMtZ\npTA1BgNVHREELjAsghUqLmltYXAubWFpbC55YWhvby5jb22CE2ltYXAubWFpbC55\nYWhvby5jb20wPgYDVR0gBDcwNTAzBgZngQwBAgIwKTAnBggrBgEFBQcCARYbaHR0\ncDovL3d3dy5kaWdpY2VydC5jb20vQ1BTMA4GA1UdDwEB/wQEAwIFoDAdBgNVHSUE\nFjAUBggrBgEFBQcDAQYIKwYBBQUHAwIwdQYDVR0fBG4wbDA0oDKgMIYuaHR0cDov\nL2NybDMuZGlnaWNlcnQuY29tL3NoYTItaGEtc2VydmVyLWc2LmNybDA0oDKgMIYu\naHR0cDovL2NybDQuZGlnaWNlcnQuY29tL3NoYTItaGEtc2VydmVyLWc2LmNybDCB\ngwYIKwYBBQUHAQEEdzB1MCQGCCsGAQUFBzABhhhodHRwOi8vb2NzcC5kaWdpY2Vy\ndC5jb20wTQYIKwYBBQUHMAKGQWh0dHA6Ly9jYWNlcnRzLmRpZ2ljZXJ0LmNvbS9E\naWdpQ2VydFNIQTJIaWdoQXNzdXJhbmNlU2VydmVyQ0EuY3J0MAwGA1UdEwEB/wQC\nMAAwggF9BgorBgEEAdZ5AgQCBIIBbQSCAWkBZwB1AA5XlLzzrqk+MxssmQez95Df\nm8I9cTIl3SGpJaxhxU4hAAABmZfxeYkAAAQDAEYwRAIgGQrP9bwCv/h793qClKFw\nmmI7JbIQmlE+jbnQrCx56RkCIA9Fljw0czGYo4A7nNtSQeGmUP/b78+UlvRd+Ihf\nqUgkAHcAZBHEbKQS7KeJHKICLgC8q08oB9QeNSer6v7VA8l9zfAAAAGZl/F5uQAA\nBAMASDBGAiEAsii15iVEm0qT9D4geoirXexImW14rXsA0TIYeCh5HjsCIQDOkS+7\nWrmU19ihoWs9oswJ8azLmdbeMgMzsXXpjDt2ggB1AEmcm2neHXzs/DbezYdkprhb\nrwqHgBnRVVL76esp3fjDAAABmZfxecwAAAQDAEYwRAIgQcmoYy2rPsTxPaNVbk62\n92ihKuJ5kNIs6Jqf9WcrPtkCIFt9tlGUa55djzlLCTKw7+707byTBkvc8IiMHwST\neUNqMA0GCSqGSIb3DQEBCwUAA4IBAQAeOOpnKGQ2YU9iOrTWclCsa4EZZqXMovYU\nwcqJwaPZYD0rXN+zr2PUlNwqE+Pa3YSdhHjTkivERS4JaXvnSeALho0VdyU3f6rg\n3zQs4w7QYIt1NyUby1NALS/VzF8VzM55+5VBtqb0VdClb+35+KSoa3G13v82LN1U\nEgc2LDflWjmXat1SffOc1GIf2xSR1eDn2RTG474AR+TmuBGSKMqbTG9FMEtBKXNj\nrqDWPGykqh1xHEr6wnHD2hLiENbE0/ISfwt5IbsLN9sTyp0I8u/vYC2O5+5SNLMt\nQdmwlsKQOxyHMYXOK96qaPVFMo/y7RGpD5xtuw27WUJlOq+6Alt0\n-----END CERTIFICATE-----\n", "auth": ["IMAP4REV1", "SASL-IR", "AUTH=PLAIN", "AUTH=XOAUTH2", "AUTH=OAUTHBEARER", "ID", "MOVE", "NAMESPACE", "XYMHIGHESTMODSEQ", "UIDPLUS", "LITERAL+", "CHILDREN", "UNSELECT", "X-MSG-EXT", "OBJECTID", "IDLE", "ENABLE", "UIDONLY", "X-ALL-MAIL", "X-UIDONLY", "LIST-EXTENDED", "LIST-STATUS", "SPECIAL-USE", "PARTIAL", "APPENDLIMIT=41697280"]}}
+
+ProtocolType: imap
+Port: 993
+Hostname: export.imap.mail.yahoo.com
+Running test
+Raw output:
+ {"success": false, "info": null, "error": "OS error : timed out"}
+
+Running test
+Raw output:
+ {"success": false, "info": null, "error": "OS error : timed out"}
+
+Running test
+Raw output:
+ {"success": true, "info": {"error": [], "version": "TLSv1.3", "cipher": ["TLS_AES_256_GCM_SHA384", "TLSv1.3", 256], "tls ca": "-----BEGIN CERTIFICATE-----\nMIIG4zCCBcugAwIBAgIQCFwriGafb6IWybE4NL+QMDANBgkqhkiG9w0BAQsFADBw\nMQswCQYDVQQGEwJVUzEVMBMGA1UEChMMRGlnaUNlcnQgSW5jMRkwFwYDVQQLExB3\nd3cuZGlnaWNlcnQuY29tMS8wLQYDVQQDEyZEaWdpQ2VydCBTSEEyIEhpZ2ggQXNz\ndXJhbmNlIFNlcnZlciBDQTAeFw0yNTA5MzAwMDAwMDBaFw0yNjAzMjUyMzU5NTla\nMHExCzAJBgNVBAYTAlVTMREwDwYDVQQIEwhOZXcgWW9yazERMA8GA1UEBxMITmV3\nIFlvcmsxHDAaBgNVBAoTE1lhaG9vIEhvbGRpbmdzIEluYy4xHjAcBgNVBAMMFSou\naW1hcC5tYWlsLnlhaG9vLmNvbTCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoC\nggEBAL7EypEG9sospXRjT6cQ9auOGrbPqE1wCLvJ5lGSKuwBE4OG0zNQXDROb6sf\n/T8K8GbMsMbn9hDZMZv+wF87FQ9J8gLmLLIm6hEArzs3d3nsqTq7biZ6B18ntKof\n1kG+53z6nXs4rVd1tIDtB+j8/JdqXVecetc7TjH3laxFDDGsx/HWU1BFdKlBVPZ/\nJs9JtxAKEDY06/tu5VWdTtFYgL3pQalZooMpbwKkt/Lyxq2+ONEfLTjrhkn+LMML\nI4l3FmtRrHsrl3uq5fFqSdoIltFJiQG5rc7jmta5LVLA5at7mz2aLprZysPI4B0s\nCOgL3+S+YpDRsLsIcWroh0Vl/q0CAwEAAaOCA3YwggNyMB8GA1UdIwQYMBaAFFFo\n/5CvAgd1PMzZZWRiohK4WXI7MB0GA1UdDgQWBBTCuRabp5gaYQjPfT8Z9y9tpMtZ\npTA1BgNVHREELjAsghUqLmltYXAubWFpbC55YWhvby5jb22CE2ltYXAubWFpbC55\nYWhvby5jb20wPgYDVR0gBDcwNTAzBgZngQwBAgIwKTAnBggrBgEFBQcCARYbaHR0\ncDovL3d3dy5kaWdpY2VydC5jb20vQ1BTMA4GA1UdDwEB/wQEAwIFoDAdBgNVHSUE\nFjAUBggrBgEFBQcDAQYIKwYBBQUHAwIwdQYDVR0fBG4wbDA0oDKgMIYuaHR0cDov\nL2NybDMuZGlnaWNlcnQuY29tL3NoYTItaGEtc2VydmVyLWc2LmNybDA0oDKgMIYu\naHR0cDovL2NybDQuZGlnaWNlcnQuY29tL3NoYTItaGEtc2VydmVyLWc2LmNybDCB\ngwYIKwYBBQUHAQEEdzB1MCQGCCsGAQUFBzABhhhodHRwOi8vb2NzcC5kaWdpY2Vy\ndC5jb20wTQYIKwYBBQUHMAKGQWh0dHA6Ly9jYWNlcnRzLmRpZ2ljZXJ0LmNvbS9E\naWdpQ2VydFNIQTJIaWdoQXNzdXJhbmNlU2VydmVyQ0EuY3J0MAwGA1UdEwEB/wQC\nMAAwggF9BgorBgEEAdZ5AgQCBIIBbQSCAWkBZwB1AA5XlLzzrqk+MxssmQez95Df\nm8I9cTIl3SGpJaxhxU4hAAABmZfxeYkAAAQDAEYwRAIgGQrP9bwCv/h793qClKFw\nmmI7JbIQmlE+jbnQrCx56RkCIA9Fljw0czGYo4A7nNtSQeGmUP/b78+UlvRd+Ihf\nqUgkAHcAZBHEbKQS7KeJHKICLgC8q08oB9QeNSer6v7VA8l9zfAAAAGZl/F5uQAA\nBAMASDBGAiEAsii15iVEm0qT9D4geoirXexImW14rXsA0TIYeCh5HjsCIQDOkS+7\nWrmU19ihoWs9oswJ8azLmdbeMgMzsXXpjDt2ggB1AEmcm2neHXzs/DbezYdkprhb\nrwqHgBnRVVL76esp3fjDAAABmZfxecwAAAQDAEYwRAIgQcmoYy2rPsTxPaNVbk62\n92ihKuJ5kNIs6Jqf9WcrPtkCIFt9tlGUa55djzlLCTKw7+707byTBkvc8IiMHwST\neUNqMA0GCSqGSIb3DQEBCwUAA4IBAQAeOOpnKGQ2YU9iOrTWclCsa4EZZqXMovYU\nwcqJwaPZYD0rXN+zr2PUlNwqE+Pa3YSdhHjTkivERS4JaXvnSeALho0VdyU3f6rg\n3zQs4w7QYIt1NyUby1NALS/VzF8VzM55+5VBtqb0VdClb+35+KSoa3G13v82LN1U\nEgc2LDflWjmXat1SffOc1GIf2xSR1eDn2RTG474AR+TmuBGSKMqbTG9FMEtBKXNj\nrqDWPGykqh1xHEr6wnHD2hLiENbE0/ISfwt5IbsLN9sTyp0I8u/vYC2O5+5SNLMt\nQdmwlsKQOxyHMYXOK96qaPVFMo/y7RGpD5xtuw27WUJlOq+6Alt0\n-----END CERTIFICATE-----\n", "auth": ["IMAP4REV1", "SASL-IR", "AUTH=PLAIN", "AUTH=XOAUTH2", "AUTH=OAUTHBEARER", "ID", "MOVE", "NAMESPACE", "XYMHIGHESTMODSEQ", "UIDPLUS", "LITERAL+", "CHILDREN", "UNSELECT", "X-MSG-EXT", "OBJECTID", "IDLE", "ENABLE", "UIDONLY", "X-ALL-MAIL", "X-UIDONLY", "LIST-EXTENDED", "LIST-STATUS", "SPECIAL-USE", "PARTIAL", "APPENDLIMIT=41697280"]}}
+
+ProtocolType: pop3
+Port: 995
+Hostname: pop.mail.yahoo.com
+Running test
+Raw output:
+ {"success": false, "info": null, "error": "OS error : timed out"}
+
+Running test
+Raw output:
+ {"success": false, "info": null, "error": "OS error : timed out"}
+
+Running test
+Raw output:
+ {"success": true, "info": {"error": [], "version": "TLSv1.3", "cipher": ["TLS_AES_256_GCM_SHA384", "TLSv1.3", 256], "tls ca": "-----BEGIN CERTIFICATE-----\nMIII8zCCB9ugAwIBAgIQBrckFVyIWI1T1f6qYSy6xDANBgkqhkiG9w0BAQsFADBw\nMQswCQYDVQQGEwJVUzEVMBMGA1UEChMMRGlnaUNlcnQgSW5jMRkwFwYDVQQLExB3\nd3cuZGlnaWNlcnQuY29tMS8wLQYDVQQDEyZEaWdpQ2VydCBTSEEyIEhpZ2ggQXNz\ndXJhbmNlIFNlcnZlciBDQTAeFw0yNTA1MjAwMDAwMDBaFw0yNTExMTIyMzU5NTla\nMHUxCzAJBgNVBAYTAlVTMREwDwYDVQQIEwhOZXcgWW9yazERMA8GA1UEBxMITmV3\nIFlvcmsxHDAaBgNVBAoTE1lhaG9vIEhvbGRpbmdzIEluYy4xIjAgBgNVBAMTGWxl\nZ2FjeS5wb3AubWFpbC55YWhvby5jb20wggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAw\nggEKAoIBAQCtGNd2/zbq547QZld9im23i+dkkeX2KPRvbx2R148Yoe/aAndMDY1t\no95ArSUbN6/0nF07JAK0AobblGtv71Y8yGJzmR/9p/qDjiA8gnoMLbPXzsQ2M6vS\nobhOIuCY7lVA2KV+tcRr2FgCsOGSojliJT6FvhhoF645mZh3fDHoT4Yi3y6M4PP1\nSfV6PkF55IcM3/sGbzvFZbWFlAcmyZfFlofj4gH2IeHdCahty0i7WJpWtJQaTqv9\nb4iBjX3AyuPBhECBjrlXvf4LxipVfkStHuci+ZNtW7hxZNoEbhlcAnXGi1YB5qQw\nJSJxcDwyS8wKXXvxmWQCVBQw0JWZvuDlAgMBAAGjggWCMIIFfjAfBgNVHSMEGDAW\ngBRRaP+QrwIHdTzM2WVkYqISuFlyOzAdBgNVHQ4EFgQUOjHTAFcEtbYJnErqWPps\ne0zzdRwwggI9BgNVHREEggI0MIICMIIZbGVnYWN5LnBvcC5tYWlsLnlhaG9vLmNv\nbYIScG9wLm1haWwueWFob28uY29tghQqLnBvcC5tYWlsLnlhaG9vLmNvbYIVcG9w\nLmJpem1haWwueWFob28uY29tghVwb3AubWFpbC55YWhvby5jb20uYXKCFXBvcC5t\nYWlsLnlhaG9vLmNvbS5hdYIVcG9wLm1haWwueWFob28uY29tLmJyghVwb3AubWFp\nbC55YWhvby5jb20uaGuCFXBvcC5tYWlsLnlhaG9vLmNvbS5teYIVcG9wLm1haWwu\neWFob28uY29tLnBoghVwb3AubWFpbC55YWhvby5jb20uc2eCFXBvcC5tYWlsLnlh\naG9vLmNvbS50d4IVcG9wLm1haWwueWFob28uY29tLnZughRwb3AubWFpbC55YWhv\nby5jby5pZIIUcG9wLm1haWwueWFob28uY28uaW6CFHBvcC5tYWlsLnlhaG9vLmNv\nLmtyghRwb3AubWFpbC55YWhvby5jby50aIIUcG9wLm1haWwueWFob28uY28udWuC\nEXBvcC5tYWlsLnlhaG9vLmNhghFwb3AubWFpbC55YWhvby5kZYIRcG9wLm1haWwu\neWFob28uZnKCEXBvcC5tYWlsLnlhaG9vLmlughFwb3AubWFpbC55YWhvby5pdIIT\ncG9wLmNvcnJlby55YWhvby5lc4IOcG9wLnk3bWFpbC5jb22CEXBvcC5hdHQueWFo\nb28uY29tMD4GA1UdIAQ3MDUwMwYGZ4EMAQICMCkwJwYIKwYBBQUHAgEWG2h0dHA6\nLy93d3cuZGlnaWNlcnQuY29tL0NQUzAOBgNVHQ8BAf8EBAMCBaAwHQYDVR0lBBYw\nFAYIKwYBBQUHAwEGCCsGAQUFBwMCMHUGA1UdHwRuMGwwNKAyoDCGLmh0dHA6Ly9j\ncmwzLmRpZ2ljZXJ0LmNvbS9zaGEyLWhhLXNlcnZlci1nNi5jcmwwNKAyoDCGLmh0\ndHA6Ly9jcmw0LmRpZ2ljZXJ0LmNvbS9zaGEyLWhhLXNlcnZlci1nNi5jcmwwgYMG\nCCsGAQUFBwEBBHcwdTAkBggrBgEFBQcwAYYYaHR0cDovL29jc3AuZGlnaWNlcnQu\nY29tME0GCCsGAQUFBzAChkFodHRwOi8vY2FjZXJ0cy5kaWdpY2VydC5jb20vRGln\naUNlcnRTSEEySGlnaEFzc3VyYW5jZVNlcnZlckNBLmNydDAMBgNVHRMBAf8EAjAA\nMIIBfwYKKwYBBAHWeQIEAgSCAW8EggFrAWkAdQDd3Mo0ldfhFgXnlTL6x5/4PRxQ\n39sAOhQSdgosrLvIKgAAAZbrri4IAAAEAwBGMEQCIDZGcbaVEqUo/rPPMUpnw0Ld\n8SDIpY4qtOnYSYB2bKuWAiBE7W4Ul9EpLj0UnHt7B0tXwesTMRJBdQ6wKqNK34Jc\n4gB3AO08S9boBsKkogBX28sk4jgB31Ev7cSGxXAPIN23Pj/gAAABluuuLeMAAAQD\nAEgwRgIhAJFhrCTxzxl2GDcU5r3EKfpSPxVUycNi1A/3YEq0ZPtVAiEAzNvVdJzK\ned9V293kKbiG5oEozzeIB1Uzo3/qXRqiN8AAdwCkQsUGSWBhVI8P1Oqc+3otJkVN\nh6l/L99FWfYnTzqEVAAAAZbrri31AAAEAwBIMEYCIQCLCH8iEK49Z/5zy4jxvuIk\nqeUM3nQrcZmbl8IBmKbUSAIhAMBkfBSeoKMI8XVGVVv/xb2gS7cK1IiwBa8tLEGv\nGCJeMA0GCSqGSIb3DQEBCwUAA4IBAQA+ajBCucS9d0TLRqNypoxnpZrD104IPSgH\nREB9+lec6zTa/W7G8AphIvOkkuMHqcjE9MxrAD0J9WP7BQKwQQL98j53yXtNRh+Q\nga2CCO81y5v7u5+1qfSp1ezWgMfR6mHGFil4fxjcBF0kWiOZaDEklRX6YMbrLECZ\nRzvKF3TY0uzIO1ME+KPcChHwLMXhDEbQysn8xvQye6PviAYH8pGcBDqRJp72jjTU\nh2fMSns9NAdsVXfkB/AkvBQgaIWI94FrcOyUo2LOxe6AQW26F0L+hm13fDKuKJ97\neq3xd+F7TnGe/pqr0Xhxo5e+fwqfSLMT7JWeftM7daL5JhP26dZC\n-----END CERTIFICATE-----\n", "auth": {"IMPLEMENTATION": ["jpop-0.1"], "EXPIRE-NEVER": [], "PIPELINING": [], "RESP-CODES": [], "TOP": [], "UIDL": [], "USER": [], "SASL": ["PLAIN", "XOAUTH2"]}}}
+
+ProtocolType: smtp
+Port: 465
+Hostname: smtp.mail.yahoo.com
+Running test
+Raw output:
+ {"success": false, "info": null, "error": "OS error : Connection unexpectedly closed: timed out"}
+
+Running test
+Raw output:
+ {"success": false, "info": null, "error": "OS error : Connection unexpectedly closed: timed out"}
+
+Running test
+Raw output:
+ {"success": true, "info": {"error": [], "version": "TLSv1.3", "cipher": ["TLS_AES_128_GCM_SHA256", "TLSv1.3", 128], "tls ca": "-----BEGIN CERTIFICATE-----\nMIIIwDCCB6igAwIBAgIQD4G+WKXfEGkt2U/98nr9DTANBgkqhkiG9w0BAQsFADBw\nMQswCQYDVQQGEwJVUzEVMBMGA1UEChMMRGlnaUNlcnQgSW5jMRkwFwYDVQQLExB3\nd3cuZGlnaWNlcnQuY29tMS8wLQYDVQQDEyZEaWdpQ2VydCBTSEEyIEhpZ2ggQXNz\ndXJhbmNlIFNlcnZlciBDQTAeFw0yNTA1MjAwMDAwMDBaFw0yNTExMTIyMzU5NTla\nMG8xCzAJBgNVBAYTAlVTMREwDwYDVQQIEwhOZXcgWW9yazERMA8GA1UEBxMITmV3\nIFlvcmsxHDAaBgNVBAoTE1lhaG9vIEhvbGRpbmdzIEluYy4xHDAaBgNVBAMTE3Nt\ndHAubWFpbC55YWhvby5jb20wggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIB\nAQDNoGhIA9iYXos4ia7+Q4NoT7uXyC54GiibhsmrTHlaI0zkENkShVVjgUARNBxS\nmGX0x/yaczxTNJpcuBmIP7LwdcFoZIu8jShX7zw2/1MZMDDSzPe5C0ZKLGtpbbAi\nHe+COPd9R1dmt18UQAyQAVYx2hbzU8kGN4uolGF25CTZAzZgAb/k+VRfwKgBN/bH\nF+kqRtOZUleKYDpFXn2zgSOuUjkvG9+HCHF0yf2VvEd6YGFX+j6MMwMFS45ozkt4\nvMosQbXFj3yTttWSO7RvcM2z75Ienh8ArmVemMBHYdJumNL2L/EemYzide0YPhdL\n5NZpkTLqVkkOi/EOccdwiBRtAgMBAAGjggVVMIIFUTAfBgNVHSMEGDAWgBRRaP+Q\nrwIHdTzM2WVkYqISuFlyOzAdBgNVHQ4EFgQUN3VlhPAXlbKW+WOjsKWbB/uXmagw\nggIQBgNVHREEggIHMIICA4ITc210cC5tYWlsLnlhaG9vLmNvbYIWc210cC5tYWls\nLnlhaG9vLmNvbS5hcoIWc210cC5tYWlsLnlhaG9vLmNvbS5hdYIWc210cC5tYWls\nLnlhaG9vLmNvbS5icoIWc210cC5tYWlsLnlhaG9vLmNvbS5jboIWc210cC5tYWls\nLnlhaG9vLmNvbS5oa4IWc210cC5tYWlsLnlhaG9vLmNvbS5teYIWc210cC5tYWls\nLnlhaG9vLmNvbS5waIIWc210cC5tYWlsLnlhaG9vLmNvbS5zZ4IWc210cC5tYWls\nLnlhaG9vLmNvbS50d4IWc210cC5tYWlsLnlhaG9vLmNvbS52boIVc210cC5tYWls\nLnlhaG9vLmNvLmlkghVzbXRwLm1haWwueWFob28uY28uaW6CFXNtdHAubWFpbC55\nYWhvby5jby5rcoIVc210cC5tYWlsLnlhaG9vLmNvLnRoghVzbXRwLm1haWwueWFo\nb28uY28udWuCEnNtdHAubWFpbC55YWhvby5jYYISc210cC5tYWlsLnlhaG9vLmNu\nghJzbXRwLm1haWwueWFob28uZGWCEnNtdHAubWFpbC55YWhvby5mcoISc210cC5t\nYWlsLnlhaG9vLml0gg9zbXRwLnk3bWFpbC5jb22CFHNtdHAuY29ycmVvLnlhaG9v\nLmVzMD4GA1UdIAQ3MDUwMwYGZ4EMAQICMCkwJwYIKwYBBQUHAgEWG2h0dHA6Ly93\nd3cuZGlnaWNlcnQuY29tL0NQUzAOBgNVHQ8BAf8EBAMCBaAwHQYDVR0lBBYwFAYI\nKwYBBQUHAwEGCCsGAQUFBwMCMHUGA1UdHwRuMGwwNKAyoDCGLmh0dHA6Ly9jcmwz\nLmRpZ2ljZXJ0LmNvbS9zaGEyLWhhLXNlcnZlci1nNi5jcmwwNKAyoDCGLmh0dHA6\nLy9jcmw0LmRpZ2ljZXJ0LmNvbS9zaGEyLWhhLXNlcnZlci1nNi5jcmwwgYMGCCsG\nAQUFBwEBBHcwdTAkBggrBgEFBQcwAYYYaHR0cDovL29jc3AuZGlnaWNlcnQuY29t\nME0GCCsGAQUFBzAChkFodHRwOi8vY2FjZXJ0cy5kaWdpY2VydC5jb20vRGlnaUNl\ncnRTSEEySGlnaEFzc3VyYW5jZVNlcnZlckNBLmNydDAMBgNVHRMBAf8EAjAAMIIB\nfwYKKwYBBAHWeQIEAgSCAW8EggFrAWkAdgAS8U40vVNyTIQGGcOPP3oT+Oe1YoeI\nnG0wBYTr5YYmOgAAAZbsD569AAAEAwBHMEUCIF1s8ORblm9P2mnFLxPGZZlUnU27\nNzCB1U6oK0PVtDRqAiEAtY+htXoSYAJAi8Z8JbvywnFXubNcfTEzBs2H28HJ/3IA\ndwDtPEvW6AbCpKIAV9vLJOI4Ad9RL+3EhsVwDyDdtz4/4AAAAZbsD576AAAEAwBI\nMEYCIQDndPR4GOObBJLEl7KV8vdaKroZ2GvPW5tpJjIEH6fR7AIhAOZ940tqN4ET\n8B6wlR005QvDFb857UPYnHVdmztf+vapAHYApELFBklgYVSPD9TqnPt6LSZFTYep\nfy/fRVn2J086hFQAAAGW7A+fCgAABAMARzBFAiBjW7vn8kiV4Hknrp/HuMHSuk8o\n5zKuo07R7FG5eqvmEwIhALcJylDMuD+nwqM//S9QB53oo7J9kF6w6imN5nSfI5V4\nMA0GCSqGSIb3DQEBCwUAA4IBAQADAPrVBaoTPKfDV4azwJ8ygeG9+qC71SJaxKge\nDHHLyIbYm6C7eV3TXuQ/OZwwBGTBUTqguhQ/38tYn7kpLnsQjqgWdPUL2cT2nO0p\nfT4eIt9v0qbEjyU4xIuGVLhNCQs3qHXh9UbPO81mdS5jExDQKCoBB1LUKzP3nAee\nlsECPuy4a0KnlGJNsS7LMBoqnFzRHiDIRrXhfxl3uWkUy+12rQo2dIOwCz/dR4QB\nlukoIGWqm13ae5jCtGTBY6bh/Lkd+luNNiRbTwAi60Zwzt16gQvc12gzKiGbZcw7\nOF5bnIaBnGxeo49K3hdQOzmI+In5WPpTjOKGpJToqWfscC0o\n-----END CERTIFICATE-----\n", "enable esmtp": 1, "auth": {"pipelining": "", "enhancedstatuscodes": "", "8bitmime": "", "size": "41697280", "auth": " PLAIN LOGIN XOAUTH2 OAUTHBEARER"}}}
+
+service:_imap._tcp.yahoo.com, adBit:false
+Failed to query SRV for _imap._tcp.yahoo.com or no records found: <nil>
+service:_imaps._tcp.yahoo.com, adBit:false
+Failed to query SRV for _imaps._tcp.yahoo.com or no records found: <nil>
+service:_pop3._tcp.yahoo.com, adBit:false
+Failed to query SRV for _pop3._tcp.yahoo.com or no records found: <nil>
+service:_pop3s._tcp.yahoo.com, adBit:false
+Failed to query SRV for _pop3s._tcp.yahoo.com or no records found: <nil>
+service:_submission._tcp.yahoo.com, adBit:false
+Failed to query SRV for _submission._tcp.yahoo.com or no records found: <nil>
+service:_submissions._tcp.yahoo.com, adBit:false
+Failed to query SRV for _submissions._tcp.yahoo.com or no records found: <nil>
+2025/10/09 21:01:54 📝 已缓存: yahoo.com
+2025/10/09 21:02:44 客户端已连接进度 WebSocket
+2025/10/09 21:02:45 ⚡ 缓存命中: qq.com
+2025/10/09 21:02:46 ⚡ 缓存命中: 163.com
+2025/10/09 21:02:46 客户端已连接进度 WebSocket
+2025/10/09 21:02:50 ⚡ 缓存命中: 163.com
+2025/10/09 21:02:50 客户端已连接进度 WebSocket
+2025/10/09 21:02:53 WebSocket 关闭: websocket: close 1001 (going away)
+2025/10/09 21:03:01 ⚡ 缓存命中: 163.com
+2025/10/09 21:03:02 客户端已连接进度 WebSocket
+2025/10/09 21:03:06 WebSocket 关闭: websocket: close 1001 (going away)
+2025/10/09 21:04:01 WebSocket 关闭: websocket: close 1006 (abnormal closure): unexpected EOF
+2025/10/09 21:04:01 WebSocket 关闭: websocket: close 1006 (abnormal closure): unexpected EOF
+2025/10/09 21:04:37 ⚡ 缓存命中: 163.com
+2025/10/09 21:04:37 客户端已连接进度 WebSocket
+2025/10/09 21:04:41 WebSocket 关闭: websocket: close 1001 (going away)
+2025/10/09 21:04:49 客户端已连接进度 WebSocket
+flag1now:1
+Redirect to: https://126.com/autodiscover/autodiscover.xml
+flag1: 1
+flag2: 0
+flag3: 0
+flag1now:1
+Redirect to: https://mail.163.com/404_error.html
+flag1: 1
+flag2: 0
+flag3: 0
+flag1now:1
+Redirect to: https://mail.163.com/404_error.html
+flag1: 1
+flag2: 0
+flag3: 0
+flag1: 0
+flag2: 0
+flag3: 0
+Redirect to: https://mail.163.com/404_error.html
+Redirect to: https://126.com/autodiscover/autodiscover.xml
+Redirect to: https://mail.163.com/404_error.html
+Redirect to: https://mail.163.com/404_error.html
+MX record for 126.com: 126mx00.mxmail.netease.com., the priority is 50
+MX record for 126.com: 126mx02.mxmail.netease.com., the priority is 10
+MX record for 126.com: 126mx03.mxmail.netease.com., the priority is 10
+MX record for 126.com: 126mx01.mxmail.netease.com., the priority is 10
+fulldomain: mxmail.netease.com
+maindomain: netease.com
+ProtocolType: imap
+Port: 993
+Hostname: imap.126.com
+Running test
+Raw output:
+ {"success": false, "info": null, "error": "OS error : timed out"}
+
+Running test
+Raw output:
+ {"success": false, "info": null, "error": "OS error : timed out"}
+
+Running test
+Raw output:
+ {"success": true, "info": {"error": [], "version": "TLSv1.2", "cipher": ["ECDHE-RSA-AES256-GCM-SHA384", "TLSv1.2", 256], "tls ca": "-----BEGIN CERTIFICATE-----\nMIIHlTCCBX2gAwIBAgIQAQHqz4v72yQ/jWD9q14dAjANBgkqhkiG9w0BAQsFADBb\nMQswCQYDVQQGEwJVUzEXMBUGA1UEChMORGlnaUNlcnQsIEluYy4xMzAxBgNVBAMT\nKkdlb1RydXN0IEcyIFRMUyBDTiBSU0E0MDk2IFNIQTI1NiAyMDIyIENBMTAeFw0y\nNTAxMDkwMDAwMDBaFw0yNjAyMDkyMzU5NTlaMHUxCzAJBgNVBAYTAkNOMREwDwYD\nVQQIEwhaaGVqaWFuZzERMA8GA1UEBxMISGFuZ3pob3UxLDAqBgNVBAoTI05ldEVh\nc2UgKEhhbmd6aG91KSBOZXR3b3JrIENvLiwgTHRkMRIwEAYDVQQDDAkqLjEyNi5j\nb20wggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQDaV2SB3eRzlIcCN52y\nwgP84c6SShmDKkJx3KL81A6tSAKJas4CC2YY4Xy2jXRB5fxH+wwKt9Lj986BSH1+\nDjBe3N9AapYWsB6j9Xpydfi1JZdmbLyNJFqnZk22gsIxFjqegFriXnaG/093R7SU\nrfZjs8SUlgrElHN1TwypEwoGfiZE/6k7JQ7eFs6q/EdmPTR6wjYsfpO7RjHfrpVx\nb9lqJR52DEDVNbolQwZ/RbIwV/MwVuMpXjD+7io32NC5p3cycsEw87Upl+/KVXdN\nfDANYswcfAIfroneJz8YUQjoMyLIKGEkc92GXfaevWTwldVer5DovWm8IimdVMyF\n69uRAgMBAAGjggM5MIIDNTAfBgNVHSMEGDAWgBRBTo5pnfRuJex4FBx+180dmc/5\nazAdBgNVHQ4EFgQUyB3vQnZCssVXYfTCOeXCk7F9GQgwHQYDVR0RBBYwFIIJKi4x\nMjYuY29tggcxMjYuY29tMD4GA1UdIAQ3MDUwMwYGZ4EMAQICMCkwJwYIKwYBBQUH\nAgEWG2h0dHA6Ly93d3cuZGlnaWNlcnQuY29tL0NQUzAOBgNVHQ8BAf8EBAMCBaAw\nHQYDVR0lBBYwFAYIKwYBBQUHAwEGCCsGAQUFBwMCME8GA1UdHwRIMEYwRKBCoECG\nPmh0dHA6Ly9jcmwuZGlnaWNlcnQuY24vR2VvVHJ1c3RHMlRMU0NOUlNBNDA5NlNI\nQTI1NjIwMjJDQTEuY3JsMIGDBggrBgEFBQcBAQR3MHUwIwYIKwYBBQUHMAGGF2h0\ndHA6Ly9vY3NwLmRpZ2ljZXJ0LmNuME4GCCsGAQUFBzAChkJodHRwOi8vY2FjZXJ0\ncy5kaWdpY2VydC5jbi9HZW9UcnVzdEcyVExTQ05SU0E0MDk2U0hBMjU2MjAyMkNB\nMS5jcnQwDAYDVR0TAQH/BAIwADCCAX4GCisGAQQB1nkCBAIEggFuBIIBagFoAHcA\nDleUvPOuqT4zGyyZB7P3kN+bwj1xMiXdIaklrGHFTiEAAAGUSMqifwAABAMASDBG\nAiEA+PJ7zjCEzZPa4p3SMvQ3XHaOWhP4TQXRSB/mCcYBPBACIQCMCzEOAlwQREEu\nkfvdKjxrpzZ5GnvS5O12kC6eepzhcQB2AGQRxGykEuyniRyiAi4AvKtPKAfUHjUn\nq+r+1QPJfc3wAAABlEjKonYAAAQDAEcwRQIgGaVePCiixZ7Q9On3Czmg6iLFw6Qx\nDspCfiZuCZHxJ8kCIQDZkCjKtjaf7ordAbC/tQANIw4fwWL3ctZINUALIhASQgB1\nAEmcm2neHXzs/DbezYdkprhbrwqHgBnRVVL76esp3fjDAAABlEjKookAAAQDAEYw\nRAIgaGDe5uRrs1rzxF+YiXozBo9EeXeCflezqZTwkLnVhgICIBJvKIXUsicYgqfs\nrBNT0GxAbYVmfbsXSReCNkyEaY7uMA0GCSqGSIb3DQEBCwUAA4ICAQBNia4x9Q9T\nwtJf+PtRiosHSY12Keir7Vlm+wsXc40DK1c/+MxpicPFf4jKhDnOYZoJpDVnP31U\nIy7T0sUDjDnY89u0mfZ/IjSbUpFQFGROjithgrXM+PYYTMyNVlbtIpjnzKWFYeWd\nJR6c/nByUecbZTkpHH7nLeNbUoKTfWzt6SLGxQ6Gr9mZFUuRv+22ozhNKCu8R7bA\nEMDwL/F3YhCulTk6qMOXJmt0/GaxBYNzUM4mbdwYiJNuv01wRGtXyoMyTKWD8KeD\nxyA1G0kLl5WtU58jxkRJCaI0PjionBTtQ0ewNHDk0qMAQuweXQInV6isjec6PcQ8\nYVshF1CDDmSzuGpgB3x1Qkr+DiewNpgl+Fd/QnlQM/hQlAV7mFNKx7XOwgt7mhA3\n5SSRIGb6OOsOCWxw6h0e7mfC7wi0Evu5HR1pjXs46JgJflNNTBkFOSXGwsysXKeQ\nb9CGjOxjC2hHr3Kexjpyl7qkD3AQxDcF0+5uvpN3MEoMXxA2HY4hn178Y3IhR2UH\nBv0QbsOepmPM+z0ommD4mRGXnvS4twv6UNkNJo4tyRNKdeTSOEuwJ8tE0jlU8TyM\n2057Bb5J+cqNgJ9r/mN0fQShlEdgciZo8cKlMt6OBPfnqlXQ6kinrtiIbAOHFNVS\niSZ+VpKo4o+vH9hFuoO8SMx50P8phRbcVw==\n-----END CERTIFICATE-----\n", "auth": ["IMAP4REV1", "XLIST", "SPECIAL-USE", "LITERAL+", "STARTTLS", "APPENDLIMIT=71680000", "XAPPLEPUSHSERVICE", "UIDPLUS", "X-CM-EXT-1", "SASL-IR", "AUTH=PLAIN", "AUTH=LOGIN", "AUTH=XOAUTH2", "ID"]}}
+
+ProtocolType: smtp
+Port: 465
+Hostname: smtp.126.com
+Running test
+Raw output:
+ {"success": false, "info": null, "error": "OS error : Connection unexpectedly closed: timed out"}
+
+Running test
+Raw output:
+ {"success": false, "info": null, "error": "OS error : Connection unexpectedly closed: timed out"}
+
+Running test
+Raw output:
+ {"success": true, "info": {"error": [], "version": "TLSv1.3", "cipher": ["TLS_AES_256_GCM_SHA384", "TLSv1.3", 256], "tls ca": "-----BEGIN CERTIFICATE-----\nMIIHlTCCBX2gAwIBAgIQAQHqz4v72yQ/jWD9q14dAjANBgkqhkiG9w0BAQsFADBb\nMQswCQYDVQQGEwJVUzEXMBUGA1UEChMORGlnaUNlcnQsIEluYy4xMzAxBgNVBAMT\nKkdlb1RydXN0IEcyIFRMUyBDTiBSU0E0MDk2IFNIQTI1NiAyMDIyIENBMTAeFw0y\nNTAxMDkwMDAwMDBaFw0yNjAyMDkyMzU5NTlaMHUxCzAJBgNVBAYTAkNOMREwDwYD\nVQQIEwhaaGVqaWFuZzERMA8GA1UEBxMISGFuZ3pob3UxLDAqBgNVBAoTI05ldEVh\nc2UgKEhhbmd6aG91KSBOZXR3b3JrIENvLiwgTHRkMRIwEAYDVQQDDAkqLjEyNi5j\nb20wggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQDaV2SB3eRzlIcCN52y\nwgP84c6SShmDKkJx3KL81A6tSAKJas4CC2YY4Xy2jXRB5fxH+wwKt9Lj986BSH1+\nDjBe3N9AapYWsB6j9Xpydfi1JZdmbLyNJFqnZk22gsIxFjqegFriXnaG/093R7SU\nrfZjs8SUlgrElHN1TwypEwoGfiZE/6k7JQ7eFs6q/EdmPTR6wjYsfpO7RjHfrpVx\nb9lqJR52DEDVNbolQwZ/RbIwV/MwVuMpXjD+7io32NC5p3cycsEw87Upl+/KVXdN\nfDANYswcfAIfroneJz8YUQjoMyLIKGEkc92GXfaevWTwldVer5DovWm8IimdVMyF\n69uRAgMBAAGjggM5MIIDNTAfBgNVHSMEGDAWgBRBTo5pnfRuJex4FBx+180dmc/5\nazAdBgNVHQ4EFgQUyB3vQnZCssVXYfTCOeXCk7F9GQgwHQYDVR0RBBYwFIIJKi4x\nMjYuY29tggcxMjYuY29tMD4GA1UdIAQ3MDUwMwYGZ4EMAQICMCkwJwYIKwYBBQUH\nAgEWG2h0dHA6Ly93d3cuZGlnaWNlcnQuY29tL0NQUzAOBgNVHQ8BAf8EBAMCBaAw\nHQYDVR0lBBYwFAYIKwYBBQUHAwEGCCsGAQUFBwMCME8GA1UdHwRIMEYwRKBCoECG\nPmh0dHA6Ly9jcmwuZGlnaWNlcnQuY24vR2VvVHJ1c3RHMlRMU0NOUlNBNDA5NlNI\nQTI1NjIwMjJDQTEuY3JsMIGDBggrBgEFBQcBAQR3MHUwIwYIKwYBBQUHMAGGF2h0\ndHA6Ly9vY3NwLmRpZ2ljZXJ0LmNuME4GCCsGAQUFBzAChkJodHRwOi8vY2FjZXJ0\ncy5kaWdpY2VydC5jbi9HZW9UcnVzdEcyVExTQ05SU0E0MDk2U0hBMjU2MjAyMkNB\nMS5jcnQwDAYDVR0TAQH/BAIwADCCAX4GCisGAQQB1nkCBAIEggFuBIIBagFoAHcA\nDleUvPOuqT4zGyyZB7P3kN+bwj1xMiXdIaklrGHFTiEAAAGUSMqifwAABAMASDBG\nAiEA+PJ7zjCEzZPa4p3SMvQ3XHaOWhP4TQXRSB/mCcYBPBACIQCMCzEOAlwQREEu\nkfvdKjxrpzZ5GnvS5O12kC6eepzhcQB2AGQRxGykEuyniRyiAi4AvKtPKAfUHjUn\nq+r+1QPJfc3wAAABlEjKonYAAAQDAEcwRQIgGaVePCiixZ7Q9On3Czmg6iLFw6Qx\nDspCfiZuCZHxJ8kCIQDZkCjKtjaf7ordAbC/tQANIw4fwWL3ctZINUALIhASQgB1\nAEmcm2neHXzs/DbezYdkprhbrwqHgBnRVVL76esp3fjDAAABlEjKookAAAQDAEYw\nRAIgaGDe5uRrs1rzxF+YiXozBo9EeXeCflezqZTwkLnVhgICIBJvKIXUsicYgqfs\nrBNT0GxAbYVmfbsXSReCNkyEaY7uMA0GCSqGSIb3DQEBCwUAA4ICAQBNia4x9Q9T\nwtJf+PtRiosHSY12Keir7Vlm+wsXc40DK1c/+MxpicPFf4jKhDnOYZoJpDVnP31U\nIy7T0sUDjDnY89u0mfZ/IjSbUpFQFGROjithgrXM+PYYTMyNVlbtIpjnzKWFYeWd\nJR6c/nByUecbZTkpHH7nLeNbUoKTfWzt6SLGxQ6Gr9mZFUuRv+22ozhNKCu8R7bA\nEMDwL/F3YhCulTk6qMOXJmt0/GaxBYNzUM4mbdwYiJNuv01wRGtXyoMyTKWD8KeD\nxyA1G0kLl5WtU58jxkRJCaI0PjionBTtQ0ewNHDk0qMAQuweXQInV6isjec6PcQ8\nYVshF1CDDmSzuGpgB3x1Qkr+DiewNpgl+Fd/QnlQM/hQlAV7mFNKx7XOwgt7mhA3\n5SSRIGb6OOsOCWxw6h0e7mfC7wi0Evu5HR1pjXs46JgJflNNTBkFOSXGwsysXKeQ\nb9CGjOxjC2hHr3Kexjpyl7qkD3AQxDcF0+5uvpN3MEoMXxA2HY4hn178Y3IhR2UH\nBv0QbsOepmPM+z0ommD4mRGXnvS4twv6UNkNJo4tyRNKdeTSOEuwJ8tE0jlU8TyM\n2057Bb5J+cqNgJ9r/mN0fQShlEdgciZo8cKlMt6OBPfnqlXQ6kinrtiIbAOHFNVS\niSZ+VpKo4o+vH9hFuoO8SMx50P8phRbcVw==\n-----END CERTIFICATE-----\n", "enable esmtp": 1, "auth": {"auth": " LOGIN PLAIN XOAUTH2 LOGIN PLAIN XOAUTH2", "coremail": "1Uxr2xKj7kG0xkI17xGrU7I0s8FY2U3Uj8Cz28x1UUUUU7Ic2I0Y2UrBvD1BUCa0xDrUUUUj", "starttls": "", "id": "", "8bitmime": ""}}}
+
+service:_imap._tcp.126.com, adBit:false
+Failed to query SRV for _imap._tcp.126.com or no records found: <nil>
+service:_imaps._tcp.126.com, adBit:false
+Failed to query SRV for _imaps._tcp.126.com or no records found: <nil>
+service:_pop3._tcp.126.com, adBit:false
+Failed to query SRV for _pop3._tcp.126.com or no records found: <nil>
+service:_pop3s._tcp.126.com, adBit:false
+Failed to query SRV for _pop3s._tcp.126.com or no records found: <nil>
+service:_submission._tcp.126.com, adBit:false
+Failed to query SRV for _submission._tcp.126.com or no records found: <nil>
+service:_submissions._tcp.126.com, adBit:false
+Failed to query SRV for _submissions._tcp.126.com or no records found: <nil>
+[imap.126.com:993 imap.126.com:143 mail.126.com:465 mail.126.com:587 pop.126.com:995 pop3.126.com:995 smtp.126.com:587 smtp.126.com:465 pop.126.com:110 pop3.126.com:110]Running test
 Raw output:
  {"success": false, "info": null, "error": "OS error : timed out"}
 
@@ -129,64 +346,23 @@ Raw output:
 
 Running test
 Raw output:
- {"success": true, "info": {"error": ["SSL error: [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: Hostname mismatch, certificate is not valid for 'imap.gmail.com.'. (_ssl.c:1076)"], "version": "TLSv1.3", "cipher": ["TLS_AES_256_GCM_SHA384", "TLSv1.3", 256], "tls ca": "-----BEGIN CERTIFICATE-----\nMIIDlTCCAzygAwIBAgIQD6pRa0pn0roS2HAyATy0CTAKBggqhkjOPQQDAjA7MQsw\nCQYDVQQGEwJVUzEeMBwGA1UEChMVR29vZ2xlIFRydXN0IFNlcnZpY2VzMQwwCgYD\nVQQDEwNXRTIwHhcNMjUwOTE1MDgzNjE0WhcNMjUxMjA4MDgzNjEzWjAZMRcwFQYD\nVQQDEw5pbWFwLmdtYWlsLmNvbTBZMBMGByqGSM49AgEGCCqGSM49AwEHA0IABNmD\nyjREG2gcwDJMzZQQ1YTF/cbVb1lpiNkclIN/HZ8gL9SFwSHog//ZcHTaekq0a3qB\nzYN7qjFxGceMP9gyBQejggJCMIICPjAOBgNVHQ8BAf8EBAMCB4AwEwYDVR0lBAww\nCgYIKwYBBQUHAwEwDAYDVR0TAQH/BAIwADAdBgNVHQ4EFgQU9M+3GFVlSDrD+SE8\n58PlFokyLbwwHwYDVR0jBBgwFoAUdb7Ed66J9kQ3fc+xaB8dGuvcNFkwWAYIKwYB\nBQUHAQEETDBKMCEGCCsGAQUFBzABhhVodHRwOi8vby5wa2kuZ29vZy93ZTIwJQYI\nKwYBBQUHMAKGGWh0dHA6Ly9pLnBraS5nb29nL3dlMi5jcnQwGQYDVR0RBBIwEIIO\naW1hcC5nbWFpbC5jb20wEwYDVR0gBAwwCjAIBgZngQwBAgEwNgYDVR0fBC8wLTAr\noCmgJ4YlaHR0cDovL2MucGtpLmdvb2cvd2UyL3lLNW5QaHRIS1FzLmNybDCCAQUG\nCisGAQQB1nkCBAIEgfYEgfMA8QB3AKRCxQZJYGFUjw/U6pz7ei0mRU2HqX8v30VZ\n9idPOoRUAAABmUy7bIkAAAQDAEgwRgIhANWzrNKJ9/0N7M4Cr889Y7YW5wksghTf\nsK7NDezALCfRAiEAgByIisNJeoDbai0e7bnOROKBpiYI+MDGeoBQW85rRoAAdgAS\n8U40vVNyTIQGGcOPP3oT+Oe1YoeInG0wBYTr5YYmOgAAAZlMu2xAAAAEAwBHMEUC\nIQCyrcgjvxLs/24BaN3wjo/ri4/9A6YhVSFS5ILLvFIYlAIgdaqlR4XDVaFGkHwM\nYOwTSoe8KOOPUXrGLtk8s5huRbwwCgYIKoZIzj0EAwIDRwAwRAIgdcsggO/w86on\n8dmMDwt6rm2pVdfvjH2BBbk8n2IezRMCIC0Nb7POEkEbb0F0/QMploEqTOjThE99\n2Gm9CKsTa76k\n-----END CERTIFICATE-----\n", "auth": ["IMAP4REV1", "UNSELECT", "IDLE", "NAMESPACE", "QUOTA", "ID", "XLIST", "CHILDREN", "X-GM-EXT-1", "XYZZY", "SASL-IR", "AUTH=XOAUTH2", "AUTH=PLAIN", "AUTH=PLAIN-CLIENTTOKEN", "AUTH=OAUTHBEARER"]}}
+ {"success": true, "info": {"error": [], "version": "TLSv1.2", "cipher": ["ECDHE-RSA-AES256-GCM-SHA384", "TLSv1.2", 256], "tls ca": "-----BEGIN CERTIFICATE-----\nMIIHlTCCBX2gAwIBAgIQAQHqz4v72yQ/jWD9q14dAjANBgkqhkiG9w0BAQsFADBb\nMQswCQYDVQQGEwJVUzEXMBUGA1UEChMORGlnaUNlcnQsIEluYy4xMzAxBgNVBAMT\nKkdlb1RydXN0IEcyIFRMUyBDTiBSU0E0MDk2IFNIQTI1NiAyMDIyIENBMTAeFw0y\nNTAxMDkwMDAwMDBaFw0yNjAyMDkyMzU5NTlaMHUxCzAJBgNVBAYTAkNOMREwDwYD\nVQQIEwhaaGVqaWFuZzERMA8GA1UEBxMISGFuZ3pob3UxLDAqBgNVBAoTI05ldEVh\nc2UgKEhhbmd6aG91KSBOZXR3b3JrIENvLiwgTHRkMRIwEAYDVQQDDAkqLjEyNi5j\nb20wggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQDaV2SB3eRzlIcCN52y\nwgP84c6SShmDKkJx3KL81A6tSAKJas4CC2YY4Xy2jXRB5fxH+wwKt9Lj986BSH1+\nDjBe3N9AapYWsB6j9Xpydfi1JZdmbLyNJFqnZk22gsIxFjqegFriXnaG/093R7SU\nrfZjs8SUlgrElHN1TwypEwoGfiZE/6k7JQ7eFs6q/EdmPTR6wjYsfpO7RjHfrpVx\nb9lqJR52DEDVNbolQwZ/RbIwV/MwVuMpXjD+7io32NC5p3cycsEw87Upl+/KVXdN\nfDANYswcfAIfroneJz8YUQjoMyLIKGEkc92GXfaevWTwldVer5DovWm8IimdVMyF\n69uRAgMBAAGjggM5MIIDNTAfBgNVHSMEGDAWgBRBTo5pnfRuJex4FBx+180dmc/5\nazAdBgNVHQ4EFgQUyB3vQnZCssVXYfTCOeXCk7F9GQgwHQYDVR0RBBYwFIIJKi4x\nMjYuY29tggcxMjYuY29tMD4GA1UdIAQ3MDUwMwYGZ4EMAQICMCkwJwYIKwYBBQUH\nAgEWG2h0dHA6Ly93d3cuZGlnaWNlcnQuY29tL0NQUzAOBgNVHQ8BAf8EBAMCBaAw\nHQYDVR0lBBYwFAYIKwYBBQUHAwEGCCsGAQUFBwMCME8GA1UdHwRIMEYwRKBCoECG\nPmh0dHA6Ly9jcmwuZGlnaWNlcnQuY24vR2VvVHJ1c3RHMlRMU0NOUlNBNDA5NlNI\nQTI1NjIwMjJDQTEuY3JsMIGDBggrBgEFBQcBAQR3MHUwIwYIKwYBBQUHMAGGF2h0\ndHA6Ly9vY3NwLmRpZ2ljZXJ0LmNuME4GCCsGAQUFBzAChkJodHRwOi8vY2FjZXJ0\ncy5kaWdpY2VydC5jbi9HZW9UcnVzdEcyVExTQ05SU0E0MDk2U0hBMjU2MjAyMkNB\nMS5jcnQwDAYDVR0TAQH/BAIwADCCAX4GCisGAQQB1nkCBAIEggFuBIIBagFoAHcA\nDleUvPOuqT4zGyyZB7P3kN+bwj1xMiXdIaklrGHFTiEAAAGUSMqifwAABAMASDBG\nAiEA+PJ7zjCEzZPa4p3SMvQ3XHaOWhP4TQXRSB/mCcYBPBACIQCMCzEOAlwQREEu\nkfvdKjxrpzZ5GnvS5O12kC6eepzhcQB2AGQRxGykEuyniRyiAi4AvKtPKAfUHjUn\nq+r+1QPJfc3wAAABlEjKonYAAAQDAEcwRQIgGaVePCiixZ7Q9On3Czmg6iLFw6Qx\nDspCfiZuCZHxJ8kCIQDZkCjKtjaf7ordAbC/tQANIw4fwWL3ctZINUALIhASQgB1\nAEmcm2neHXzs/DbezYdkprhbrwqHgBnRVVL76esp3fjDAAABlEjKookAAAQDAEYw\nRAIgaGDe5uRrs1rzxF+YiXozBo9EeXeCflezqZTwkLnVhgICIBJvKIXUsicYgqfs\nrBNT0GxAbYVmfbsXSReCNkyEaY7uMA0GCSqGSIb3DQEBCwUAA4ICAQBNia4x9Q9T\nwtJf+PtRiosHSY12Keir7Vlm+wsXc40DK1c/+MxpicPFf4jKhDnOYZoJpDVnP31U\nIy7T0sUDjDnY89u0mfZ/IjSbUpFQFGROjithgrXM+PYYTMyNVlbtIpjnzKWFYeWd\nJR6c/nByUecbZTkpHH7nLeNbUoKTfWzt6SLGxQ6Gr9mZFUuRv+22ozhNKCu8R7bA\nEMDwL/F3YhCulTk6qMOXJmt0/GaxBYNzUM4mbdwYiJNuv01wRGtXyoMyTKWD8KeD\nxyA1G0kLl5WtU58jxkRJCaI0PjionBTtQ0ewNHDk0qMAQuweXQInV6isjec6PcQ8\nYVshF1CDDmSzuGpgB3x1Qkr+DiewNpgl+Fd/QnlQM/hQlAV7mFNKx7XOwgt7mhA3\n5SSRIGb6OOsOCWxw6h0e7mfC7wi0Evu5HR1pjXs46JgJflNNTBkFOSXGwsysXKeQ\nb9CGjOxjC2hHr3Kexjpyl7qkD3AQxDcF0+5uvpN3MEoMXxA2HY4hn178Y3IhR2UH\nBv0QbsOepmPM+z0ommD4mRGXnvS4twv6UNkNJo4tyRNKdeTSOEuwJ8tE0jlU8TyM\n2057Bb5J+cqNgJ9r/mN0fQShlEdgciZo8cKlMt6OBPfnqlXQ6kinrtiIbAOHFNVS\niSZ+VpKo4o+vH9hFuoO8SMx50P8phRbcVw==\n-----END CERTIFICATE-----\n", "auth": ["IMAP4REV1", "XLIST", "SPECIAL-USE", "LITERAL+", "STARTTLS", "APPENDLIMIT=71680000", "XAPPLEPUSHSERVICE", "UIDPLUS", "X-CM-EXT-1", "SASL-IR", "AUTH=PLAIN", "AUTH=LOGIN", "AUTH=XOAUTH2", "ID"]}}
 
 Plain err: TLS test failed: OS error : timed out
 StartTLS err: TLS test failed: OS error : timed out
 Running test
 Raw output:
- {"success": false, "info": null, "error": "OS error : timed out"}
+ {"success": true, "info": {"error": [], "auth": ["IMAP4REV1", "XLIST", "SPECIAL-USE", "LITERAL+", "STARTTLS", "APPENDLIMIT=71680000", "XAPPLEPUSHSERVICE", "UIDPLUS", "X-CM-EXT-1", "SASL-IR", "AUTH=PLAIN", "AUTH=LOGIN", "AUTH=XOAUTH2", "ID", "STARTTLS"]}}
 
 Running test
 Raw output:
- {"success": false, "info": null, "error": "OS error : timed out"}
-
-Running test
-Raw output:
- {"success": true, "info": {"error": ["SSL error: [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: Hostname mismatch, certificate is not valid for 'pop.gmail.com.'. (_ssl.c:1076)"], "version": "TLSv1.3", "cipher": ["TLS_AES_256_GCM_SHA384", "TLSv1.3", 256], "tls ca": "-----BEGIN CERTIFICATE-----\nMIIDkjCCAzigAwIBAgIQYLuY+XFNIVcSWs9SRFEA7zAKBggqhkjOPQQDAjA7MQsw\nCQYDVQQGEwJVUzEeMBwGA1UEChMVR29vZ2xlIFRydXN0IFNlcnZpY2VzMQwwCgYD\nVQQDEwNXRTIwHhcNMjUwOTE1MDgzNjE1WhcNMjUxMjA4MDgzNjE0WjAYMRYwFAYD\nVQQDEw1wb3AuZ21haWwuY29tMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEc5X7\nMBAk64KcS5kEfk/KYYl4eTnPnupBzE9WzyhNlZ5EqZkd/ydsNdfBU0yaRc6h4GoF\nxZ8PWYwRrFND9vgHM6OCAj8wggI7MA4GA1UdDwEB/wQEAwIHgDATBgNVHSUEDDAK\nBggrBgEFBQcDATAMBgNVHRMBAf8EAjAAMB0GA1UdDgQWBBSGOJ903/cAwUY0s7aS\nYl+tbDRPPjAfBgNVHSMEGDAWgBR1vsR3ron2RDd9z7FoHx0a69w0WTBYBggrBgEF\nBQcBAQRMMEowIQYIKwYBBQUHMAGGFWh0dHA6Ly9vLnBraS5nb29nL3dlMjAlBggr\nBgEFBQcwAoYZaHR0cDovL2kucGtpLmdvb2cvd2UyLmNydDAYBgNVHREEETAPgg1w\nb3AuZ21haWwuY29tMBMGA1UdIAQMMAowCAYGZ4EMAQIBMDYGA1UdHwQvMC0wK6Ap\noCeGJWh0dHA6Ly9jLnBraS5nb29nL3dlMi94dXp0M1BVOUZfdy5jcmwwggEDBgor\nBgEEAdZ5AgQCBIH0BIHxAO8AdQAS8U40vVNyTIQGGcOPP3oT+Oe1YoeInG0wBYTr\n5YYmOgAAAZlMu25CAAAEAwBGMEQCIF5f/lz3vgNcC/EEufyn2DaVZBBVcXtI6ve3\nMd/erEzyAiAFZMtPgfbQgHgKleAyzjK3luwyP/umXOvNT8vVvrY+vAB2AO08S9bo\nBsKkogBX28sk4jgB31Ev7cSGxXAPIN23Pj/gAAABmUy7bl0AAAQDAEcwRQIhAI4g\nL02s0hg9MgxmdprWfuom7EReLaetFEqw94qo8DoEAiAVPaxVd5d2RhE77uo5sTaI\n6tXs88+o3JcFtYTyd39CXTAKBggqhkjOPQQDAgNIADBFAiEApUDl3G/EyOc15l/8\nB6Q1YrEQ1POsQ5IAK0ZZGuVW9OkCIHqERFiGrt6p46HlwfyTzkj3Q6UcN00gG9Fw\nXEHvYAh3\n-----END CERTIFICATE-----\n", "auth": {"USER": [], "RESP-CODES": [], "EXPIRE": ["0"], "LOGIN-DELAY": ["300"], "TOP": [], "UIDL": [], "X-GOOGLE-RICO": [], "SASL": ["PLAIN", "XOAUTH2", "OAUTHBEARER"]}}}
-
-Plain err: TLS test failed: OS error : timed out
-StartTLS err: TLS test failed: OS error : timed out
-Running test
-Raw output:
- {"success": true, "info": {"error": [], "enable esmtp": 1, "auth": {"size": "35882577", "8bitmime": "", "starttls": "", "enhancedstatuscodes": "", "pipelining": "", "chunking": "", "smtputf8": ""}}}
-
-Running test
-Raw output:
- {"success": true, "info": {"error": ["SSL error: [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: Hostname mismatch, certificate is not valid for 'smtp.gmail.com.'. (_ssl.c:1076)"], "version": "TLSv1.3", "cipher": ["TLS_AES_256_GCM_SHA384", "TLSv1.3", 256], "tls ca": "-----BEGIN CERTIFICATE-----\nMIIDmDCCAz6gAwIBAgIRAKmDX2rqSO14EmdzvQaXFacwCgYIKoZIzj0EAwIwOzEL\nMAkGA1UEBhMCVVMxHjAcBgNVBAoTFUdvb2dsZSBUcnVzdCBTZXJ2aWNlczEMMAoG\nA1UEAxMDV0UyMB4XDTI1MDkxNTA4MzYxNloXDTI1MTIwODA4MzYxNVowGTEXMBUG\nA1UEAxMOc210cC5nbWFpbC5jb20wWTATBgcqhkjOPQIBBggqhkjOPQMBBwNCAASS\npY9Vdvv/Xd4J8M5fDKfsFGoJ0ZfZ5Fhh3IjrIo6y5gkckboHgOIh/IVeXguZ8Zdj\nkCx/vcJiRxAXnFOKV5j4o4ICQzCCAj8wDgYDVR0PAQH/BAQDAgeAMBMGA1UdJQQM\nMAoGCCsGAQUFBwMBMAwGA1UdEwEB/wQCMAAwHQYDVR0OBBYEFPtEbP0sB0dN7rxo\nsSzsJHglRP/HMB8GA1UdIwQYMBaAFHW+xHeuifZEN33PsWgfHRrr3DRZMFgGCCsG\nAQUFBwEBBEwwSjAhBggrBgEFBQcwAYYVaHR0cDovL28ucGtpLmdvb2cvd2UyMCUG\nCCsGAQUFBzAChhlodHRwOi8vaS5wa2kuZ29vZy93ZTIuY3J0MBkGA1UdEQQSMBCC\nDnNtdHAuZ21haWwuY29tMBMGA1UdIAQMMAowCAYGZ4EMAQIBMDYGA1UdHwQvMC0w\nK6ApoCeGJWh0dHA6Ly9jLnBraS5nb29nL3dlMi9kVE0zLTBocFdmRS5jcmwwggEG\nBgorBgEEAdZ5AgQCBIH3BIH0APIAdwAS8U40vVNyTIQGGcOPP3oT+Oe1YoeInG0w\nBYTr5YYmOgAAAZlMu3J6AAAEAwBIMEYCIQC7QYaEhSi3a2N72LHSPCltFVJ8N8XZ\nzuZIfdOrgJahDwIhAJxmkpzzXs69jYR3mbWM6DPmOfAubRFa25/e9L3wZimfAHcA\nGgT/SdBUHUCv9qDDv/HYxGcvTuzuI0BomGsXQC7ciX0AAAGZTLtypQAABAMASDBG\nAiEA4ffRRAfY2dfkvSCoAVcBoYzV5rqPQmPHm8gTpZZbwZ0CIQCmF6yt8bg6mcyV\nGYsZSK0e6PG9/ZEr+SbavJSOkNTCYzAKBggqhkjOPQQDAgNIADBFAiBtmYF8C5Jm\ntzcCKxP31wASURQLZov9Yr7dLvvqq8xWMQIhAP97Vzafzd2DCMopfBG+CSMrgQNh\nnKJccrb8R91SUXzz\n-----END CERTIFICATE-----\n", "enable esmtp": 1, "auth": {"size": "35882577", "8bitmime": "", "auth": " LOGIN PLAIN XOAUTH2 PLAIN-CLIENTTOKEN OAUTHBEARER XOAUTH", "enhancedstatuscodes": "", "pipelining": "", "chunking": "", "smtputf8": ""}}}
+ {"success": true, "info": {"error": [], "version": "TLSv1.2", "cipher": ["ECDHE-RSA-AES256-GCM-SHA384", "TLSv1.2", 256], "tls ca": "-----BEGIN CERTIFICATE-----\nMIIHlTCCBX2gAwIBAgIQAQHqz4v72yQ/jWD9q14dAjANBgkqhkiG9w0BAQsFADBb\nMQswCQYDVQQGEwJVUzEXMBUGA1UEChMORGlnaUNlcnQsIEluYy4xMzAxBgNVBAMT\nKkdlb1RydXN0IEcyIFRMUyBDTiBSU0E0MDk2IFNIQTI1NiAyMDIyIENBMTAeFw0y\nNTAxMDkwMDAwMDBaFw0yNjAyMDkyMzU5NTlaMHUxCzAJBgNVBAYTAkNOMREwDwYD\nVQQIEwhaaGVqaWFuZzERMA8GA1UEBxMISGFuZ3pob3UxLDAqBgNVBAoTI05ldEVh\nc2UgKEhhbmd6aG91KSBOZXR3b3JrIENvLiwgTHRkMRIwEAYDVQQDDAkqLjEyNi5j\nb20wggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQDaV2SB3eRzlIcCN52y\nwgP84c6SShmDKkJx3KL81A6tSAKJas4CC2YY4Xy2jXRB5fxH+wwKt9Lj986BSH1+\nDjBe3N9AapYWsB6j9Xpydfi1JZdmbLyNJFqnZk22gsIxFjqegFriXnaG/093R7SU\nrfZjs8SUlgrElHN1TwypEwoGfiZE/6k7JQ7eFs6q/EdmPTR6wjYsfpO7RjHfrpVx\nb9lqJR52DEDVNbolQwZ/RbIwV/MwVuMpXjD+7io32NC5p3cycsEw87Upl+/KVXdN\nfDANYswcfAIfroneJz8YUQjoMyLIKGEkc92GXfaevWTwldVer5DovWm8IimdVMyF\n69uRAgMBAAGjggM5MIIDNTAfBgNVHSMEGDAWgBRBTo5pnfRuJex4FBx+180dmc/5\nazAdBgNVHQ4EFgQUyB3vQnZCssVXYfTCOeXCk7F9GQgwHQYDVR0RBBYwFIIJKi4x\nMjYuY29tggcxMjYuY29tMD4GA1UdIAQ3MDUwMwYGZ4EMAQICMCkwJwYIKwYBBQUH\nAgEWG2h0dHA6Ly93d3cuZGlnaWNlcnQuY29tL0NQUzAOBgNVHQ8BAf8EBAMCBaAw\nHQYDVR0lBBYwFAYIKwYBBQUHAwEGCCsGAQUFBwMCME8GA1UdHwRIMEYwRKBCoECG\nPmh0dHA6Ly9jcmwuZGlnaWNlcnQuY24vR2VvVHJ1c3RHMlRMU0NOUlNBNDA5NlNI\nQTI1NjIwMjJDQTEuY3JsMIGDBggrBgEFBQcBAQR3MHUwIwYIKwYBBQUHMAGGF2h0\ndHA6Ly9vY3NwLmRpZ2ljZXJ0LmNuME4GCCsGAQUFBzAChkJodHRwOi8vY2FjZXJ0\ncy5kaWdpY2VydC5jbi9HZW9UcnVzdEcyVExTQ05SU0E0MDk2U0hBMjU2MjAyMkNB\nMS5jcnQwDAYDVR0TAQH/BAIwADCCAX4GCisGAQQB1nkCBAIEggFuBIIBagFoAHcA\nDleUvPOuqT4zGyyZB7P3kN+bwj1xMiXdIaklrGHFTiEAAAGUSMqifwAABAMASDBG\nAiEA+PJ7zjCEzZPa4p3SMvQ3XHaOWhP4TQXRSB/mCcYBPBACIQCMCzEOAlwQREEu\nkfvdKjxrpzZ5GnvS5O12kC6eepzhcQB2AGQRxGykEuyniRyiAi4AvKtPKAfUHjUn\nq+r+1QPJfc3wAAABlEjKonYAAAQDAEcwRQIgGaVePCiixZ7Q9On3Czmg6iLFw6Qx\nDspCfiZuCZHxJ8kCIQDZkCjKtjaf7ordAbC/tQANIw4fwWL3ctZINUALIhASQgB1\nAEmcm2neHXzs/DbezYdkprhbrwqHgBnRVVL76esp3fjDAAABlEjKookAAAQDAEYw\nRAIgaGDe5uRrs1rzxF+YiXozBo9EeXeCflezqZTwkLnVhgICIBJvKIXUsicYgqfs\nrBNT0GxAbYVmfbsXSReCNkyEaY7uMA0GCSqGSIb3DQEBCwUAA4ICAQBNia4x9Q9T\nwtJf+PtRiosHSY12Keir7Vlm+wsXc40DK1c/+MxpicPFf4jKhDnOYZoJpDVnP31U\nIy7T0sUDjDnY89u0mfZ/IjSbUpFQFGROjithgrXM+PYYTMyNVlbtIpjnzKWFYeWd\nJR6c/nByUecbZTkpHH7nLeNbUoKTfWzt6SLGxQ6Gr9mZFUuRv+22ozhNKCu8R7bA\nEMDwL/F3YhCulTk6qMOXJmt0/GaxBYNzUM4mbdwYiJNuv01wRGtXyoMyTKWD8KeD\nxyA1G0kLl5WtU58jxkRJCaI0PjionBTtQ0ewNHDk0qMAQuweXQInV6isjec6PcQ8\nYVshF1CDDmSzuGpgB3x1Qkr+DiewNpgl+Fd/QnlQM/hQlAV7mFNKx7XOwgt7mhA3\n5SSRIGb6OOsOCWxw6h0e7mfC7wi0Evu5HR1pjXs46JgJflNNTBkFOSXGwsysXKeQ\nb9CGjOxjC2hHr3Kexjpyl7qkD3AQxDcF0+5uvpN3MEoMXxA2HY4hn178Y3IhR2UH\nBv0QbsOepmPM+z0ommD4mRGXnvS4twv6UNkNJo4tyRNKdeTSOEuwJ8tE0jlU8TyM\n2057Bb5J+cqNgJ9r/mN0fQShlEdgciZo8cKlMt6OBPfnqlXQ6kinrtiIbAOHFNVS\niSZ+VpKo4o+vH9hFuoO8SMx50P8phRbcVw==\n-----END CERTIFICATE-----\n", "auth": ["IMAP4REV1", "XLIST", "SPECIAL-USE", "LITERAL+", "STARTTLS", "APPENDLIMIT=71680000", "XAPPLEPUSHSERVICE", "UIDPLUS", "X-CM-EXT-1", "SASL-IR", "AUTH=PLAIN", "AUTH=LOGIN", "AUTH=XOAUTH2", "ID"]}}
 
 Running test
 Raw output:
  {"success": false, "info": null, "error": "SSL error: [SSL: WRONG_VERSION_NUMBER] wrong version number (_ssl.c:1076)"}
 
 TLS err: TLS test failed: SSL error: [SSL: WRONG_VERSION_NUMBER] wrong version number (_ssl.c:1076)
-[smtp.gmail.com:587 imap.gmail.com:993 smtp.gmail.com:465 pop.gmail.com:995]Running test
-Raw output:
- {"success": true, "info": {"error": [], "enable esmtp": 1, "auth": {"size": "35882577", "8bitmime": "", "starttls": "", "enhancedstatuscodes": "", "pipelining": "", "chunking": "", "smtputf8": ""}}}
-
-Running test
-Raw output:
- {"success": true, "info": {"error": [], "version": "TLSv1.3", "cipher": ["TLS_AES_256_GCM_SHA384", "TLSv1.3", 256], "tls ca": "-----BEGIN CERTIFICATE-----\nMIIDmDCCAz6gAwIBAgIRAKmDX2rqSO14EmdzvQaXFacwCgYIKoZIzj0EAwIwOzEL\nMAkGA1UEBhMCVVMxHjAcBgNVBAoTFUdvb2dsZSBUcnVzdCBTZXJ2aWNlczEMMAoG\nA1UEAxMDV0UyMB4XDTI1MDkxNTA4MzYxNloXDTI1MTIwODA4MzYxNVowGTEXMBUG\nA1UEAxMOc210cC5nbWFpbC5jb20wWTATBgcqhkjOPQIBBggqhkjOPQMBBwNCAASS\npY9Vdvv/Xd4J8M5fDKfsFGoJ0ZfZ5Fhh3IjrIo6y5gkckboHgOIh/IVeXguZ8Zdj\nkCx/vcJiRxAXnFOKV5j4o4ICQzCCAj8wDgYDVR0PAQH/BAQDAgeAMBMGA1UdJQQM\nMAoGCCsGAQUFBwMBMAwGA1UdEwEB/wQCMAAwHQYDVR0OBBYEFPtEbP0sB0dN7rxo\nsSzsJHglRP/HMB8GA1UdIwQYMBaAFHW+xHeuifZEN33PsWgfHRrr3DRZMFgGCCsG\nAQUFBwEBBEwwSjAhBggrBgEFBQcwAYYVaHR0cDovL28ucGtpLmdvb2cvd2UyMCUG\nCCsGAQUFBzAChhlodHRwOi8vaS5wa2kuZ29vZy93ZTIuY3J0MBkGA1UdEQQSMBCC\nDnNtdHAuZ21haWwuY29tMBMGA1UdIAQMMAowCAYGZ4EMAQIBMDYGA1UdHwQvMC0w\nK6ApoCeGJWh0dHA6Ly9jLnBraS5nb29nL3dlMi9kVE0zLTBocFdmRS5jcmwwggEG\nBgorBgEEAdZ5AgQCBIH3BIH0APIAdwAS8U40vVNyTIQGGcOPP3oT+Oe1YoeInG0w\nBYTr5YYmOgAAAZlMu3J6AAAEAwBIMEYCIQC7QYaEhSi3a2N72LHSPCltFVJ8N8XZ\nzuZIfdOrgJahDwIhAJxmkpzzXs69jYR3mbWM6DPmOfAubRFa25/e9L3wZimfAHcA\nGgT/SdBUHUCv9qDDv/HYxGcvTuzuI0BomGsXQC7ciX0AAAGZTLtypQAABAMASDBG\nAiEA4ffRRAfY2dfkvSCoAVcBoYzV5rqPQmPHm8gTpZZbwZ0CIQCmF6yt8bg6mcyV\nGYsZSK0e6PG9/ZEr+SbavJSOkNTCYzAKBggqhkjOPQQDAgNIADBFAiBtmYF8C5Jm\ntzcCKxP31wASURQLZov9Yr7dLvvqq8xWMQIhAP97Vzafzd2DCMopfBG+CSMrgQNh\nnKJccrb8R91SUXzz\n-----END CERTIFICATE-----\n", "enable esmtp": 1, "auth": {"size": "35882577", "8bitmime": "", "auth": " LOGIN PLAIN XOAUTH2 PLAIN-CLIENTTOKEN OAUTHBEARER XOAUTH", "enhancedstatuscodes": "", "pipelining": "", "chunking": "", "smtputf8": ""}}}
-
-Running test
-Raw output:
- {"success": false, "info": null, "error": "SSL error: [SSL: WRONG_VERSION_NUMBER] wrong version number (_ssl.c:1076)"}
-
-TLS err: TLS test failed: SSL error: [SSL: WRONG_VERSION_NUMBER] wrong version number (_ssl.c:1076)
-Running test
-Raw output:
- {"success": false, "info": null, "error": "OS error : timed out"}
-
-Running test
-Raw output:
- {"success": false, "info": null, "error": "OS error : timed out"}
-
-Running test
-Raw output:
- {"success": true, "info": {"error": [], "version": "TLSv1.3", "cipher": ["TLS_AES_256_GCM_SHA384", "TLSv1.3", 256], "tls ca": "-----BEGIN CERTIFICATE-----\nMIIDlTCCAzygAwIBAgIQD6pRa0pn0roS2HAyATy0CTAKBggqhkjOPQQDAjA7MQsw\nCQYDVQQGEwJVUzEeMBwGA1UEChMVR29vZ2xlIFRydXN0IFNlcnZpY2VzMQwwCgYD\nVQQDEwNXRTIwHhcNMjUwOTE1MDgzNjE0WhcNMjUxMjA4MDgzNjEzWjAZMRcwFQYD\nVQQDEw5pbWFwLmdtYWlsLmNvbTBZMBMGByqGSM49AgEGCCqGSM49AwEHA0IABNmD\nyjREG2gcwDJMzZQQ1YTF/cbVb1lpiNkclIN/HZ8gL9SFwSHog//ZcHTaekq0a3qB\nzYN7qjFxGceMP9gyBQejggJCMIICPjAOBgNVHQ8BAf8EBAMCB4AwEwYDVR0lBAww\nCgYIKwYBBQUHAwEwDAYDVR0TAQH/BAIwADAdBgNVHQ4EFgQU9M+3GFVlSDrD+SE8\n58PlFokyLbwwHwYDVR0jBBgwFoAUdb7Ed66J9kQ3fc+xaB8dGuvcNFkwWAYIKwYB\nBQUHAQEETDBKMCEGCCsGAQUFBzABhhVodHRwOi8vby5wa2kuZ29vZy93ZTIwJQYI\nKwYBBQUHMAKGGWh0dHA6Ly9pLnBraS5nb29nL3dlMi5jcnQwGQYDVR0RBBIwEIIO\naW1hcC5nbWFpbC5jb20wEwYDVR0gBAwwCjAIBgZngQwBAgEwNgYDVR0fBC8wLTAr\noCmgJ4YlaHR0cDovL2MucGtpLmdvb2cvd2UyL3lLNW5QaHRIS1FzLmNybDCCAQUG\nCisGAQQB1nkCBAIEgfYEgfMA8QB3AKRCxQZJYGFUjw/U6pz7ei0mRU2HqX8v30VZ\n9idPOoRUAAABmUy7bIkAAAQDAEgwRgIhANWzrNKJ9/0N7M4Cr889Y7YW5wksghTf\nsK7NDezALCfRAiEAgByIisNJeoDbai0e7bnOROKBpiYI+MDGeoBQW85rRoAAdgAS\n8U40vVNyTIQGGcOPP3oT+Oe1YoeInG0wBYTr5YYmOgAAAZlMu2xAAAAEAwBHMEUC\nIQCyrcgjvxLs/24BaN3wjo/ri4/9A6YhVSFS5ILLvFIYlAIgdaqlR4XDVaFGkHwM\nYOwTSoe8KOOPUXrGLtk8s5huRbwwCgYIKoZIzj0EAwIDRwAwRAIgdcsggO/w86on\n8dmMDwt6rm2pVdfvjH2BBbk8n2IezRMCIC0Nb7POEkEbb0F0/QMploEqTOjThE99\n2Gm9CKsTa76k\n-----END CERTIFICATE-----\n", "auth": ["IMAP4REV1", "UNSELECT", "IDLE", "NAMESPACE", "QUOTA", "ID", "XLIST", "CHILDREN", "X-GM-EXT-1", "XYZZY", "SASL-IR", "AUTH=XOAUTH2", "AUTH=PLAIN", "AUTH=PLAIN-CLIENTTOKEN", "AUTH=OAUTHBEARER"]}}
-
-Plain err: TLS test failed: OS error : timed out
-StartTLS err: TLS test failed: OS error : timed out
 Running test
 Raw output:
  {"success": false, "info": null, "error": "OS error : Connection unexpectedly closed: timed out"}
@@ -197,7 +373,21 @@ Raw output:
 
 Running test
 Raw output:
- {"success": true, "info": {"error": [], "version": "TLSv1.3", "cipher": ["TLS_AES_256_GCM_SHA384", "TLSv1.3", 256], "tls ca": "-----BEGIN CERTIFICATE-----\nMIIDmDCCAz6gAwIBAgIRAKmDX2rqSO14EmdzvQaXFacwCgYIKoZIzj0EAwIwOzEL\nMAkGA1UEBhMCVVMxHjAcBgNVBAoTFUdvb2dsZSBUcnVzdCBTZXJ2aWNlczEMMAoG\nA1UEAxMDV0UyMB4XDTI1MDkxNTA4MzYxNloXDTI1MTIwODA4MzYxNVowGTEXMBUG\nA1UEAxMOc210cC5nbWFpbC5jb20wWTATBgcqhkjOPQIBBggqhkjOPQMBBwNCAASS\npY9Vdvv/Xd4J8M5fDKfsFGoJ0ZfZ5Fhh3IjrIo6y5gkckboHgOIh/IVeXguZ8Zdj\nkCx/vcJiRxAXnFOKV5j4o4ICQzCCAj8wDgYDVR0PAQH/BAQDAgeAMBMGA1UdJQQM\nMAoGCCsGAQUFBwMBMAwGA1UdEwEB/wQCMAAwHQYDVR0OBBYEFPtEbP0sB0dN7rxo\nsSzsJHglRP/HMB8GA1UdIwQYMBaAFHW+xHeuifZEN33PsWgfHRrr3DRZMFgGCCsG\nAQUFBwEBBEwwSjAhBggrBgEFBQcwAYYVaHR0cDovL28ucGtpLmdvb2cvd2UyMCUG\nCCsGAQUFBzAChhlodHRwOi8vaS5wa2kuZ29vZy93ZTIuY3J0MBkGA1UdEQQSMBCC\nDnNtdHAuZ21haWwuY29tMBMGA1UdIAQMMAowCAYGZ4EMAQIBMDYGA1UdHwQvMC0w\nK6ApoCeGJWh0dHA6Ly9jLnBraS5nb29nL3dlMi9kVE0zLTBocFdmRS5jcmwwggEG\nBgorBgEEAdZ5AgQCBIH3BIH0APIAdwAS8U40vVNyTIQGGcOPP3oT+Oe1YoeInG0w\nBYTr5YYmOgAAAZlMu3J6AAAEAwBIMEYCIQC7QYaEhSi3a2N72LHSPCltFVJ8N8XZ\nzuZIfdOrgJahDwIhAJxmkpzzXs69jYR3mbWM6DPmOfAubRFa25/e9L3wZimfAHcA\nGgT/SdBUHUCv9qDDv/HYxGcvTuzuI0BomGsXQC7ciX0AAAGZTLtypQAABAMASDBG\nAiEA4ffRRAfY2dfkvSCoAVcBoYzV5rqPQmPHm8gTpZZbwZ0CIQCmF6yt8bg6mcyV\nGYsZSK0e6PG9/ZEr+SbavJSOkNTCYzAKBggqhkjOPQQDAgNIADBFAiBtmYF8C5Jm\ntzcCKxP31wASURQLZov9Yr7dLvvqq8xWMQIhAP97Vzafzd2DCMopfBG+CSMrgQNh\nnKJccrb8R91SUXzz\n-----END CERTIFICATE-----\n", "enable esmtp": 1, "auth": {"size": "35882577", "8bitmime": "", "auth": " LOGIN PLAIN XOAUTH2 PLAIN-CLIENTTOKEN OAUTHBEARER XOAUTH", "enhancedstatuscodes": "", "pipelining": "", "chunking": "", "smtputf8": ""}}}
+ {"success": true, "info": {"error": ["SSL error: [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: Hostname mismatch, certificate is not valid for 'mail.126.com'. (_ssl.c:1076)"], "version": "TLSv1.3", "cipher": ["TLS_AES_256_GCM_SHA384", "TLSv1.3", 256], "tls ca": "-----BEGIN CERTIFICATE-----\nMIIHlzCCBX+gAwIBAgIQDNdwLdUwm1jbd6qjnx79TzANBgkqhkiG9w0BAQsFADBb\nMQswCQYDVQQGEwJVUzEXMBUGA1UEChMORGlnaUNlcnQsIEluYy4xMzAxBgNVBAMT\nKkdlb1RydXN0IEcyIFRMUyBDTiBSU0E0MDk2IFNIQTI1NiAyMDIyIENBMTAeFw0y\nNTAyMjcwMDAwMDBaFw0yNjAyMjYyMzU5NTlaMHUxCzAJBgNVBAYTAkNOMREwDwYD\nVQQIEwh6aGVqaWFuZzERMA8GA1UEBxMIaGFuZ3pob3UxLDAqBgNVBAoTI05ldEVh\nc2UgKEhhbmd6aG91KSBOZXR3b3JrIENvLiwgTHRkMRIwEAYDVQQDDAkqLjE4OC5j\nb20wggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQDGRaZM1N5qcnn3iXSt\nuONK5azPnadW4zz29rVeccecSARJIFoaFmRbFUCVwMqczxPGqjXhxj8pKJPSU/mn\n/VFevFmv5O8aaDgAU51MnoqhrDwjH0wgIAlVqC8O4rrb9YYm+WnblCFoejQqO040\nR7uTD1Y+v/JcvP2RgBJS0LD91F8hgDfDLy76N7vAw77nqAFGqS0nBpNCk5ytVRfh\nb00WPFoHdc0T9R66arbyfoesWX+9o8hD+sTGIa8XXGOMGLnPR7/ZKwhbF9QsYJpC\nfy972xITbdeAvWJx9bAgwKGylv7gQ5cQxzFrHDttFPl+iCD4mI2nXvqpkoMmSOJX\nSD43AgMBAAGjggM7MIIDNzAfBgNVHSMEGDAWgBRBTo5pnfRuJex4FBx+180dmc/5\nazAdBgNVHQ4EFgQUfUdxNjobj/bABPOPa4rSfjCoQi8wHQYDVR0RBBYwFIIJKi4x\nODguY29tggcxODguY29tMD4GA1UdIAQ3MDUwMwYGZ4EMAQICMCkwJwYIKwYBBQUH\nAgEWG2h0dHA6Ly93d3cuZGlnaWNlcnQuY29tL0NQUzAOBgNVHQ8BAf8EBAMCBaAw\nHQYDVR0lBBYwFAYIKwYBBQUHAwEGCCsGAQUFBwMCME8GA1UdHwRIMEYwRKBCoECG\nPmh0dHA6Ly9jcmwuZGlnaWNlcnQuY24vR2VvVHJ1c3RHMlRMU0NOUlNBNDA5NlNI\nQTI1NjIwMjJDQTEuY3JsMIGDBggrBgEFBQcBAQR3MHUwIwYIKwYBBQUHMAGGF2h0\ndHA6Ly9vY3NwLmRpZ2ljZXJ0LmNuME4GCCsGAQUFBzAChkJodHRwOi8vY2FjZXJ0\ncy5kaWdpY2VydC5jbi9HZW9UcnVzdEcyVExTQ05SU0E0MDk2U0hBMjU2MjAyMkNB\nMS5jcnQwDAYDVR0TAQH/BAIwADCCAYAGCisGAQQB1nkCBAIEggFwBIIBbAFqAHcA\nDleUvPOuqT4zGyyZB7P3kN+bwj1xMiXdIaklrGHFTiEAAAGVSCufsgAABAMASDBG\nAiEA4jWLNLNVCui54rp3Og8bL6MpooCbxQ6ypIpvxNxRK3gCIQCxivZZ+PrmrEwz\n+gVxLD3M7WqXVqCYAcutG5BOzOni4gB2AGQRxGykEuyniRyiAi4AvKtPKAfUHjUn\nq+r+1QPJfc3wAAABlUgrn+UAAAQDAEcwRQIgQFIt2j77VEfBCWY0WXvM2PMrYjYD\ni8ORnmmC6QHQUxACIQCNogxLvTHOiw6H3bHKuNQDleFJFra0mrPcFVoS7tuJOQB3\nAEmcm2neHXzs/DbezYdkprhbrwqHgBnRVVL76esp3fjDAAABlUgrn/4AAAQDAEgw\nRgIhAPwckau+LHfcLm83uOLd2f2raOYNOpkc0hrBTIXMSH06AiEAyVab9J7JTebE\n0KAeKZGicoLVoyWwwQtjSsWkMJrXHh8wDQYJKoZIhvcNAQELBQADggIBAIQ+HEc8\nZnXawfuNOWNfdYcdKDrH032WA9bSY2oSzb5T4vy+NSLWhtTuyLjAd3PPgrD7fGKv\n41S9vI0PtoRAB34fj60Tq0yvF2dN3TZH3BhRblJZW0xoVU0+S4/7qTCkPMYIMZXb\nUeDx2CnGSuVpfTKGGHfTLSDGLtFSJtkde/4kZyXJ9jEjalRmMVZHNL7oNycaRJp3\nmagaq2BP3qN79ABRjPI1Eg5/5Vzzkx0mtJWaOG0NDaYy49pAooHf0AXBahzskAz6\nLEqBgLC7lwLjgVPiKZ6I8H7INo0o1EaQQmocyF2x5QyWWfM4Tp+1ZL4AgG8FnnF5\nr8DRxcpr8NYfT4te5f+307UjPPLyoJxElWwFH0Vn8258FGs64a7XPwhNrs3YQ7PE\nGxeiSnRRGh4/vOD3jiBWyAyOV1Tn9yqmUvPCc2gQJ8Di7UfXb+z8uS3X/tDWmPdV\nr1BD/Fp80vaO9YwVh4RHc0Y/JV412fi7V7Lh93DMWgKE86+0q3DvbvJhTaNyYpXd\nK1c7mmMRKyKX0U3+FFEf6OQU8QPBWTrrjn+lVKL1D5B/f0bTQk8CtffArthIyo1b\nPZuBP2wkPzQOgWbY4d2Kve/HVPux/VTRaGxBtx0sjN6zG7HOxjBSIM5N5p/a/+51\nuFmQtpmVD9I3M6HOEl8+eSbwO1fyGp2mu9+p\n-----END CERTIFICATE-----\n", "enable esmtp": 1, "auth": {"pipelining": "", "auth": " LOGIN PLAIN XOAUTH2 LOGIN PLAIN XOAUTH2", "coremail": "1Uxr2xKj7kG0xkI17xGrU7I0s8FY2U3Uj8Cz28x1UUUUU7Ic2I0Y2UranKAWUCa0xDrUUUUj", "starttls": "", "id": "", "8bitmime": ""}}}
+
+Plain err: TLS test failed: OS error : Connection unexpectedly closed: timed out
+StartTLS err: TLS test failed: OS error : Connection unexpectedly closed: timed out
+Running test
+Raw output:
+ {"success": false, "info": null, "error": "OS error : Connection unexpectedly closed: timed out"}
+
+Running test
+Raw output:
+ {"success": false, "info": null, "error": "OS error : Connection unexpectedly closed: timed out"}
+
+Running test
+Raw output:
+ {"success": true, "info": {"error": ["SSL error: [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: Hostname mismatch, certificate is not valid for 'mail.126.com'. (_ssl.c:1076)"], "version": "TLSv1.3", "cipher": ["TLS_AES_256_GCM_SHA384", "TLSv1.3", 256], "tls ca": "-----BEGIN CERTIFICATE-----\nMIIHlzCCBX+gAwIBAgIQDNdwLdUwm1jbd6qjnx79TzANBgkqhkiG9w0BAQsFADBb\nMQswCQYDVQQGEwJVUzEXMBUGA1UEChMORGlnaUNlcnQsIEluYy4xMzAxBgNVBAMT\nKkdlb1RydXN0IEcyIFRMUyBDTiBSU0E0MDk2IFNIQTI1NiAyMDIyIENBMTAeFw0y\nNTAyMjcwMDAwMDBaFw0yNjAyMjYyMzU5NTlaMHUxCzAJBgNVBAYTAkNOMREwDwYD\nVQQIEwh6aGVqaWFuZzERMA8GA1UEBxMIaGFuZ3pob3UxLDAqBgNVBAoTI05ldEVh\nc2UgKEhhbmd6aG91KSBOZXR3b3JrIENvLiwgTHRkMRIwEAYDVQQDDAkqLjE4OC5j\nb20wggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQDGRaZM1N5qcnn3iXSt\nuONK5azPnadW4zz29rVeccecSARJIFoaFmRbFUCVwMqczxPGqjXhxj8pKJPSU/mn\n/VFevFmv5O8aaDgAU51MnoqhrDwjH0wgIAlVqC8O4rrb9YYm+WnblCFoejQqO040\nR7uTD1Y+v/JcvP2RgBJS0LD91F8hgDfDLy76N7vAw77nqAFGqS0nBpNCk5ytVRfh\nb00WPFoHdc0T9R66arbyfoesWX+9o8hD+sTGIa8XXGOMGLnPR7/ZKwhbF9QsYJpC\nfy972xITbdeAvWJx9bAgwKGylv7gQ5cQxzFrHDttFPl+iCD4mI2nXvqpkoMmSOJX\nSD43AgMBAAGjggM7MIIDNzAfBgNVHSMEGDAWgBRBTo5pnfRuJex4FBx+180dmc/5\nazAdBgNVHQ4EFgQUfUdxNjobj/bABPOPa4rSfjCoQi8wHQYDVR0RBBYwFIIJKi4x\nODguY29tggcxODguY29tMD4GA1UdIAQ3MDUwMwYGZ4EMAQICMCkwJwYIKwYBBQUH\nAgEWG2h0dHA6Ly93d3cuZGlnaWNlcnQuY29tL0NQUzAOBgNVHQ8BAf8EBAMCBaAw\nHQYDVR0lBBYwFAYIKwYBBQUHAwEGCCsGAQUFBwMCME8GA1UdHwRIMEYwRKBCoECG\nPmh0dHA6Ly9jcmwuZGlnaWNlcnQuY24vR2VvVHJ1c3RHMlRMU0NOUlNBNDA5NlNI\nQTI1NjIwMjJDQTEuY3JsMIGDBggrBgEFBQcBAQR3MHUwIwYIKwYBBQUHMAGGF2h0\ndHA6Ly9vY3NwLmRpZ2ljZXJ0LmNuME4GCCsGAQUFBzAChkJodHRwOi8vY2FjZXJ0\ncy5kaWdpY2VydC5jbi9HZW9UcnVzdEcyVExTQ05SU0E0MDk2U0hBMjU2MjAyMkNB\nMS5jcnQwDAYDVR0TAQH/BAIwADCCAYAGCisGAQQB1nkCBAIEggFwBIIBbAFqAHcA\nDleUvPOuqT4zGyyZB7P3kN+bwj1xMiXdIaklrGHFTiEAAAGVSCufsgAABAMASDBG\nAiEA4jWLNLNVCui54rp3Og8bL6MpooCbxQ6ypIpvxNxRK3gCIQCxivZZ+PrmrEwz\n+gVxLD3M7WqXVqCYAcutG5BOzOni4gB2AGQRxGykEuyniRyiAi4AvKtPKAfUHjUn\nq+r+1QPJfc3wAAABlUgrn+UAAAQDAEcwRQIgQFIt2j77VEfBCWY0WXvM2PMrYjYD\ni8ORnmmC6QHQUxACIQCNogxLvTHOiw6H3bHKuNQDleFJFra0mrPcFVoS7tuJOQB3\nAEmcm2neHXzs/DbezYdkprhbrwqHgBnRVVL76esp3fjDAAABlUgrn/4AAAQDAEgw\nRgIhAPwckau+LHfcLm83uOLd2f2raOYNOpkc0hrBTIXMSH06AiEAyVab9J7JTebE\n0KAeKZGicoLVoyWwwQtjSsWkMJrXHh8wDQYJKoZIhvcNAQELBQADggIBAIQ+HEc8\nZnXawfuNOWNfdYcdKDrH032WA9bSY2oSzb5T4vy+NSLWhtTuyLjAd3PPgrD7fGKv\n41S9vI0PtoRAB34fj60Tq0yvF2dN3TZH3BhRblJZW0xoVU0+S4/7qTCkPMYIMZXb\nUeDx2CnGSuVpfTKGGHfTLSDGLtFSJtkde/4kZyXJ9jEjalRmMVZHNL7oNycaRJp3\nmagaq2BP3qN79ABRjPI1Eg5/5Vzzkx0mtJWaOG0NDaYy49pAooHf0AXBahzskAz6\nLEqBgLC7lwLjgVPiKZ6I8H7INo0o1EaQQmocyF2x5QyWWfM4Tp+1ZL4AgG8FnnF5\nr8DRxcpr8NYfT4te5f+307UjPPLyoJxElWwFH0Vn8258FGs64a7XPwhNrs3YQ7PE\nGxeiSnRRGh4/vOD3jiBWyAyOV1Tn9yqmUvPCc2gQJ8Di7UfXb+z8uS3X/tDWmPdV\nr1BD/Fp80vaO9YwVh4RHc0Y/JV412fi7V7Lh93DMWgKE86+0q3DvbvJhTaNyYpXd\nK1c7mmMRKyKX0U3+FFEf6OQU8QPBWTrrjn+lVKL1D5B/f0bTQk8CtffArthIyo1b\nPZuBP2wkPzQOgWbY4d2Kve/HVPux/VTRaGxBtx0sjN6zG7HOxjBSIM5N5p/a/+51\nuFmQtpmVD9I3M6HOEl8+eSbwO1fyGp2mu9+p\n-----END CERTIFICATE-----\n", "enable esmtp": 1, "auth": {"pipelining": "", "auth": " LOGIN PLAIN XOAUTH2 LOGIN PLAIN XOAUTH2", "coremail": "1Uxr2xKj7kG0xkI17xGrU7I0s8FY2U3Uj8Cz28x1UUUUU7Ic2I0Y2UF3hyUfUCa0xDrUUUUj", "starttls": "", "id": "", "8bitmime": ""}}}
 
 Plain err: TLS test failed: OS error : Connection unexpectedly closed: timed out
 StartTLS err: TLS test failed: OS error : Connection unexpectedly closed: timed out
@@ -211,9 +401,89 @@ Raw output:
 
 Running test
 Raw output:
- {"success": true, "info": {"error": [], "version": "TLSv1.3", "cipher": ["TLS_AES_256_GCM_SHA384", "TLSv1.3", 256], "tls ca": "-----BEGIN CERTIFICATE-----\nMIIDkjCCAzigAwIBAgIQYLuY+XFNIVcSWs9SRFEA7zAKBggqhkjOPQQDAjA7MQsw\nCQYDVQQGEwJVUzEeMBwGA1UEChMVR29vZ2xlIFRydXN0IFNlcnZpY2VzMQwwCgYD\nVQQDEwNXRTIwHhcNMjUwOTE1MDgzNjE1WhcNMjUxMjA4MDgzNjE0WjAYMRYwFAYD\nVQQDEw1wb3AuZ21haWwuY29tMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEc5X7\nMBAk64KcS5kEfk/KYYl4eTnPnupBzE9WzyhNlZ5EqZkd/ydsNdfBU0yaRc6h4GoF\nxZ8PWYwRrFND9vgHM6OCAj8wggI7MA4GA1UdDwEB/wQEAwIHgDATBgNVHSUEDDAK\nBggrBgEFBQcDATAMBgNVHRMBAf8EAjAAMB0GA1UdDgQWBBSGOJ903/cAwUY0s7aS\nYl+tbDRPPjAfBgNVHSMEGDAWgBR1vsR3ron2RDd9z7FoHx0a69w0WTBYBggrBgEF\nBQcBAQRMMEowIQYIKwYBBQUHMAGGFWh0dHA6Ly9vLnBraS5nb29nL3dlMjAlBggr\nBgEFBQcwAoYZaHR0cDovL2kucGtpLmdvb2cvd2UyLmNydDAYBgNVHREEETAPgg1w\nb3AuZ21haWwuY29tMBMGA1UdIAQMMAowCAYGZ4EMAQIBMDYGA1UdHwQvMC0wK6Ap\noCeGJWh0dHA6Ly9jLnBraS5nb29nL3dlMi94dXp0M1BVOUZfdy5jcmwwggEDBgor\nBgEEAdZ5AgQCBIH0BIHxAO8AdQAS8U40vVNyTIQGGcOPP3oT+Oe1YoeInG0wBYTr\n5YYmOgAAAZlMu25CAAAEAwBGMEQCIF5f/lz3vgNcC/EEufyn2DaVZBBVcXtI6ve3\nMd/erEzyAiAFZMtPgfbQgHgKleAyzjK3luwyP/umXOvNT8vVvrY+vAB2AO08S9bo\nBsKkogBX28sk4jgB31Ev7cSGxXAPIN23Pj/gAAABmUy7bl0AAAQDAEcwRQIhAI4g\nL02s0hg9MgxmdprWfuom7EReLaetFEqw94qo8DoEAiAVPaxVd5d2RhE77uo5sTaI\n6tXs88+o3JcFtYTyd39CXTAKBggqhkjOPQQDAgNIADBFAiEApUDl3G/EyOc15l/8\nB6Q1YrEQ1POsQ5IAK0ZZGuVW9OkCIHqERFiGrt6p46HlwfyTzkj3Q6UcN00gG9Fw\nXEHvYAh3\n-----END CERTIFICATE-----\n", "auth": {"USER": [], "RESP-CODES": [], "EXPIRE": ["0"], "LOGIN-DELAY": ["300"], "TOP": [], "UIDL": [], "X-GOOGLE-RICO": [], "SASL": ["PLAIN", "XOAUTH2", "OAUTHBEARER"]}}}
+ {"success": true, "info": {"error": [], "version": "TLSv1.2", "cipher": ["ECDHE-RSA-AES256-GCM-SHA384", "TLSv1.2", 256], "tls ca": "-----BEGIN CERTIFICATE-----\nMIIHlTCCBX2gAwIBAgIQAQHqz4v72yQ/jWD9q14dAjANBgkqhkiG9w0BAQsFADBb\nMQswCQYDVQQGEwJVUzEXMBUGA1UEChMORGlnaUNlcnQsIEluYy4xMzAxBgNVBAMT\nKkdlb1RydXN0IEcyIFRMUyBDTiBSU0E0MDk2IFNIQTI1NiAyMDIyIENBMTAeFw0y\nNTAxMDkwMDAwMDBaFw0yNjAyMDkyMzU5NTlaMHUxCzAJBgNVBAYTAkNOMREwDwYD\nVQQIEwhaaGVqaWFuZzERMA8GA1UEBxMISGFuZ3pob3UxLDAqBgNVBAoTI05ldEVh\nc2UgKEhhbmd6aG91KSBOZXR3b3JrIENvLiwgTHRkMRIwEAYDVQQDDAkqLjEyNi5j\nb20wggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQDaV2SB3eRzlIcCN52y\nwgP84c6SShmDKkJx3KL81A6tSAKJas4CC2YY4Xy2jXRB5fxH+wwKt9Lj986BSH1+\nDjBe3N9AapYWsB6j9Xpydfi1JZdmbLyNJFqnZk22gsIxFjqegFriXnaG/093R7SU\nrfZjs8SUlgrElHN1TwypEwoGfiZE/6k7JQ7eFs6q/EdmPTR6wjYsfpO7RjHfrpVx\nb9lqJR52DEDVNbolQwZ/RbIwV/MwVuMpXjD+7io32NC5p3cycsEw87Upl+/KVXdN\nfDANYswcfAIfroneJz8YUQjoMyLIKGEkc92GXfaevWTwldVer5DovWm8IimdVMyF\n69uRAgMBAAGjggM5MIIDNTAfBgNVHSMEGDAWgBRBTo5pnfRuJex4FBx+180dmc/5\nazAdBgNVHQ4EFgQUyB3vQnZCssVXYfTCOeXCk7F9GQgwHQYDVR0RBBYwFIIJKi4x\nMjYuY29tggcxMjYuY29tMD4GA1UdIAQ3MDUwMwYGZ4EMAQICMCkwJwYIKwYBBQUH\nAgEWG2h0dHA6Ly93d3cuZGlnaWNlcnQuY29tL0NQUzAOBgNVHQ8BAf8EBAMCBaAw\nHQYDVR0lBBYwFAYIKwYBBQUHAwEGCCsGAQUFBwMCME8GA1UdHwRIMEYwRKBCoECG\nPmh0dHA6Ly9jcmwuZGlnaWNlcnQuY24vR2VvVHJ1c3RHMlRMU0NOUlNBNDA5NlNI\nQTI1NjIwMjJDQTEuY3JsMIGDBggrBgEFBQcBAQR3MHUwIwYIKwYBBQUHMAGGF2h0\ndHA6Ly9vY3NwLmRpZ2ljZXJ0LmNuME4GCCsGAQUFBzAChkJodHRwOi8vY2FjZXJ0\ncy5kaWdpY2VydC5jbi9HZW9UcnVzdEcyVExTQ05SU0E0MDk2U0hBMjU2MjAyMkNB\nMS5jcnQwDAYDVR0TAQH/BAIwADCCAX4GCisGAQQB1nkCBAIEggFuBIIBagFoAHcA\nDleUvPOuqT4zGyyZB7P3kN+bwj1xMiXdIaklrGHFTiEAAAGUSMqifwAABAMASDBG\nAiEA+PJ7zjCEzZPa4p3SMvQ3XHaOWhP4TQXRSB/mCcYBPBACIQCMCzEOAlwQREEu\nkfvdKjxrpzZ5GnvS5O12kC6eepzhcQB2AGQRxGykEuyniRyiAi4AvKtPKAfUHjUn\nq+r+1QPJfc3wAAABlEjKonYAAAQDAEcwRQIgGaVePCiixZ7Q9On3Czmg6iLFw6Qx\nDspCfiZuCZHxJ8kCIQDZkCjKtjaf7ordAbC/tQANIw4fwWL3ctZINUALIhASQgB1\nAEmcm2neHXzs/DbezYdkprhbrwqHgBnRVVL76esp3fjDAAABlEjKookAAAQDAEYw\nRAIgaGDe5uRrs1rzxF+YiXozBo9EeXeCflezqZTwkLnVhgICIBJvKIXUsicYgqfs\nrBNT0GxAbYVmfbsXSReCNkyEaY7uMA0GCSqGSIb3DQEBCwUAA4ICAQBNia4x9Q9T\nwtJf+PtRiosHSY12Keir7Vlm+wsXc40DK1c/+MxpicPFf4jKhDnOYZoJpDVnP31U\nIy7T0sUDjDnY89u0mfZ/IjSbUpFQFGROjithgrXM+PYYTMyNVlbtIpjnzKWFYeWd\nJR6c/nByUecbZTkpHH7nLeNbUoKTfWzt6SLGxQ6Gr9mZFUuRv+22ozhNKCu8R7bA\nEMDwL/F3YhCulTk6qMOXJmt0/GaxBYNzUM4mbdwYiJNuv01wRGtXyoMyTKWD8KeD\nxyA1G0kLl5WtU58jxkRJCaI0PjionBTtQ0ewNHDk0qMAQuweXQInV6isjec6PcQ8\nYVshF1CDDmSzuGpgB3x1Qkr+DiewNpgl+Fd/QnlQM/hQlAV7mFNKx7XOwgt7mhA3\n5SSRIGb6OOsOCWxw6h0e7mfC7wi0Evu5HR1pjXs46JgJflNNTBkFOSXGwsysXKeQ\nb9CGjOxjC2hHr3Kexjpyl7qkD3AQxDcF0+5uvpN3MEoMXxA2HY4hn178Y3IhR2UH\nBv0QbsOepmPM+z0ommD4mRGXnvS4twv6UNkNJo4tyRNKdeTSOEuwJ8tE0jlU8TyM\n2057Bb5J+cqNgJ9r/mN0fQShlEdgciZo8cKlMt6OBPfnqlXQ6kinrtiIbAOHFNVS\niSZ+VpKo4o+vH9hFuoO8SMx50P8phRbcVw==\n-----END CERTIFICATE-----\n", "auth": {"LANG": [], "TOP": [], "USER": [], "UTF8": [], "STLS": [], "PIPELINING": [], "SASL(PLAIN": ["XOAUTH2)"], "ID": [], "UIDL": [], "SASL": ["PLAIN"]}}}
 
 Plain err: TLS test failed: OS error : timed out
 StartTLS err: TLS test failed: OS error : timed out
-2025/10/08 15:47:19 📝 已缓存: gmail.com
-2025/10/08 15:47:19 WebSocket 关闭: websocket: close 1005 (no status)
+Running test
+Raw output:
+ {"success": false, "info": null, "error": "OS error : timed out"}
+
+Running test
+Raw output:
+ {"success": false, "info": null, "error": "OS error : timed out"}
+
+Running test
+Raw output:
+ {"success": true, "info": {"error": [], "version": "TLSv1.2", "cipher": ["ECDHE-RSA-AES256-GCM-SHA384", "TLSv1.2", 256], "tls ca": "-----BEGIN CERTIFICATE-----\nMIIHlTCCBX2gAwIBAgIQAQHqz4v72yQ/jWD9q14dAjANBgkqhkiG9w0BAQsFADBb\nMQswCQYDVQQGEwJVUzEXMBUGA1UEChMORGlnaUNlcnQsIEluYy4xMzAxBgNVBAMT\nKkdlb1RydXN0IEcyIFRMUyBDTiBSU0E0MDk2IFNIQTI1NiAyMDIyIENBMTAeFw0y\nNTAxMDkwMDAwMDBaFw0yNjAyMDkyMzU5NTlaMHUxCzAJBgNVBAYTAkNOMREwDwYD\nVQQIEwhaaGVqaWFuZzERMA8GA1UEBxMISGFuZ3pob3UxLDAqBgNVBAoTI05ldEVh\nc2UgKEhhbmd6aG91KSBOZXR3b3JrIENvLiwgTHRkMRIwEAYDVQQDDAkqLjEyNi5j\nb20wggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQDaV2SB3eRzlIcCN52y\nwgP84c6SShmDKkJx3KL81A6tSAKJas4CC2YY4Xy2jXRB5fxH+wwKt9Lj986BSH1+\nDjBe3N9AapYWsB6j9Xpydfi1JZdmbLyNJFqnZk22gsIxFjqegFriXnaG/093R7SU\nrfZjs8SUlgrElHN1TwypEwoGfiZE/6k7JQ7eFs6q/EdmPTR6wjYsfpO7RjHfrpVx\nb9lqJR52DEDVNbolQwZ/RbIwV/MwVuMpXjD+7io32NC5p3cycsEw87Upl+/KVXdN\nfDANYswcfAIfroneJz8YUQjoMyLIKGEkc92GXfaevWTwldVer5DovWm8IimdVMyF\n69uRAgMBAAGjggM5MIIDNTAfBgNVHSMEGDAWgBRBTo5pnfRuJex4FBx+180dmc/5\nazAdBgNVHQ4EFgQUyB3vQnZCssVXYfTCOeXCk7F9GQgwHQYDVR0RBBYwFIIJKi4x\nMjYuY29tggcxMjYuY29tMD4GA1UdIAQ3MDUwMwYGZ4EMAQICMCkwJwYIKwYBBQUH\nAgEWG2h0dHA6Ly93d3cuZGlnaWNlcnQuY29tL0NQUzAOBgNVHQ8BAf8EBAMCBaAw\nHQYDVR0lBBYwFAYIKwYBBQUHAwEGCCsGAQUFBwMCME8GA1UdHwRIMEYwRKBCoECG\nPmh0dHA6Ly9jcmwuZGlnaWNlcnQuY24vR2VvVHJ1c3RHMlRMU0NOUlNBNDA5NlNI\nQTI1NjIwMjJDQTEuY3JsMIGDBggrBgEFBQcBAQR3MHUwIwYIKwYBBQUHMAGGF2h0\ndHA6Ly9vY3NwLmRpZ2ljZXJ0LmNuME4GCCsGAQUFBzAChkJodHRwOi8vY2FjZXJ0\ncy5kaWdpY2VydC5jbi9HZW9UcnVzdEcyVExTQ05SU0E0MDk2U0hBMjU2MjAyMkNB\nMS5jcnQwDAYDVR0TAQH/BAIwADCCAX4GCisGAQQB1nkCBAIEggFuBIIBagFoAHcA\nDleUvPOuqT4zGyyZB7P3kN+bwj1xMiXdIaklrGHFTiEAAAGUSMqifwAABAMASDBG\nAiEA+PJ7zjCEzZPa4p3SMvQ3XHaOWhP4TQXRSB/mCcYBPBACIQCMCzEOAlwQREEu\nkfvdKjxrpzZ5GnvS5O12kC6eepzhcQB2AGQRxGykEuyniRyiAi4AvKtPKAfUHjUn\nq+r+1QPJfc3wAAABlEjKonYAAAQDAEcwRQIgGaVePCiixZ7Q9On3Czmg6iLFw6Qx\nDspCfiZuCZHxJ8kCIQDZkCjKtjaf7ordAbC/tQANIw4fwWL3ctZINUALIhASQgB1\nAEmcm2neHXzs/DbezYdkprhbrwqHgBnRVVL76esp3fjDAAABlEjKookAAAQDAEYw\nRAIgaGDe5uRrs1rzxF+YiXozBo9EeXeCflezqZTwkLnVhgICIBJvKIXUsicYgqfs\nrBNT0GxAbYVmfbsXSReCNkyEaY7uMA0GCSqGSIb3DQEBCwUAA4ICAQBNia4x9Q9T\nwtJf+PtRiosHSY12Keir7Vlm+wsXc40DK1c/+MxpicPFf4jKhDnOYZoJpDVnP31U\nIy7T0sUDjDnY89u0mfZ/IjSbUpFQFGROjithgrXM+PYYTMyNVlbtIpjnzKWFYeWd\nJR6c/nByUecbZTkpHH7nLeNbUoKTfWzt6SLGxQ6Gr9mZFUuRv+22ozhNKCu8R7bA\nEMDwL/F3YhCulTk6qMOXJmt0/GaxBYNzUM4mbdwYiJNuv01wRGtXyoMyTKWD8KeD\nxyA1G0kLl5WtU58jxkRJCaI0PjionBTtQ0ewNHDk0qMAQuweXQInV6isjec6PcQ8\nYVshF1CDDmSzuGpgB3x1Qkr+DiewNpgl+Fd/QnlQM/hQlAV7mFNKx7XOwgt7mhA3\n5SSRIGb6OOsOCWxw6h0e7mfC7wi0Evu5HR1pjXs46JgJflNNTBkFOSXGwsysXKeQ\nb9CGjOxjC2hHr3Kexjpyl7qkD3AQxDcF0+5uvpN3MEoMXxA2HY4hn178Y3IhR2UH\nBv0QbsOepmPM+z0ommD4mRGXnvS4twv6UNkNJo4tyRNKdeTSOEuwJ8tE0jlU8TyM\n2057Bb5J+cqNgJ9r/mN0fQShlEdgciZo8cKlMt6OBPfnqlXQ6kinrtiIbAOHFNVS\niSZ+VpKo4o+vH9hFuoO8SMx50P8phRbcVw==\n-----END CERTIFICATE-----\n", "auth": {"LANG": [], "TOP": [], "USER": [], "UTF8": [], "STLS": [], "PIPELINING": [], "SASL(PLAIN": ["XOAUTH2)"], "ID": [], "UIDL": [], "SASL": ["PLAIN"]}}}
+
+Plain err: TLS test failed: OS error : timed out
+StartTLS err: TLS test failed: OS error : timed out
+Running test
+Raw output:
+ {"success": false, "info": null, "error": "OS error : Connection unexpectedly closed: timed out"}
+
+Running test
+Raw output:
+ {"success": false, "info": null, "error": "OS error : Connection unexpectedly closed: timed out"}
+
+Running test
+Raw output:
+ {"success": true, "info": {"error": [], "version": "TLSv1.3", "cipher": ["TLS_AES_256_GCM_SHA384", "TLSv1.3", 256], "tls ca": "-----BEGIN CERTIFICATE-----\nMIIHlTCCBX2gAwIBAgIQAQHqz4v72yQ/jWD9q14dAjANBgkqhkiG9w0BAQsFADBb\nMQswCQYDVQQGEwJVUzEXMBUGA1UEChMORGlnaUNlcnQsIEluYy4xMzAxBgNVBAMT\nKkdlb1RydXN0IEcyIFRMUyBDTiBSU0E0MDk2IFNIQTI1NiAyMDIyIENBMTAeFw0y\nNTAxMDkwMDAwMDBaFw0yNjAyMDkyMzU5NTlaMHUxCzAJBgNVBAYTAkNOMREwDwYD\nVQQIEwhaaGVqaWFuZzERMA8GA1UEBxMISGFuZ3pob3UxLDAqBgNVBAoTI05ldEVh\nc2UgKEhhbmd6aG91KSBOZXR3b3JrIENvLiwgTHRkMRIwEAYDVQQDDAkqLjEyNi5j\nb20wggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQDaV2SB3eRzlIcCN52y\nwgP84c6SShmDKkJx3KL81A6tSAKJas4CC2YY4Xy2jXRB5fxH+wwKt9Lj986BSH1+\nDjBe3N9AapYWsB6j9Xpydfi1JZdmbLyNJFqnZk22gsIxFjqegFriXnaG/093R7SU\nrfZjs8SUlgrElHN1TwypEwoGfiZE/6k7JQ7eFs6q/EdmPTR6wjYsfpO7RjHfrpVx\nb9lqJR52DEDVNbolQwZ/RbIwV/MwVuMpXjD+7io32NC5p3cycsEw87Upl+/KVXdN\nfDANYswcfAIfroneJz8YUQjoMyLIKGEkc92GXfaevWTwldVer5DovWm8IimdVMyF\n69uRAgMBAAGjggM5MIIDNTAfBgNVHSMEGDAWgBRBTo5pnfRuJex4FBx+180dmc/5\nazAdBgNVHQ4EFgQUyB3vQnZCssVXYfTCOeXCk7F9GQgwHQYDVR0RBBYwFIIJKi4x\nMjYuY29tggcxMjYuY29tMD4GA1UdIAQ3MDUwMwYGZ4EMAQICMCkwJwYIKwYBBQUH\nAgEWG2h0dHA6Ly93d3cuZGlnaWNlcnQuY29tL0NQUzAOBgNVHQ8BAf8EBAMCBaAw\nHQYDVR0lBBYwFAYIKwYBBQUHAwEGCCsGAQUFBwMCME8GA1UdHwRIMEYwRKBCoECG\nPmh0dHA6Ly9jcmwuZGlnaWNlcnQuY24vR2VvVHJ1c3RHMlRMU0NOUlNBNDA5NlNI\nQTI1NjIwMjJDQTEuY3JsMIGDBggrBgEFBQcBAQR3MHUwIwYIKwYBBQUHMAGGF2h0\ndHA6Ly9vY3NwLmRpZ2ljZXJ0LmNuME4GCCsGAQUFBzAChkJodHRwOi8vY2FjZXJ0\ncy5kaWdpY2VydC5jbi9HZW9UcnVzdEcyVExTQ05SU0E0MDk2U0hBMjU2MjAyMkNB\nMS5jcnQwDAYDVR0TAQH/BAIwADCCAX4GCisGAQQB1nkCBAIEggFuBIIBagFoAHcA\nDleUvPOuqT4zGyyZB7P3kN+bwj1xMiXdIaklrGHFTiEAAAGUSMqifwAABAMASDBG\nAiEA+PJ7zjCEzZPa4p3SMvQ3XHaOWhP4TQXRSB/mCcYBPBACIQCMCzEOAlwQREEu\nkfvdKjxrpzZ5GnvS5O12kC6eepzhcQB2AGQRxGykEuyniRyiAi4AvKtPKAfUHjUn\nq+r+1QPJfc3wAAABlEjKonYAAAQDAEcwRQIgGaVePCiixZ7Q9On3Czmg6iLFw6Qx\nDspCfiZuCZHxJ8kCIQDZkCjKtjaf7ordAbC/tQANIw4fwWL3ctZINUALIhASQgB1\nAEmcm2neHXzs/DbezYdkprhbrwqHgBnRVVL76esp3fjDAAABlEjKookAAAQDAEYw\nRAIgaGDe5uRrs1rzxF+YiXozBo9EeXeCflezqZTwkLnVhgICIBJvKIXUsicYgqfs\nrBNT0GxAbYVmfbsXSReCNkyEaY7uMA0GCSqGSIb3DQEBCwUAA4ICAQBNia4x9Q9T\nwtJf+PtRiosHSY12Keir7Vlm+wsXc40DK1c/+MxpicPFf4jKhDnOYZoJpDVnP31U\nIy7T0sUDjDnY89u0mfZ/IjSbUpFQFGROjithgrXM+PYYTMyNVlbtIpjnzKWFYeWd\nJR6c/nByUecbZTkpHH7nLeNbUoKTfWzt6SLGxQ6Gr9mZFUuRv+22ozhNKCu8R7bA\nEMDwL/F3YhCulTk6qMOXJmt0/GaxBYNzUM4mbdwYiJNuv01wRGtXyoMyTKWD8KeD\nxyA1G0kLl5WtU58jxkRJCaI0PjionBTtQ0ewNHDk0qMAQuweXQInV6isjec6PcQ8\nYVshF1CDDmSzuGpgB3x1Qkr+DiewNpgl+Fd/QnlQM/hQlAV7mFNKx7XOwgt7mhA3\n5SSRIGb6OOsOCWxw6h0e7mfC7wi0Evu5HR1pjXs46JgJflNNTBkFOSXGwsysXKeQ\nb9CGjOxjC2hHr3Kexjpyl7qkD3AQxDcF0+5uvpN3MEoMXxA2HY4hn178Y3IhR2UH\nBv0QbsOepmPM+z0ommD4mRGXnvS4twv6UNkNJo4tyRNKdeTSOEuwJ8tE0jlU8TyM\n2057Bb5J+cqNgJ9r/mN0fQShlEdgciZo8cKlMt6OBPfnqlXQ6kinrtiIbAOHFNVS\niSZ+VpKo4o+vH9hFuoO8SMx50P8phRbcVw==\n-----END CERTIFICATE-----\n", "enable esmtp": 1, "auth": {"auth": " LOGIN PLAIN XOAUTH2 LOGIN PLAIN XOAUTH2", "coremail": "1Uxr2xKj7kG0xkI17xGrU7I0s8FY2U3Uj8Cz28x1UUUUU7Ic2I0Y2Urq5I6_UCa0xDrUUUUj", "starttls": "", "id": "", "8bitmime": ""}}}
+
+Plain err: TLS test failed: OS error : Connection unexpectedly closed: timed out
+StartTLS err: TLS test failed: OS error : Connection unexpectedly closed: timed out
+Running test
+Raw output:
+ {"success": false, "info": null, "error": "OS error : Connection unexpectedly closed: timed out"}
+
+Running test
+Raw output:
+ {"success": false, "info": null, "error": "OS error : Connection unexpectedly closed: timed out"}
+
+Running test
+Raw output:
+ {"success": true, "info": {"error": [], "version": "TLSv1.3", "cipher": ["TLS_AES_256_GCM_SHA384", "TLSv1.3", 256], "tls ca": "-----BEGIN CERTIFICATE-----\nMIIHlTCCBX2gAwIBAgIQAQHqz4v72yQ/jWD9q14dAjANBgkqhkiG9w0BAQsFADBb\nMQswCQYDVQQGEwJVUzEXMBUGA1UEChMORGlnaUNlcnQsIEluYy4xMzAxBgNVBAMT\nKkdlb1RydXN0IEcyIFRMUyBDTiBSU0E0MDk2IFNIQTI1NiAyMDIyIENBMTAeFw0y\nNTAxMDkwMDAwMDBaFw0yNjAyMDkyMzU5NTlaMHUxCzAJBgNVBAYTAkNOMREwDwYD\nVQQIEwhaaGVqaWFuZzERMA8GA1UEBxMISGFuZ3pob3UxLDAqBgNVBAoTI05ldEVh\nc2UgKEhhbmd6aG91KSBOZXR3b3JrIENvLiwgTHRkMRIwEAYDVQQDDAkqLjEyNi5j\nb20wggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQDaV2SB3eRzlIcCN52y\nwgP84c6SShmDKkJx3KL81A6tSAKJas4CC2YY4Xy2jXRB5fxH+wwKt9Lj986BSH1+\nDjBe3N9AapYWsB6j9Xpydfi1JZdmbLyNJFqnZk22gsIxFjqegFriXnaG/093R7SU\nrfZjs8SUlgrElHN1TwypEwoGfiZE/6k7JQ7eFs6q/EdmPTR6wjYsfpO7RjHfrpVx\nb9lqJR52DEDVNbolQwZ/RbIwV/MwVuMpXjD+7io32NC5p3cycsEw87Upl+/KVXdN\nfDANYswcfAIfroneJz8YUQjoMyLIKGEkc92GXfaevWTwldVer5DovWm8IimdVMyF\n69uRAgMBAAGjggM5MIIDNTAfBgNVHSMEGDAWgBRBTo5pnfRuJex4FBx+180dmc/5\nazAdBgNVHQ4EFgQUyB3vQnZCssVXYfTCOeXCk7F9GQgwHQYDVR0RBBYwFIIJKi4x\nMjYuY29tggcxMjYuY29tMD4GA1UdIAQ3MDUwMwYGZ4EMAQICMCkwJwYIKwYBBQUH\nAgEWG2h0dHA6Ly93d3cuZGlnaWNlcnQuY29tL0NQUzAOBgNVHQ8BAf8EBAMCBaAw\nHQYDVR0lBBYwFAYIKwYBBQUHAwEGCCsGAQUFBwMCME8GA1UdHwRIMEYwRKBCoECG\nPmh0dHA6Ly9jcmwuZGlnaWNlcnQuY24vR2VvVHJ1c3RHMlRMU0NOUlNBNDA5NlNI\nQTI1NjIwMjJDQTEuY3JsMIGDBggrBgEFBQcBAQR3MHUwIwYIKwYBBQUHMAGGF2h0\ndHA6Ly9vY3NwLmRpZ2ljZXJ0LmNuME4GCCsGAQUFBzAChkJodHRwOi8vY2FjZXJ0\ncy5kaWdpY2VydC5jbi9HZW9UcnVzdEcyVExTQ05SU0E0MDk2U0hBMjU2MjAyMkNB\nMS5jcnQwDAYDVR0TAQH/BAIwADCCAX4GCisGAQQB1nkCBAIEggFuBIIBagFoAHcA\nDleUvPOuqT4zGyyZB7P3kN+bwj1xMiXdIaklrGHFTiEAAAGUSMqifwAABAMASDBG\nAiEA+PJ7zjCEzZPa4p3SMvQ3XHaOWhP4TQXRSB/mCcYBPBACIQCMCzEOAlwQREEu\nkfvdKjxrpzZ5GnvS5O12kC6eepzhcQB2AGQRxGykEuyniRyiAi4AvKtPKAfUHjUn\nq+r+1QPJfc3wAAABlEjKonYAAAQDAEcwRQIgGaVePCiixZ7Q9On3Czmg6iLFw6Qx\nDspCfiZuCZHxJ8kCIQDZkCjKtjaf7ordAbC/tQANIw4fwWL3ctZINUALIhASQgB1\nAEmcm2neHXzs/DbezYdkprhbrwqHgBnRVVL76esp3fjDAAABlEjKookAAAQDAEYw\nRAIgaGDe5uRrs1rzxF+YiXozBo9EeXeCflezqZTwkLnVhgICIBJvKIXUsicYgqfs\nrBNT0GxAbYVmfbsXSReCNkyEaY7uMA0GCSqGSIb3DQEBCwUAA4ICAQBNia4x9Q9T\nwtJf+PtRiosHSY12Keir7Vlm+wsXc40DK1c/+MxpicPFf4jKhDnOYZoJpDVnP31U\nIy7T0sUDjDnY89u0mfZ/IjSbUpFQFGROjithgrXM+PYYTMyNVlbtIpjnzKWFYeWd\nJR6c/nByUecbZTkpHH7nLeNbUoKTfWzt6SLGxQ6Gr9mZFUuRv+22ozhNKCu8R7bA\nEMDwL/F3YhCulTk6qMOXJmt0/GaxBYNzUM4mbdwYiJNuv01wRGtXyoMyTKWD8KeD\nxyA1G0kLl5WtU58jxkRJCaI0PjionBTtQ0ewNHDk0qMAQuweXQInV6isjec6PcQ8\nYVshF1CDDmSzuGpgB3x1Qkr+DiewNpgl+Fd/QnlQM/hQlAV7mFNKx7XOwgt7mhA3\n5SSRIGb6OOsOCWxw6h0e7mfC7wi0Evu5HR1pjXs46JgJflNNTBkFOSXGwsysXKeQ\nb9CGjOxjC2hHr3Kexjpyl7qkD3AQxDcF0+5uvpN3MEoMXxA2HY4hn178Y3IhR2UH\nBv0QbsOepmPM+z0ommD4mRGXnvS4twv6UNkNJo4tyRNKdeTSOEuwJ8tE0jlU8TyM\n2057Bb5J+cqNgJ9r/mN0fQShlEdgciZo8cKlMt6OBPfnqlXQ6kinrtiIbAOHFNVS\niSZ+VpKo4o+vH9hFuoO8SMx50P8phRbcVw==\n-----END CERTIFICATE-----\n", "enable esmtp": 1, "auth": {"auth": " LOGIN PLAIN XOAUTH2 LOGIN PLAIN XOAUTH2", "coremail": "1Uxr2xKj7kG0xkI17xGrU7I0s8FY2U3Uj8Cz28x1UUUUU7Ic2I0Y2UrlqCorUCa0xDrUUUUj", "starttls": "", "id": "", "8bitmime": ""}}}
+
+Plain err: TLS test failed: OS error : Connection unexpectedly closed: timed out
+StartTLS err: TLS test failed: OS error : Connection unexpectedly closed: timed out
+Running test
+Raw output:
+ {"success": true, "info": {"error": [], "auth": {"LANG": [], "TOP": [], "USER": [], "UTF8": [], "STLS": [], "PIPELINING": [], "SASL(PLAIN": ["XOAUTH2)"], "ID": [], "UIDL": [], "SASL": ["PLAIN"]}}}
+
+Running test
+Raw output:
+ {"success": true, "info": {"error": [], "version": "TLSv1.2", "cipher": ["ECDHE-RSA-AES256-GCM-SHA384", "TLSv1.2", 256], "tls ca": "-----BEGIN CERTIFICATE-----\nMIIHlTCCBX2gAwIBAgIQAQHqz4v72yQ/jWD9q14dAjANBgkqhkiG9w0BAQsFADBb\nMQswCQYDVQQGEwJVUzEXMBUGA1UEChMORGlnaUNlcnQsIEluYy4xMzAxBgNVBAMT\nKkdlb1RydXN0IEcyIFRMUyBDTiBSU0E0MDk2IFNIQTI1NiAyMDIyIENBMTAeFw0y\nNTAxMDkwMDAwMDBaFw0yNjAyMDkyMzU5NTlaMHUxCzAJBgNVBAYTAkNOMREwDwYD\nVQQIEwhaaGVqaWFuZzERMA8GA1UEBxMISGFuZ3pob3UxLDAqBgNVBAoTI05ldEVh\nc2UgKEhhbmd6aG91KSBOZXR3b3JrIENvLiwgTHRkMRIwEAYDVQQDDAkqLjEyNi5j\nb20wggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQDaV2SB3eRzlIcCN52y\nwgP84c6SShmDKkJx3KL81A6tSAKJas4CC2YY4Xy2jXRB5fxH+wwKt9Lj986BSH1+\nDjBe3N9AapYWsB6j9Xpydfi1JZdmbLyNJFqnZk22gsIxFjqegFriXnaG/093R7SU\nrfZjs8SUlgrElHN1TwypEwoGfiZE/6k7JQ7eFs6q/EdmPTR6wjYsfpO7RjHfrpVx\nb9lqJR52DEDVNbolQwZ/RbIwV/MwVuMpXjD+7io32NC5p3cycsEw87Upl+/KVXdN\nfDANYswcfAIfroneJz8YUQjoMyLIKGEkc92GXfaevWTwldVer5DovWm8IimdVMyF\n69uRAgMBAAGjggM5MIIDNTAfBgNVHSMEGDAWgBRBTo5pnfRuJex4FBx+180dmc/5\nazAdBgNVHQ4EFgQUyB3vQnZCssVXYfTCOeXCk7F9GQgwHQYDVR0RBBYwFIIJKi4x\nMjYuY29tggcxMjYuY29tMD4GA1UdIAQ3MDUwMwYGZ4EMAQICMCkwJwYIKwYBBQUH\nAgEWG2h0dHA6Ly93d3cuZGlnaWNlcnQuY29tL0NQUzAOBgNVHQ8BAf8EBAMCBaAw\nHQYDVR0lBBYwFAYIKwYBBQUHAwEGCCsGAQUFBwMCME8GA1UdHwRIMEYwRKBCoECG\nPmh0dHA6Ly9jcmwuZGlnaWNlcnQuY24vR2VvVHJ1c3RHMlRMU0NOUlNBNDA5NlNI\nQTI1NjIwMjJDQTEuY3JsMIGDBggrBgEFBQcBAQR3MHUwIwYIKwYBBQUHMAGGF2h0\ndHA6Ly9vY3NwLmRpZ2ljZXJ0LmNuME4GCCsGAQUFBzAChkJodHRwOi8vY2FjZXJ0\ncy5kaWdpY2VydC5jbi9HZW9UcnVzdEcyVExTQ05SU0E0MDk2U0hBMjU2MjAyMkNB\nMS5jcnQwDAYDVR0TAQH/BAIwADCCAX4GCisGAQQB1nkCBAIEggFuBIIBagFoAHcA\nDleUvPOuqT4zGyyZB7P3kN+bwj1xMiXdIaklrGHFTiEAAAGUSMqifwAABAMASDBG\nAiEA+PJ7zjCEzZPa4p3SMvQ3XHaOWhP4TQXRSB/mCcYBPBACIQCMCzEOAlwQREEu\nkfvdKjxrpzZ5GnvS5O12kC6eepzhcQB2AGQRxGykEuyniRyiAi4AvKtPKAfUHjUn\nq+r+1QPJfc3wAAABlEjKonYAAAQDAEcwRQIgGaVePCiixZ7Q9On3Czmg6iLFw6Qx\nDspCfiZuCZHxJ8kCIQDZkCjKtjaf7ordAbC/tQANIw4fwWL3ctZINUALIhASQgB1\nAEmcm2neHXzs/DbezYdkprhbrwqHgBnRVVL76esp3fjDAAABlEjKookAAAQDAEYw\nRAIgaGDe5uRrs1rzxF+YiXozBo9EeXeCflezqZTwkLnVhgICIBJvKIXUsicYgqfs\nrBNT0GxAbYVmfbsXSReCNkyEaY7uMA0GCSqGSIb3DQEBCwUAA4ICAQBNia4x9Q9T\nwtJf+PtRiosHSY12Keir7Vlm+wsXc40DK1c/+MxpicPFf4jKhDnOYZoJpDVnP31U\nIy7T0sUDjDnY89u0mfZ/IjSbUpFQFGROjithgrXM+PYYTMyNVlbtIpjnzKWFYeWd\nJR6c/nByUecbZTkpHH7nLeNbUoKTfWzt6SLGxQ6Gr9mZFUuRv+22ozhNKCu8R7bA\nEMDwL/F3YhCulTk6qMOXJmt0/GaxBYNzUM4mbdwYiJNuv01wRGtXyoMyTKWD8KeD\nxyA1G0kLl5WtU58jxkRJCaI0PjionBTtQ0ewNHDk0qMAQuweXQInV6isjec6PcQ8\nYVshF1CDDmSzuGpgB3x1Qkr+DiewNpgl+Fd/QnlQM/hQlAV7mFNKx7XOwgt7mhA3\n5SSRIGb6OOsOCWxw6h0e7mfC7wi0Evu5HR1pjXs46JgJflNNTBkFOSXGwsysXKeQ\nb9CGjOxjC2hHr3Kexjpyl7qkD3AQxDcF0+5uvpN3MEoMXxA2HY4hn178Y3IhR2UH\nBv0QbsOepmPM+z0ommD4mRGXnvS4twv6UNkNJo4tyRNKdeTSOEuwJ8tE0jlU8TyM\n2057Bb5J+cqNgJ9r/mN0fQShlEdgciZo8cKlMt6OBPfnqlXQ6kinrtiIbAOHFNVS\niSZ+VpKo4o+vH9hFuoO8SMx50P8phRbcVw==\n-----END CERTIFICATE-----\n", "auth": {"LANG": [], "TOP": [], "USER": [], "UTF8": [], "STLS": [], "PIPELINING": [], "SASL(PLAIN": ["XOAUTH2)"], "ID": [], "UIDL": [], "SASL": ["PLAIN"]}}}
+
+Running test
+Raw output:
+ {"success": false, "info": null, "error": "SSL error: [SSL: WRONG_VERSION_NUMBER] wrong version number (_ssl.c:1076)"}
+
+TLS err: TLS test failed: SSL error: [SSL: WRONG_VERSION_NUMBER] wrong version number (_ssl.c:1076)
+Running test
+Raw output:
+ {"success": true, "info": {"error": [], "auth": {"LANG": [], "TOP": [], "USER": [], "UTF8": [], "STLS": [], "PIPELINING": [], "SASL(PLAIN": ["XOAUTH2)"], "ID": [], "UIDL": [], "SASL": ["PLAIN"]}}}
+
+Running test
+Raw output:
+ {"success": true, "info": {"error": [], "version": "TLSv1.2", "cipher": ["ECDHE-RSA-AES256-GCM-SHA384", "TLSv1.2", 256], "tls ca": "-----BEGIN CERTIFICATE-----\nMIIHlTCCBX2gAwIBAgIQAQHqz4v72yQ/jWD9q14dAjANBgkqhkiG9w0BAQsFADBb\nMQswCQYDVQQGEwJVUzEXMBUGA1UEChMORGlnaUNlcnQsIEluYy4xMzAxBgNVBAMT\nKkdlb1RydXN0IEcyIFRMUyBDTiBSU0E0MDk2IFNIQTI1NiAyMDIyIENBMTAeFw0y\nNTAxMDkwMDAwMDBaFw0yNjAyMDkyMzU5NTlaMHUxCzAJBgNVBAYTAkNOMREwDwYD\nVQQIEwhaaGVqaWFuZzERMA8GA1UEBxMISGFuZ3pob3UxLDAqBgNVBAoTI05ldEVh\nc2UgKEhhbmd6aG91KSBOZXR3b3JrIENvLiwgTHRkMRIwEAYDVQQDDAkqLjEyNi5j\nb20wggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQDaV2SB3eRzlIcCN52y\nwgP84c6SShmDKkJx3KL81A6tSAKJas4CC2YY4Xy2jXRB5fxH+wwKt9Lj986BSH1+\nDjBe3N9AapYWsB6j9Xpydfi1JZdmbLyNJFqnZk22gsIxFjqegFriXnaG/093R7SU\nrfZjs8SUlgrElHN1TwypEwoGfiZE/6k7JQ7eFs6q/EdmPTR6wjYsfpO7RjHfrpVx\nb9lqJR52DEDVNbolQwZ/RbIwV/MwVuMpXjD+7io32NC5p3cycsEw87Upl+/KVXdN\nfDANYswcfAIfroneJz8YUQjoMyLIKGEkc92GXfaevWTwldVer5DovWm8IimdVMyF\n69uRAgMBAAGjggM5MIIDNTAfBgNVHSMEGDAWgBRBTo5pnfRuJex4FBx+180dmc/5\nazAdBgNVHQ4EFgQUyB3vQnZCssVXYfTCOeXCk7F9GQgwHQYDVR0RBBYwFIIJKi4x\nMjYuY29tggcxMjYuY29tMD4GA1UdIAQ3MDUwMwYGZ4EMAQICMCkwJwYIKwYBBQUH\nAgEWG2h0dHA6Ly93d3cuZGlnaWNlcnQuY29tL0NQUzAOBgNVHQ8BAf8EBAMCBaAw\nHQYDVR0lBBYwFAYIKwYBBQUHAwEGCCsGAQUFBwMCME8GA1UdHwRIMEYwRKBCoECG\nPmh0dHA6Ly9jcmwuZGlnaWNlcnQuY24vR2VvVHJ1c3RHMlRMU0NOUlNBNDA5NlNI\nQTI1NjIwMjJDQTEuY3JsMIGDBggrBgEFBQcBAQR3MHUwIwYIKwYBBQUHMAGGF2h0\ndHA6Ly9vY3NwLmRpZ2ljZXJ0LmNuME4GCCsGAQUFBzAChkJodHRwOi8vY2FjZXJ0\ncy5kaWdpY2VydC5jbi9HZW9UcnVzdEcyVExTQ05SU0E0MDk2U0hBMjU2MjAyMkNB\nMS5jcnQwDAYDVR0TAQH/BAIwADCCAX4GCisGAQQB1nkCBAIEggFuBIIBagFoAHcA\nDleUvPOuqT4zGyyZB7P3kN+bwj1xMiXdIaklrGHFTiEAAAGUSMqifwAABAMASDBG\nAiEA+PJ7zjCEzZPa4p3SMvQ3XHaOWhP4TQXRSB/mCcYBPBACIQCMCzEOAlwQREEu\nkfvdKjxrpzZ5GnvS5O12kC6eepzhcQB2AGQRxGykEuyniRyiAi4AvKtPKAfUHjUn\nq+r+1QPJfc3wAAABlEjKonYAAAQDAEcwRQIgGaVePCiixZ7Q9On3Czmg6iLFw6Qx\nDspCfiZuCZHxJ8kCIQDZkCjKtjaf7ordAbC/tQANIw4fwWL3ctZINUALIhASQgB1\nAEmcm2neHXzs/DbezYdkprhbrwqHgBnRVVL76esp3fjDAAABlEjKookAAAQDAEYw\nRAIgaGDe5uRrs1rzxF+YiXozBo9EeXeCflezqZTwkLnVhgICIBJvKIXUsicYgqfs\nrBNT0GxAbYVmfbsXSReCNkyEaY7uMA0GCSqGSIb3DQEBCwUAA4ICAQBNia4x9Q9T\nwtJf+PtRiosHSY12Keir7Vlm+wsXc40DK1c/+MxpicPFf4jKhDnOYZoJpDVnP31U\nIy7T0sUDjDnY89u0mfZ/IjSbUpFQFGROjithgrXM+PYYTMyNVlbtIpjnzKWFYeWd\nJR6c/nByUecbZTkpHH7nLeNbUoKTfWzt6SLGxQ6Gr9mZFUuRv+22ozhNKCu8R7bA\nEMDwL/F3YhCulTk6qMOXJmt0/GaxBYNzUM4mbdwYiJNuv01wRGtXyoMyTKWD8KeD\nxyA1G0kLl5WtU58jxkRJCaI0PjionBTtQ0ewNHDk0qMAQuweXQInV6isjec6PcQ8\nYVshF1CDDmSzuGpgB3x1Qkr+DiewNpgl+Fd/QnlQM/hQlAV7mFNKx7XOwgt7mhA3\n5SSRIGb6OOsOCWxw6h0e7mfC7wi0Evu5HR1pjXs46JgJflNNTBkFOSXGwsysXKeQ\nb9CGjOxjC2hHr3Kexjpyl7qkD3AQxDcF0+5uvpN3MEoMXxA2HY4hn178Y3IhR2UH\nBv0QbsOepmPM+z0ommD4mRGXnvS4twv6UNkNJo4tyRNKdeTSOEuwJ8tE0jlU8TyM\n2057Bb5J+cqNgJ9r/mN0fQShlEdgciZo8cKlMt6OBPfnqlXQ6kinrtiIbAOHFNVS\niSZ+VpKo4o+vH9hFuoO8SMx50P8phRbcVw==\n-----END CERTIFICATE-----\n", "auth": {"LANG": [], "TOP": [], "USER": [], "UTF8": [], "STLS": [], "PIPELINING": [], "SASL(PLAIN": ["XOAUTH2)"], "ID": [], "UIDL": [], "SASL": ["PLAIN"]}}}
+
+Running test
+Raw output:
+ {"success": false, "info": null, "error": "SSL error: [SSL: WRONG_VERSION_NUMBER] wrong version number (_ssl.c:1076)"}
+
+TLS err: TLS test failed: SSL error: [SSL: WRONG_VERSION_NUMBER] wrong version number (_ssl.c:1076)
+2025/10/09 21:05:55 📝 已缓存: 126.com
+2025/10/09 21:05:55 WebSocket 关闭: websocket: close 1005 (no status)
+2025/10/09 21:06:19 ⚡ 缓存命中: 163.com
+2025/10/09 21:06:19 客户端已连接进度 WebSocket
+2025/10/09 21:06:20 WebSocket 关闭: websocket: close 1001 (going away)
+2025/10/09 21:07:34 ⚡ 缓存命中: 163.com
+2025/10/09 21:07:34 客户端已连接进度 WebSocket
+2025/10/09 21:08:34 WebSocket 关闭: websocket: close 1006 (abnormal closure): unexpected EOF
+2025/10/09 21:08:47 ⚡ 缓存命中: spammotel.com
+2025/10/09 21:08:47 客户端已连接进度 WebSocket
+2025/10/09 21:08:49 ⚡ 缓存命中: yahoo.com
+2025/10/09 21:08:49 客户端已连接进度 WebSocket
+2025/10/09 21:09:49 WebSocket 关闭: websocket: close 1006 (abnormal closure): unexpected EOF
+2025/10/09 21:09:49 WebSocket 关闭: websocket: close 1006 (abnormal closure): unexpected EOF

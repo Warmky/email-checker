@@ -745,131 +745,156 @@ function ConfigViewPage() {
   // );
 
   return (
-    <div style={{ backgroundColor: "#ffffff", minHeight: "100vh", padding: "2rem", color: "#222" }}>
-      {/* 配置文件内容 */}
-      {(mech === "autodiscover" || mech === "autoconfig") && (
-        <div style={{ marginTop: "2rem" }}>
-          <div
-            style={{
-              borderTop: "2px solid #333",
-              paddingTop: "10px",
-              marginBottom: "20px",
-              display: "flex",
-              alignItems: "center",
-            }}
-          >
-            <span style={{ fontSize: "32px", marginRight: "10px" }}>📄</span>
-            <h3 style={{ margin: 0, color: "#333" }}>配置文件内容</h3>
-          </div>
-  
-          <p>
-            <strong style={{ color: "#698fd1" }}>请求的 URI：</strong>{" "}
-            <span style={{ color: "#698fd1" }}>{uri}</span>
-          </p>
-  
-          <pre
-            style={{
-              background: "#f9fbfd",
-              color: "#2d2d2d",
-              padding: "20px",
-              borderRadius: "8px",
-              whiteSpace: "pre-wrap",
-              maxHeight: "80vh",
-              overflowY: "auto",
-              border: "1px solid #ccc",
-              fontFamily: `"Fira Code", "Source Code Pro", Menlo, Consolas, monospace`,
-              fontSize: "0.95rem",
-            }}
-          >
-            {configContent}
-          </pre>
-  
-          {configContent && configContent !== "⚠️ 无法获取配置内容" && (
-            <a
-              href={`data:text/xml;charset=utf-8,${encodeURIComponent(configContent)}`}
-              download={`config_from_${encodeURIComponent(uri || "unknown")}.xml`}
+    <div
+      style={{
+        minHeight: "100vh",
+        padding: "3rem 1rem",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "flex-start",
+        backgroundColor: "transparent", // ✅ 保证显示背景图
+      }}
+    >
+      <div
+        style={{
+          width: "100%",
+          maxWidth: "1000px",
+          backgroundColor: "rgba(255, 255, 255, 0.55)", // ✅ 半透明磨砂白
+          backdropFilter: "blur(12px)",
+          borderRadius: "16px",
+          padding: "2rem",
+          boxShadow: "0 4px 20px rgba(0,0,0,0.1)",
+          border: "1px solid rgba(255, 255, 255, 0.4)",
+          color: "#222",
+        }}
+      >
+        {/* === 配置文件内容 === */}
+        {(mech === "autodiscover" || mech === "autoconfig") && (
+          <div style={{ marginTop: "2rem" }}>
+            <div
               style={{
-                display: "inline-block",
-                marginTop: "1rem",
-                backgroundColor: "#89b5e1", // 深灰蓝色，柔和
-                color: "#e5e9f0",           // 浅灰文字，保证对比度
-                padding: "8px 14px",
-                textDecoration: "none",
-                borderRadius: "6px",
-                fontWeight: 500,
-                fontSize: "0.95rem",
-                transition: "background 0.3s",
-                boxShadow: "0 1px 3px rgba(0,0,0,0.2)", // 轻微阴影，提升质感
+                borderTop: "2px solid #333",
+                paddingTop: "10px",
+                marginBottom: "20px",
+                display: "flex",
+                alignItems: "center",
               }}
-              onMouseOver={(e) => (e.target.style.backgroundColor = "#155ab6")}
-              onMouseOut={(e) => (e.target.style.backgroundColor = "#1a73e8")}
             >
-              ⬇️ 下载配置文件
-            </a>
-          )}
-        </div>
-      )}
+              <span style={{ fontSize: "32px", marginRight: "10px" }}>📄</span>
+              <h3 style={{ margin: 0, color: "#333" }}>配置文件内容</h3>
+            </div>
   
-      {/* 配置信息概况 */}
-      {Array.isArray(portsUsage) && portsUsage.length > 0 && (
-        <div style={{ marginTop: "2rem" }}>
-          <div
-            style={{
-              borderTop: "2px solid #333",
-              paddingTop: "10px",
-              marginBottom: "20px",
-              display: "flex",
-              alignItems: "center",
-            }}
-          >
-            <span style={{ fontSize: "32px", marginRight: "10px" }}>🔌</span>
-            <h3 style={{ margin: 0, color: "#333" }}>配置信息概况</h3>
-          </div>
+            <p>
+              <strong style={{ color: "#698fd1" }}>请求的 URI：</strong>{" "}
+              <span style={{ color: "#698fd1" }}>{uri}</span>
+            </p>
   
-          <div style={{ display: "flex", flexWrap: "wrap", gap: "1rem" }}>
-            {portsUsage.map((item, idx) => (
-              <div
-                key={idx}
+            <pre
+              style={{
+                background: "rgba(249, 251, 253, 0.85)",
+                color: "#2d2d2d",
+                padding: "20px",
+                borderRadius: "8px",
+                whiteSpace: "pre-wrap",
+                maxHeight: "80vh",
+                overflowY: "auto",
+                border: "1px solid rgba(204, 204, 204, 0.6)",
+                fontFamily: `"Fira Code", "Source Code Pro", Menlo, Consolas, monospace`,
+                fontSize: "0.95rem",
+              }}
+            >
+              {configContent}
+            </pre>
+  
+            {configContent && configContent !== "⚠️ 无法获取配置内容" && (
+              <a
+                href={`data:text/xml;charset=utf-8,${encodeURIComponent(configContent)}`}
+                download={`config_from_${encodeURIComponent(uri || "unknown")}.xml`}
                 style={{
-                  backgroundColor: "#f8f9fa",
-                  color: "#222",
-                  padding: "1rem",
-                  borderRadius: "12px",
-                  boxShadow: "0 2px 6px rgba(0, 0, 0, 0.08)",
-                  border: "1px solid #ddd",
-                  minWidth: "220px",
-                  flex: "1",
-                  maxWidth: "280px",
+                  display: "inline-block",
+                  marginTop: "1rem",
+                  backgroundColor: "#1a73e8",
+                  color: "#fff",
+                  padding: "8px 14px",
+                  textDecoration: "none",
+                  borderRadius: "6px",
+                  fontWeight: 500,
+                  fontSize: "0.95rem",
+                  transition: "background 0.3s, transform 0.2s",
+                  boxShadow: "0 1px 3px rgba(0,0,0,0.2)",
+                }}
+                onMouseOver={(e) => {
+                  e.target.style.backgroundColor = "#155ab6";
+                  e.target.style.transform = "translateY(-1px)";
+                }}
+                onMouseOut={(e) => {
+                  e.target.style.backgroundColor = "#1a73e8";
+                  e.target.style.transform = "none";
                 }}
               >
-                <table style={{ width: "100%", borderCollapse: "collapse" }}>
-                  <tbody>
-                    <tr><td style={tdStyle}><strong>协议</strong></td><td style={tdStyle}>{item.protocol}</td></tr>
-                    <tr><td style={tdStyle}><strong>端口</strong></td><td style={tdStyle}>{item.port}</td></tr>
-                    <tr><td style={tdStyle}><strong>主机名</strong></td><td style={tdStyle}>{item.host}</td></tr>
-                    <tr><td style={tdStyle}><strong>SSL类型</strong></td><td style={tdStyle}>{item.ssl}</td></tr>
-                    <tr><td style={tdStyle}><strong>用户名</strong></td><td style={tdStyle}>你的邮件地址</td></tr>
-                    <tr><td style={tdStyle}><strong>密码</strong></td><td style={tdStyle}>你的邮箱密码</td></tr>
-                  </tbody>
-                </table>
-              </div>
-            ))}
+                ⬇️ 下载配置文件
+              </a>
+            )}
           </div>
-        </div>
-      )}
+        )}
   
-      {/* 连接详情 */}
-      <div style={{ marginTop: "2rem" }}>
-        {renderConnectDetailTable()}
-      </div>
+        {/* === 配置信息概况 === */}
+        {Array.isArray(portsUsage) && portsUsage.length > 0 && (
+          <div style={{ marginTop: "2rem" }}>
+            <div
+              style={{
+                borderTop: "2px solid #333",
+                paddingTop: "10px",
+                marginBottom: "20px",
+                display: "flex",
+                alignItems: "center",
+              }}
+            >
+              <span style={{ fontSize: "32px", marginRight: "10px" }}>🔌</span>
+              <h3 style={{ margin: 0, color: "#333" }}>配置信息概况</h3>
+            </div>
   
-      {/* 证书链 */}
-      <div style={{ marginTop: "2rem" }}>
-        {renderCertChain()}
+            <div style={{ display: "flex", flexWrap: "wrap", gap: "1rem" }}>
+              {portsUsage.map((item, idx) => (
+                <div
+                  key={idx}
+                  style={{
+                    backgroundColor: "rgba(255, 255, 255, 0.8)",
+                    color: "#222",
+                    padding: "1rem",
+                    borderRadius: "12px",
+                    boxShadow: "0 2px 6px rgba(0, 0, 0, 0.08)",
+                    border: "1px solid rgba(220, 220, 220, 0.8)",
+                    minWidth: "220px",
+                    flex: "1",
+                    maxWidth: "280px",
+                  }}
+                >
+                  <table style={{ width: "100%", borderCollapse: "collapse" }}>
+                    <tbody>
+                      <tr><td style={tdStyle}><strong>协议</strong></td><td style={tdStyle}>{item.protocol}</td></tr>
+                      <tr><td style={tdStyle}><strong>端口</strong></td><td style={tdStyle}>{item.port}</td></tr>
+                      <tr><td style={tdStyle}><strong>主机名</strong></td><td style={tdStyle}>{item.host}</td></tr>
+                      <tr><td style={tdStyle}><strong>SSL类型</strong></td><td style={tdStyle}>{item.ssl}</td></tr>
+                      <tr><td style={tdStyle}><strong>用户名</strong></td><td style={tdStyle}>你的邮件地址</td></tr>
+                      <tr><td style={tdStyle}><strong>密码</strong></td><td style={tdStyle}>你的邮箱密码</td></tr>
+                    </tbody>
+                  </table>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+  
+        {/* === 连接详情 === */}
+        <div style={{ marginTop: "2rem" }}>{renderConnectDetailTable()}</div>
+  
+        {/* === 证书链 === */}
+        <div style={{ marginTop: "2rem" }}>{renderCertChain()}</div>
       </div>
     </div>
   );
-
+  
 }
 
 export default ConfigViewPage;
