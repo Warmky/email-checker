@@ -323,6 +323,43 @@ function MainPage() {
         }
     };
 
+    //10.13
+    const prefixAppMap = [
+        {
+        app: "Thunderbird",
+        prefixes: ["imap.", "mail.", "pop3.", "pop.", "smtp."],
+        },
+        {
+        app: "Outlook",
+        prefixes: ["imap.", "mail.", "pop.", "smtp."],
+        },
+        {
+        app: "FairEmail",
+        prefixes: ["mx.", "imaps.", "smtps."],
+        },
+        {
+        app: "The bai!",
+        prefixes: ["imap4."],
+        },
+    ];
+
+    function detectMailAppsSmart(hostname) {
+        const matches = prefixAppMap
+        .filter(({ prefixes }) => prefixes.some(pre => hostname.startsWith(pre)))
+        .map(({ app }) => app);
+    
+        if (matches.length === 0) return "未知来源";
+    
+        // 随机挑选两个或一个（真实匹配中随机取样）
+        if (matches.length > 2) {
+        const shuffled = matches.sort(() => 0.5 - Math.random());
+        return shuffled.slice(0, 2).join(" / ");
+        }
+    
+        return matches.join(" / ");
+    }
+
+
     // 公用按钮样式
     const viewButtonStyle = {
         display: "inline-block",
@@ -2325,6 +2362,26 @@ function MainPage() {
                                 {item.port}
                                 </td>
                             </tr>
+                            <tr>
+                                <td
+                                    style={{
+                                    padding: "6px 10px",
+                                    fontWeight: "bold",
+                                    color: "#2c3e50",
+                                    }}
+                                >
+                                    应用系统
+                                </td>
+                                <td
+                                    style={{
+                                    padding: "6px 10px",
+                                    color: "#34495e",
+                                    }}
+                                >
+                                    {detectMailAppsSmart(item.host)}
+                                </td>
+                            </tr>
+
                             </tbody>
                         </table>
                         </div>
@@ -2473,7 +2530,7 @@ function MainPage() {
             padding: "0 1rem",
             }}
         >
-            <h1 style={{ fontSize: "2.5rem", marginBottom: "1rem", color: "#29323eff" }}>
+            <h1 style={{ fontSize: "2.5rem", marginBottom: "1rem",  color: "#eaf2ff", textShadow: "0 0 8px rgba(0,0,0,0.3)" }}>
             邮件服务通信安全检测
             </h1>
 
@@ -2596,23 +2653,24 @@ function MainPage() {
                 marginTop: "2rem",
                 padding: "1.5rem 2rem",
                 borderRadius: "16px",
-                backgroundColor: "rgba(255, 255, 255, 0.55)", // 半透明背景
-                backdropFilter: "blur(10px)", // 模糊玻璃效果
-                border: "1px solid rgba(255, 255, 255, 0.4)", // 柔白边框
-                boxShadow: "0 4px 12px rgba(0,0,0,0.08)", // 阴影
+                backgroundColor: "rgba(255, 255, 255, 0.4)", // 半透明背景
+                // backdropFilter: "blur(10px)", // 模糊玻璃效果
+                border: "1px solid rgba(255, 255, 255, 0.35)", // 柔白边框
+                boxShadow: "0 6px 18px rgba(0, 0, 0, 0.12)", // 阴影
             }}
         >
 
             <h3
                 style={{
                 marginBottom: "1rem",
-                color: "#2e4a7d",
+                color: "#eaf2ff",
                 fontWeight: "600",
                 fontSize: "1.2rem",
                 letterSpacing: "0.5px",
+                textShadow: "0 0 6px rgba(0,0,0,0.3)", // 增强立体感
                 }}
             >
-                🔹 Recommended Domains
+                🔹 推荐邮件域名
             </h3>
 
 
@@ -2634,7 +2692,7 @@ function MainPage() {
                         style={{
                         cursor: "pointer",
                         fontSize: "1.1rem",
-                        color: "#3c71cd",
+                        color: "#d0e4ff", // 改成柔和浅蓝
                         textDecoration: "underline",
                         transition: "all 0.2s ease-in-out",
                         width: "calc(25% - 1.5rem)", // 每行四个
@@ -2643,11 +2701,11 @@ function MainPage() {
                         borderRadius: "8px",
                         }}
                         onMouseOver={(e) => {
-                        e.currentTarget.style.color = "#1a4fa0";
-                        e.currentTarget.style.backgroundColor = "rgba(230,240,255,0.6)";
+                        e.currentTarget.style.color = "#b0cfff";
+                        e.currentTarget.style.backgroundColor = "rgba(230,240,255,0.25)";
                         }}
                         onMouseOut={(e) => {
-                        e.currentTarget.style.color = "#3c71cd";
+                        e.currentTarget.style.color = "#d0e4ff";
                         e.currentTarget.style.backgroundColor = "transparent";
                         }}
                     >
@@ -2680,7 +2738,7 @@ function MainPage() {
                             width: "100%",
                             maxWidth: "900px",
                             backgroundColor: "rgba(255, 255, 255, 0.55)", // ← 更透明（55%）
-                            backdropFilter: "blur(12px)",                  // ← 稍微加强模糊
+                            // backdropFilter: "blur(12px)",                  // ← 稍微加强模糊
                             padding: "2rem",
                             borderRadius: "16px",
                             boxShadow: "0 4px 20px rgba(0,0,0,0.08)",      // ← 柔和阴影
