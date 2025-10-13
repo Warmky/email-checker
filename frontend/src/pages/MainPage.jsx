@@ -2474,7 +2474,7 @@ function MainPage() {
             }}
         >
             <h1 style={{ fontSize: "2.5rem", marginBottom: "1rem", color: "#29323eff" }}>
-            邮件域名风险检测
+            邮件服务通信安全检测
             </h1>
 
             <div style={{ maxWidth: "900px", width: "100%", display: "flex", justifyContent: "center", margin: "0 auto"}}>
@@ -2590,38 +2590,72 @@ function MainPage() {
         {/* 9.23 */}
         {/* 推荐域名区域 - 纯文字风格，每行固定四个 */}
         <div
-        style={{
-            width: "100%",
-            maxWidth: "900px",
-            marginTop: "2rem",
-            display: "flex",
-            flexWrap: "wrap",         // 自动换行
-            gap: "1.5rem",             // 元素间距
-        }}
-        >
-        {recommended.map((item, idx) => (
-            <span
-            key={idx}
-            onClick={() => {
-                // 点击只触发检测，不放入搜索框
-                handleClick(null, "test@" + item.domain);
-            }}
             style={{
-                cursor: "pointer",
-                fontSize: "1.1rem",
-                color: "#3c71cd",
-                textDecoration: "underline",
-                transition: "color 0.2s",
-                width: "calc(25% - 1.5rem)", // 每行四个
-                textAlign: "center",
+                width: "100%",
+                maxWidth: "900px",
+                marginTop: "2rem",
+                padding: "1.5rem 2rem",
+                borderRadius: "16px",
+                backgroundColor: "rgba(255, 255, 255, 0.55)", // 半透明背景
+                backdropFilter: "blur(10px)", // 模糊玻璃效果
+                border: "1px solid rgba(255, 255, 255, 0.4)", // 柔白边框
+                boxShadow: "0 4px 12px rgba(0,0,0,0.08)", // 阴影
             }}
-            onMouseOver={(e) => (e.currentTarget.style.color = "#1a4fa0")}
-            onMouseOut={(e) => (e.currentTarget.style.color = "#3c71cd")}
+        >
+
+            <h3
+                style={{
+                marginBottom: "1rem",
+                color: "#2e4a7d",
+                fontWeight: "600",
+                fontSize: "1.2rem",
+                letterSpacing: "0.5px",
+                }}
             >
-            {item.domain}
-            </span>
-        ))}
-        </div>
+                🔹 Recommended Domains
+            </h3>
+
+
+            <div
+                style={{
+                display: "flex",
+                flexWrap: "wrap",
+                gap: "1.5rem",
+                justifyContent: "flex-start",
+                }}
+            >
+                {recommended.map((item, idx) => (
+                    <span
+                        key={idx}
+                        onClick={() => {
+                        // 点击只触发检测，不放入搜索框
+                        handleClick(null, "test@" + item.domain);
+                        }}
+                        style={{
+                        cursor: "pointer",
+                        fontSize: "1.1rem",
+                        color: "#3c71cd",
+                        textDecoration: "underline",
+                        transition: "all 0.2s ease-in-out",
+                        width: "calc(25% - 1.5rem)", // 每行四个
+                        textAlign: "center",
+                        padding: "0.4rem 0",
+                        borderRadius: "8px",
+                        }}
+                        onMouseOver={(e) => {
+                        e.currentTarget.style.color = "#1a4fa0";
+                        e.currentTarget.style.backgroundColor = "rgba(230,240,255,0.6)";
+                        }}
+                        onMouseOut={(e) => {
+                        e.currentTarget.style.color = "#3c71cd";
+                        e.currentTarget.style.backgroundColor = "transparent";
+                        }}
+                    >
+                        {item.domain}
+                    </span>
+                ))}
+                </div>
+            </div>
 
 
 

@@ -30,7 +30,7 @@ import (
 
 // 9.23改
 func RecommendedDomainsHandler(w http.ResponseWriter, r *http.Request, redisCache *cache.RedisCache) {
-	domains := []string{"qq.com", "outlook.com", "gmail.com", "yandex.com", "163.com", "yahoo.com", "spammotel.com"}
+	domains := []string{"qq.com", "outlook.com", "gmail.com", "yandex.com", "163.com", "yahoo.com", "spammotel.com", "zohu.com"}
 	results := make([]map[string]interface{}, 0)
 
 	for _, domain := range domains {

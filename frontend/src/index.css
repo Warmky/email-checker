@@ -13,7 +13,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
 
   /* === 全局背景图设置 === */
-  background-image: url('./assets/bg-tech.png');  /* 修改为你的图片文件名 */
+  background-image: url('./assets/bg2.jpg');  /* 修改为你的图片文件名 */
   background-size: cover;              /* 背景填满窗口 */
   background-position: center center;  /* 居中显示 */
   background-attachment: fixed;        /* 页面滚动时背景不动 */
