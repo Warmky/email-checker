@@ -112,7 +112,7 @@ function MainPage() {
 
     const presetDomains = [
     "qq.com",
-    "163.com",
+    "126.com",
     "gmail.com",
     "yandex.com",
     "outlook.com"
@@ -431,10 +431,12 @@ function MainPage() {
         width: "95%",
         margin: "15px auto",
         borderCollapse: "collapse",
-        borderRadius: "8px",
+        borderRadius: "10px",
         overflow: "hidden",
-        boxShadow: "0 4px 8px rgba(0,0,0,0.05)"
+        background: "rgba(255, 255, 255, 0.92)", // ✅ 表格内部白色填充（略透明）
+        boxShadow: "0 3px 8px rgba(0,0,0,0.08)", // ✅ 柔和阴影
     };
+    
 
     //9.10_2 完善compare具体内容
     const normalizeAuto = (mech, results) => {  //此处可参照后端函数calculatePortScores
@@ -834,7 +836,7 @@ function MainPage() {
 
             //let configScore = 100; //10.9
             let configScore = 0;
-            if (mechanismList.some(m => results[m])){
+            if (mechanismList.some(m => results[m]|| results.srv)){
                 configScore = 100;
                 mechanismList.forEach(m => {
                     if (httpIssues[m]) configScore -= 10;
@@ -1504,55 +1506,65 @@ function MainPage() {
                             </ul>
                         </div> */}
 
-                        {Array.isArray(certInfo?.RawCerts) && certInfo.RawCerts.length > 0 && (
-                            <div style={{ marginTop: "2rem" }}>
-                                <div
+                        {Array.isArray(certInfo?.RawCerts) && certInfo.RawCerts.length > 0 && ( 
+                        <div style={{ marginTop: "2rem" }}>
+                            <div
+                            style={{
+                                borderTop: "2px solid #333",
+                                paddingTop: "10px",
+                                marginBottom: "20px",
+                                display: "flex",
+                                alignItems: "center",
+                                cursor: "pointer",
+                                color: "#333",
+                            }}
+                            onClick={() => toggleCertChain(mech)}
+                            >
+                            <span style={{ fontSize: "32px", marginRight: "10px" }}>🔗</span>
+                            <h3 style={{ margin: 0, color: "#333" }}>
+                                配置服务器证书链 {showCertChainMap[mech] ? "▲" : "▼"}
+                            </h3>
+                            </div>
+
+                            {showCertChainMap[mech] && (
+                            <div
                                 style={{
-                                    borderTop: "2px solid #333",
-                                    paddingTop: "10px",
-                                    marginBottom: "20px",
-                                    display: "flex",
-                                    alignItems: "center",
-                                    cursor: "pointer",
+                                background: "#fff",                    // 白色填充
+                                border: "1px solid #ddd",              // 浅灰边框
+                                borderRadius: "12px",                  // 圆角
+                                padding: "1rem",                       // 内边距
+                                boxShadow: "0 2px 6px rgba(0,0,0,0.08)" // 阴影效果
                                 }}
-                                onClick={() => toggleCertChain(mech)}
-                                >
-                                <span style={{ fontSize: "32px", marginRight: "10px" }}>🔗</span>
-                                <h3 style={{ margin: 0, color: "#333" }}>
-                                    配置服务器证书链 {showCertChainMap[mech] ? "▲" : "▼"}
-                                </h3>
+                            >
+                                <div style={{ marginBottom: "10px" }}>
+                                {certInfo.RawCerts.map((_, idx) => (
+                                    <button
+                                    key={idx}
+                                    onClick={() => setActiveCertIdx(mech, idx)}
+                                    style={{
+                                        marginRight: "8px",
+                                        padding: "6px 12px",
+                                        backgroundColor:
+                                        activeCertIdxMap[mech] === idx ? "#5b73a9" : "#ddd",
+                                        color: activeCertIdxMap[mech] === idx ? "#fff" : "#000",
+                                        border: "none",
+                                        borderRadius: "6px",
+                                        cursor: "pointer",
+                                        fontWeight: "bold",
+                                    }}
+                                    >
+                                    证书 #{idx + 1}
+                                    </button>
+                                ))}
                                 </div>
-                            
-                                {showCertChainMap[mech] && (
-                                <>
-                                    <div style={{ marginBottom: "10px" }}>
-                                    {certInfo.RawCerts.map((_, idx) => (
-                                        <button
-                                        key={idx}
-                                        onClick={() => setActiveCertIdx(mech, idx)}
-                                        style={{
-                                            marginRight: "8px",
-                                            padding: "4px 10px",
-                                            backgroundColor:
-                                            activeCertIdxMap[mech] === idx ? "#5b73a9" : "#ddd",
-                                            color: activeCertIdxMap[mech] === idx ? "#fff" : "#000",
-                                            border: "none",
-                                            borderRadius: "6px",
-                                            cursor: "pointer",
-                                            fontWeight: "bold",
-                                        }}
-                                        >
-                                        第{idx + 1}证书
-                                        </button>
-                                    ))}
-                                    </div>
-                                    <PeculiarCertificateViewer
-                                    certificate={certInfo.RawCerts[activeCertIdxMap[mech] || 0]}
-                                    />
-                                </>
-                                )}
-                            </div> 
+                                <PeculiarCertificateViewer
+                                certificate={certInfo.RawCerts[activeCertIdxMap[mech] || 0]}
+                                />
+                            </div>
+                            )}
+                        </div>
                         )}
+
                         
                         {/* 9.17删 */}
 
@@ -1571,6 +1583,9 @@ function MainPage() {
                                 可通过 {mech.toUpperCase()} 方法得到的所有配置
                                 </h3>
                             </div>
+
+                            
+                            
                             <table style={tableStyle}>
                                 <thead>
                                     <tr>
@@ -1670,6 +1685,7 @@ function MainPage() {
                                     ))}
                                 </tbody>
                             </table>
+                            
 
                         </div>
                         
@@ -2166,7 +2182,10 @@ function MainPage() {
                             <tbody>
                             {Array.isArray(result.srv_records.recv) &&
                                 result.srv_records.recv.map((item, idx) => (
-                                <tr key={`recv-${idx}`}>
+                                <tr 
+                                    key={`recv-${idx}`}
+                                    style={{ backgroundColor: idx % 2 === 0 ? "#f9f9f9" : "#ffffff" }}
+                                >
                                     <td style={tdStyle}>📥 Recv</td>
                                     <td style={tdStyle}>{item.Service}</td>
                                     <td style={tdStyle}>{item.Priority}</td>
@@ -2177,7 +2196,10 @@ function MainPage() {
                                 ))}
                             {Array.isArray(result.srv_records.send) &&
                                 result.srv_records.send.map((item, idx) => (
-                                <tr key={`send-${idx}`}>
+                                <tr 
+                                    key={`send-${idx}`}
+                                    style={{ backgroundColor: idx % 2 === 0 ? "#f9f9f9" : "#ffffff" }}
+                                >
                                     <td style={tdStyle}>📤 Send</td>
                                     <td style={tdStyle}>{item.Service}</td>
                                     <td style={tdStyle}>{item.Priority}</td>
@@ -2303,9 +2325,12 @@ function MainPage() {
                     <h3 style={{ margin: 0, color: "#333" }}>猜测到的可用邮件服务器</h3>
                     </div>
 
-                    <p style={{ color: "#555", marginBottom: "1rem" }}>
-                    （以下是基于常见邮件服务前缀和端口的初步探测结果，表示这些服务器端口可以建立 TCP 连接。）
+                    <p style={{ color: "#555", marginBottom: "1rem", lineHeight: "1.6" }}>
+                    （当客户端无法通过实时查询或内建列表得到邮件服务器的配置信息时，<br/>
+                    会使用启发式方法执行配置猜测。<br/>
+                    以下是基于常见邮件服务前缀和端口的初步探测结果，表示这些服务器端口可以建立 TCP 连接。）
                     </p>
+
 
                     {/* 卡片容器 */}
                     <div style={{
@@ -2653,7 +2678,7 @@ function MainPage() {
                 marginTop: "2rem",
                 padding: "1.5rem 2rem",
                 borderRadius: "16px",
-                backgroundColor: "rgba(255, 255, 255, 0.4)", // 半透明背景
+                backgroundColor: "rgba(255, 255, 255, 0.45)", // 半透明背景
                 // backdropFilter: "blur(10px)", // 模糊玻璃效果
                 border: "1px solid rgba(255, 255, 255, 0.35)", // 柔白边框
                 boxShadow: "0 6px 18px rgba(0, 0, 0, 0.12)", // 阴影
@@ -2663,7 +2688,7 @@ function MainPage() {
             <h3
                 style={{
                 marginBottom: "1rem",
-                color: "#eaf2ff",
+                color: "#f0f6ff",
                 fontWeight: "600",
                 fontSize: "1.2rem",
                 letterSpacing: "0.5px",
@@ -2692,7 +2717,7 @@ function MainPage() {
                         style={{
                         cursor: "pointer",
                         fontSize: "1.1rem",
-                        color: "#d0e4ff", // 改成柔和浅蓝
+                        color: "#e4ecff", // 改成柔和浅蓝
                         textDecoration: "underline",
                         transition: "all 0.2s ease-in-out",
                         width: "calc(25% - 1.5rem)", // 每行四个
@@ -2701,11 +2726,11 @@ function MainPage() {
                         borderRadius: "8px",
                         }}
                         onMouseOver={(e) => {
-                        e.currentTarget.style.color = "#b0cfff";
+                        e.currentTarget.style.color = "#fff";
                         e.currentTarget.style.backgroundColor = "rgba(230,240,255,0.25)";
                         }}
                         onMouseOut={(e) => {
-                        e.currentTarget.style.color = "#d0e4ff";
+                        e.currentTarget.style.color = "#e4ecff";
                         e.currentTarget.style.backgroundColor = "transparent";
                         }}
                     >
@@ -2783,18 +2808,18 @@ function MainPage() {
 
             {/* <CSVUploadForm /> */}
 
-            <h2 style={{ marginTop: "3rem", color: "#29394dff" }}>历史查询</h2>
+            <h2 style={{ marginTop: "3rem", color: "#f5faff" }}>历史查询</h2>
             {recentlySeen.length > 0 ? (
                 <ul>
                     {recentlySeen.map((item, index) => (
-                        <li key={index} style={{ color: "#444" }}>
+                        <li key={index} style={{ color: "#e0e8ff" }}>
                             <strong>{item.domain}</strong> - Score: {item.score}, Grade: {item.grade}, Time:{" "}
                             {new Date(item.timestamp).toLocaleString()}
                         </li>
                     ))}
                 </ul>
             ) : (
-                <p style={{ color: "#888" }}>暂无记录</p>
+                <p style={{ color: "#c5d2ef" }}>暂无记录</p>
             )}
         </div>
     );
