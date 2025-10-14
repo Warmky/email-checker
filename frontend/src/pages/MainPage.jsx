@@ -2326,8 +2326,7 @@ function MainPage() {
                     </div>
 
                     <p style={{ color: "#555", marginBottom: "1rem", lineHeight: "1.6" }}>
-                    （当客户端无法通过实时查询或内建列表得到邮件服务器的配置信息时，<br/>
-                    会使用启发式方法执行配置猜测。<br/>
+                    （当客户端无法通过实时查询或内建列表得到邮件服务器的配置信息时，会使用启发式方法执行配置猜测。<br/>
                     以下是基于常见邮件服务前缀和端口的初步探测结果，表示这些服务器端口可以建立 TCP 连接。）
                     </p>
 
@@ -2392,10 +2391,11 @@ function MainPage() {
                                     style={{
                                     padding: "6px 10px",
                                     fontWeight: "bold",
+                                    whiteSpace: "nowrap",
                                     color: "#2c3e50",
                                     }}
                                 >
-                                    应用系统
+                                    客户端
                                 </td>
                                 <td
                                     style={{
@@ -2726,7 +2726,7 @@ function MainPage() {
                         borderRadius: "8px",
                         }}
                         onMouseOver={(e) => {
-                        e.currentTarget.style.color = "#fff";
+                        e.currentTarget.style.color = "#ffffff";
                         e.currentTarget.style.backgroundColor = "rgba(230,240,255,0.25)";
                         }}
                         onMouseOut={(e) => {
