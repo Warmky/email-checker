@@ -13,7 +13,7 @@ import LinearProgress from '@mui/material/LinearProgress';
 import "../App.css";
 import { checkInternalDiff } from "../components/checkInternalDiff";//9.11
 import TlsAnalyzerPanel from "../components/TlsAnalyzerPanel";
-
+import { FiPaperclip } from "react-icons/fi";
 
 function MainPage() {
     const [email, setEmail] = useState("");
@@ -2559,52 +2559,58 @@ function MainPage() {
             邮件服务通信安全检测
             </h1>
 
-            <div style={{ maxWidth: "900px", width: "100%", display: "flex", justifyContent: "center", margin: "0 auto"}}>
-                {/* 邮箱输入 + 单个检测按钮 */}
-                <div style={{ display: "flex", alignItems: "center", position: "relative" }}>
+            <div
+                style={{
+                    maxWidth: "900px",
+                    width: "100%",
+                    display: "flex",
+                    justifyContent: "center",
+                    margin: "0 auto",
+                }}
+            >
+                {/* 📮 输入框 + CSV图标 一体容器 */}
+                <div style={{ position: "relative", display: "flex", alignItems: "center" }}>
                     <input
                         type="text"
                         value={email}
                         onChange={handleChange}
-                        placeholder="请输入您的邮件地址：如 user@example.com"
+                        placeholder="输入邮件地址：如 user@example.com"
                         style={{
-                            padding: "1rem",
+                            height: "56px",
                             width: "400px",
                             fontSize: "1.2rem",
                             borderRadius: "8px",
                             border: "1px solid #ccc",
                             outline: "none",
                             color: "#000",
+                            padding: "0 1rem 0 1rem", // 🔹右侧留出图标空间
+                            boxSizing: "border-box",
                         }}
                     />
-                    <button
-                        onClick={handleClick}
-                        style={{
-                            marginLeft: "1rem",
-                            padding: "1rem",
-                            fontSize: "1.2rem",
-                            borderRadius: "8px",
-                            backgroundColor: "#3c71cdff",
-                            color: "white",
-                            border: "none",
-                            cursor: "pointer",
-                            fontWeight: "bold",
-                            transition: "background 0.3s",
-                        }}
-                        onMouseOver={(e) => (e.target.style.backgroundColor = "#2e4053")}
-                        onMouseOut={(e) => (e.target.style.backgroundColor = "#3a506b")}
-                    >
-                        开始检测
-                    </button>
 
-                    {/* 下拉框 */}
+                    {/* 📎 CSV 上传图标嵌入输入框右侧 */}
+                    <div
+                        style={{
+                            position: "absolute",
+                            right: "10px",
+                            top: "50%",
+                            transform: "translateY(-50%)",
+                            cursor: "pointer",
+                            display: "flex",
+                            alignItems: "center",
+                        }}
+                    >
+                        <CSVUploadForm compact={true} />
+                    </div>
+
+                    {/* 下拉框定位相对于输入框 */}
                     {suggestions.length > 0 && (
                         <div
                             style={{
                                 position: "absolute",
-                                top: "100%", // 紧贴输入框下方
+                                top: "100%",
                                 left: 0,
-                                width: "430px",
+                                width: "100%",
                                 background: "#fff",
                                 border: "1px solid #ccc",
                                 maxHeight: "150px",
@@ -2622,10 +2628,17 @@ function MainPage() {
                                     style={{
                                         padding: "8px 12px",
                                         cursor: "pointer",
-                                        borderBottom: idx !== suggestions.length - 1 ? "1px solid #eee" : "none"
+                                        borderBottom:
+                                            idx !== suggestions.length - 1
+                                                ? "1px solid #eee"
+                                                : "none",
                                     }}
-                                    onMouseOver={(e) => (e.currentTarget.style.background = "#f5f5f5")}
-                                    onMouseOut={(e) => (e.currentTarget.style.background = "white")}
+                                    onMouseOver={(e) =>
+                                        (e.currentTarget.style.background = "#f5f5f5")
+                                    }
+                                    onMouseOut={(e) =>
+                                        (e.currentTarget.style.background = "white")
+                                    }
                                 >
                                     {s}
                                 </div>
@@ -2634,8 +2647,37 @@ function MainPage() {
                     )}
                 </div>
 
+                {/* 🚀 开始检测按钮单独放右边 */}
+                <button
+                    onClick={handleClick}
+                    style={{
+                        height: "56px",
+                        lineHeight: "56px",
+                        marginLeft: "1rem",
+                        fontSize: "1.2rem",
+                        borderRadius: "8px",
+                        backgroundColor: "#3c71cd",
+                        color: "white",
+                        border: "none",
+                        cursor: "pointer",
+                        fontWeight: "bold",
+                        transition: "background 0.3s",
+                        padding: "0 1.5rem",
+                    }}
+                    onMouseOver={(e) =>
+                        (e.target.style.backgroundColor = "#2e4053")
+                    }
+                    onMouseOut={(e) =>
+                        (e.target.style.backgroundColor = "#3c71cd")
+                    }
+                >
+                    开始检测
+                </button>
+            </div>
+
+
                 {/* 批量检测组件 */}
-                <CSVUploadForm hideTitle={true} buttonPadding="1rem 1.2rem" />
+                {/* <CSVUploadForm hideTitle={true} buttonPadding="1rem 1.2rem" /> */}
 
                 {/* 推荐域名9.18_2 */}
                 {/* <div style={{
@@ -2667,7 +2709,7 @@ function MainPage() {
                     ))}
                 </div> */}
 
-            </div>
+            {/* </div> */}
 
         {/* 9.23 */}
         {/* 推荐域名区域 - 纯文字风格，每行固定四个 */}
@@ -2944,7 +2986,145 @@ function MainPage() {
 // }
 
 // 9.16
-function CSVUploadForm() {
+// function CSVUploadForm() {
+//     const [downloadUrl, setDownloadUrl] = useState(null);
+//     const [isUploading, setIsUploading] = useState(false);
+
+//     const handleUpload = async (e) => {
+//         const file = e.target.files[0];
+//         if (!file) return;
+
+//         setIsUploading(true);
+//         setDownloadUrl(null);
+
+//         const formData = new FormData();
+//         formData.append("file", file);
+
+//         try {
+//             const res = await fetch(`/api/uploadCsvAndExportJsonl`, {
+//             method: "POST",
+//             body: formData,
+//             mode: "cors",               // 显式允许跨域9.6
+//             credentials: "omit",        // 如果不需要带 cookie
+//             });
+
+//             if (!res.ok) throw new Error("Upload failed");
+
+//             const data = await res.json();
+//             setDownloadUrl(data.download_url);
+//         } catch (err) {
+//             alert("上传失败：" + err.message);
+//         } finally {
+//             setIsUploading(false);
+//         }
+//     };
+
+//     const handleDownload = async () => {
+//         try {
+//             const res = await fetch(`${downloadUrl}`);
+//             if (!res.ok) throw new Error("下载失败");
+
+//             const blob = await res.blob();
+//             const url = window.URL.createObjectURL(blob);
+//             const a = document.createElement("a");
+//             a.href = url;
+//             a.download = "result.jsonl";
+//             document.body.appendChild(a);
+//             a.click();
+//             a.remove();
+//             window.URL.revokeObjectURL(url);
+//         } catch (err) {
+//             alert("下载失败：" + err.message);
+//         }
+//     };
+
+//     return (
+//         <div style={{ marginLeft: "1rem", display: "flex", alignItems: "center" }}>
+//             {!downloadUrl && !isUploading && (
+//                 <label
+//                     title="上传域名列表（.csv 格式）进行批量检测"
+//                     style={{
+//                         display: "inline-block",
+//                         height: "56px",
+//                         lineHeight: "56px",
+//                         fontSize: "1.2rem",
+//                         fontWeight: "bold",
+//                         borderRadius: "8px",
+//                         backgroundColor: "#365289",
+//                         color: "white",
+//                         cursor: "pointer",
+//                         whiteSpace: "nowrap",
+//                         transition: "background 0.3s",
+//                         padding: "0 1.5rem",
+//                     }}
+//                     onMouseOver={(e) => (e.target.style.backgroundColor = "#2e4053")}
+//                     onMouseOut={(e) => (e.target.style.backgroundColor = "#365289")}
+//                 >
+//                     批量检测
+//                     <input
+//                         type="file"
+//                         accept=".csv"
+//                         onChange={handleUpload}
+//                         style={{ display: "none" }}
+//                     />
+//                 </label>
+//             )}
+
+//             {isUploading && (
+//                 <span style={{ marginLeft: "10px", color: "#888", fontSize: "0.95rem" }}>
+//                     ⏳ 批量检测处理中...
+//                 </span>
+//             )}
+
+//             {downloadUrl && !isUploading && (
+//                 <>
+//                     <button
+//                         onClick={handleDownload}
+//                         style={{
+//                             padding: "1rem",
+//                             fontSize: "1.2rem",
+//                             fontWeight: "bold",
+//                             borderRadius: "8px",
+//                             backgroundColor: "#2e4053",
+//                             color: "white",
+//                             border: "none",
+//                             cursor: "pointer",
+//                             transition: "background 0.3s",
+//                         }}
+//                         title="点击下载检测结果"
+//                         onMouseOver={(e) => (e.target.style.backgroundColor = "#1f2a3d")}
+//                         onMouseOut={(e) => (e.target.style.backgroundColor = "#2e4053")}
+//                     >
+//                         ⬇️ 下载检测结果
+//                     </button>
+//                     <button
+//                         onClick={() => setDownloadUrl(null)}
+//                         style={{
+//                             marginLeft: "10px",
+//                             padding: "1rem",
+//                             fontSize: "1.2rem",
+//                             fontWeight: "bold",
+//                             borderRadius: "8px",
+//                             backgroundColor: "#888",
+//                             color: "white",
+//                             border: "none",
+//                             cursor: "pointer",
+//                             transition: "background 0.3s",
+//                         }}
+//                         title="重置批量检测"
+//                         onMouseOver={(e) => (e.target.style.backgroundColor = "#555")}
+//                         onMouseOut={(e) => (e.target.style.backgroundColor = "#888")}
+//                     >
+//                         🔄
+//                     </button>
+//                 </>
+//             )}
+//         </div>
+//     );
+// }
+
+//10.19
+function CSVUploadForm({ compact = false }) {
     const [downloadUrl, setDownloadUrl] = useState(null);
     const [isUploading, setIsUploading] = useState(false);
 
@@ -2960,14 +3140,13 @@ function CSVUploadForm() {
 
         try {
             const res = await fetch(`/api/uploadCsvAndExportJsonl`, {
-            method: "POST",
-            body: formData,
-            mode: "cors",               // 显式允许跨域9.6
-            credentials: "omit",        // 如果不需要带 cookie
+                method: "POST",
+                body: formData,
+                mode: "cors",
+                credentials: "omit",
             });
 
             if (!res.ok) throw new Error("Upload failed");
-
             const data = await res.json();
             setDownloadUrl(data.download_url);
         } catch (err) {
@@ -2996,88 +3175,79 @@ function CSVUploadForm() {
         }
     };
 
-    return (
-        <div style={{ marginLeft: "1rem", display: "flex", alignItems: "center" }}>
-            {!downloadUrl && !isUploading && (
-                <label
-                    title="上传域名列表（.csv 格式）进行批量检测"
-                    style={{
-                        display: "inline-block",
-                        padding: "1rem",
-                        fontSize: "1.2rem",
-                        fontWeight: "bold",
-                        borderRadius: "8px",
-                        backgroundColor: "#365289",
-                        color: "white",
-                        cursor: "pointer",
-                        whiteSpace: "nowrap",
-                        transition: "background 0.3s",
-                    }}
-                    onMouseOver={(e) => (e.target.style.backgroundColor = "#2e4053")}
-                    onMouseOut={(e) => (e.target.style.backgroundColor = "#365289")}
-                >
-                    批量检测
-                    <input
-                        type="file"
-                        accept=".csv"
-                        onChange={handleUpload}
-                        style={{ display: "none" }}
-                    />
-                </label>
-            )}
-
-            {isUploading && (
-                <span style={{ marginLeft: "10px", color: "#888", fontSize: "0.95rem" }}>
-                    ⏳ 批量检测处理中...
-                </span>
-            )}
-
-            {downloadUrl && !isUploading && (
-                <>
-                    <button
-                        onClick={handleDownload}
-                        style={{
-                            padding: "1rem",
-                            fontSize: "1.2rem",
-                            fontWeight: "bold",
-                            borderRadius: "8px",
-                            backgroundColor: "#2e4053",
-                            color: "white",
-                            border: "none",
+    if (compact) {
+        // 🔹 内嵌图标模式（输入框右侧的小图标）
+        return (
+            <div 
+                style={{ 
+                    position: "absolute", 
+                    right: "10px", 
+                    top: "50%", 
+                    transform: "translateY(-50%)",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center", // 水平居中图标
+                    height: "100%",           // 高度撑满输入框
+                }}
+            >
+                {!downloadUrl && !isUploading && (
+                    <label 
+                        title="上传域名列表（.csv 格式）进行批量检测" 
+                        style={{ 
                             cursor: "pointer",
-                            transition: "background 0.3s",
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                            height: "100%", 
                         }}
-                        title="点击下载检测结果"
-                        onMouseOver={(e) => (e.target.style.backgroundColor = "#1f2a3d")}
-                        onMouseOut={(e) => (e.target.style.backgroundColor = "#2e4053")}
                     >
-                        ⬇️ 下载检测结果
-                    </button>
-                    <button
-                        onClick={() => setDownloadUrl(null)}
-                        style={{
-                            marginLeft: "10px",
-                            padding: "1rem",
-                            fontSize: "1.2rem",
-                            fontWeight: "bold",
-                            borderRadius: "8px",
-                            backgroundColor: "#888",
-                            color: "white",
-                            border: "none",
-                            cursor: "pointer",
-                            transition: "background 0.3s",
-                        }}
-                        title="重置批量检测"
-                        onMouseOver={(e) => (e.target.style.backgroundColor = "#555")}
-                        onMouseOut={(e) => (e.target.style.backgroundColor = "#888")}
-                    >
-                        🔄
-                    </button>
-                </>
-            )}
-        </div>
-    );
+                        <FiPaperclip size={20} />
+                        <input type="file" accept=".csv" onChange={handleUpload} style={{ display: "none" }} />
+                    </label>
+                )}
+
+                {isUploading && (
+                    <span title="处理中..." style={{ fontSize: "0.9rem", color: "#888" }}>
+                        ⏳
+                    </span>
+                )}
+
+                {downloadUrl && !isUploading && (
+                    <span>
+                        <button
+                            onClick={handleDownload}
+                            title="下载检测结果"
+                            style={{
+                                background: "transparent",
+                                border: "none",
+                                color: "#2e4053",
+                                fontSize: "1rem",
+                                cursor: "pointer",
+                            }}
+                        >
+                            ⬇️
+                        </button>
+                        <button
+                            onClick={() => setDownloadUrl(null)}
+                            title="重置"
+                            style={{
+                                background: "transparent",
+                                border: "none",
+                                color: "#888",
+                                fontSize: "1rem",
+                                cursor: "pointer",
+                            }}
+                        >
+                            🔄
+                        </button>
+                    </span>
+                )}
+            </div>
+        );
+    }
+
 }
+
 
 
 
