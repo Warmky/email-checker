@@ -34,7 +34,7 @@ function MainPage() {
 
     const [stage, setStage] = useState("");
     const [progressMessage, setProgressMessage] = useState("");
-
+    const [activeDomain, setActiveDomain] = useState(null);//10.19
 
     const mechanisms = ["autodiscover", "autoconfig", "srv", "guess", "overview"];//9.10_2 新增加比较机制供管理者一眼看出不同机制得到的配置信息有何不同
     // 默认选中第一个有结果的机制（不含 compare）9.10_2
@@ -2720,67 +2720,74 @@ function MainPage() {
                 marginTop: "2rem",
                 padding: "1.5rem 2rem",
                 borderRadius: "16px",
-                backgroundColor: "rgba(255, 255, 255, 0.45)", // 半透明背景
-                // backdropFilter: "blur(10px)", // 模糊玻璃效果
-                border: "1px solid rgba(255, 255, 255, 0.35)", // 柔白边框
-                boxShadow: "0 6px 18px rgba(0, 0, 0, 0.12)", // 阴影
+                backgroundColor: "rgba(249, 249, 249, 0.95)", // 🔹稍微透明
+                border: "1px solid rgba(200, 200, 200, 0.5)",  // 柔和边框
+                boxShadow: "0 6px 18px rgba(0, 0, 0, 0.12)",
+                color: "#000",                         // 文字颜色改为黑色
             }}
         >
+                <h3
+                    style={{
+                        marginBottom: "1rem",
+                        color: "#333",                     // 标题改为深色
+                        fontWeight: "600",
+                        fontSize: "1.2rem",
+                        letterSpacing: "0.5px",
+                        textShadow: "0 0 2px rgba(0,0,0,0.1)", // 轻微阴影增强立体感
+                    }}
+                >
+                    🔹 推荐邮件域名
+                </h3>
 
-            <h3
-                style={{
-                marginBottom: "1rem",
-                color: "#f0f6ff",
-                fontWeight: "600",
-                fontSize: "1.2rem",
-                letterSpacing: "0.5px",
-                textShadow: "0 0 6px rgba(0,0,0,0.3)", // 增强立体感
-                }}
-            >
-                🔹 推荐邮件域名
-            </h3>
-
-
-            <div
-                style={{
-                display: "flex",
-                flexWrap: "wrap",
-                gap: "1.5rem",
-                justifyContent: "flex-start",
-                }}
-            >
-                {recommended.map((item, idx) => (
-                    <span
-                        key={idx}
-                        onClick={() => {
-                        // 点击只触发检测，不放入搜索框
-                        handleClick(null, "test@" + item.domain);
-                        }}
-                        style={{
-                        cursor: "pointer",
-                        fontSize: "1.1rem",
-                        color: "#e4ecff", // 改成柔和浅蓝
-                        textDecoration: "underline",
-                        transition: "all 0.2s ease-in-out",
-                        width: "calc(25% - 1.5rem)", // 每行四个
-                        textAlign: "center",
-                        padding: "0.4rem 0",
-                        borderRadius: "8px",
-                        }}
-                        onMouseOver={(e) => {
-                        e.currentTarget.style.color = "#ffffff";
-                        e.currentTarget.style.backgroundColor = "rgba(230,240,255,0.25)";
-                        }}
-                        onMouseOut={(e) => {
-                        e.currentTarget.style.color = "#e4ecff";
-                        e.currentTarget.style.backgroundColor = "transparent";
-                        }}
-                    >
-                        {item.domain}
-                    </span>
-                ))}
+                <div
+                    style={{
+                        display: "flex",
+                        flexWrap: "wrap",
+                        gap: "1.5rem",
+                        justifyContent: "flex-start",
+                    }}
+                >
+                    {recommended.map((item, idx) => (
+                        <span
+                            key={idx}
+                            onClick={() => {
+                                handleClick(null, "test@" + item.domain);
+                                setActiveDomain(item.domain); // 🔹记录当前点击的域名
+                            }}
+                            style={{
+                                cursor: "pointer",
+                                fontSize: "1.1rem",
+                                color: activeDomain === item.domain ? "#000" : "#1a1a1a", // 被选中更深色
+                                textDecoration: "underline",
+                                transition: "all 0.2s ease-in-out",
+                                width: "calc(25% - 1.5rem)",     // 每行四个
+                                textAlign: "center",
+                                padding: "0.4rem 0",
+                                borderRadius: "8px",
+                                backgroundColor:
+                                    activeDomain === item.domain
+                                        ? "rgba(200,220,255,0.5)"  // 点击后保持背景色
+                                        : "transparent",
+                            }}
+                            onMouseOver={(e) => {
+                                if (activeDomain !== item.domain) {
+                                    e.currentTarget.style.color = "#000";
+                                    e.currentTarget.style.backgroundColor = "rgba(200,220,255,0.3)";
+                                }
+                            }}
+                            onMouseOut={(e) => {
+                                if (activeDomain !== item.domain) {
+                                    e.currentTarget.style.color = "#1a1a1a";
+                                    e.currentTarget.style.backgroundColor = "transparent";
+                                }
+                            }}
+                        >
+                            {item.domain}
+                        </span>
+                    ))}
                 </div>
             </div>
+
 
 
 
@@ -2804,13 +2811,13 @@ function MainPage() {
                         style={{
                             width: "100%",
                             maxWidth: "900px",
-                            backgroundColor: "rgba(255, 255, 255, 0.55)", // ← 更透明（55%）
-                            // backdropFilter: "blur(12px)",                  // ← 稍微加强模糊
+                            backgroundColor: "rgba(255, 255, 255, 0.9)", // ← 更接近纯白，可读性强
                             padding: "2rem",
                             borderRadius: "16px",
-                            boxShadow: "0 4px 20px rgba(0,0,0,0.08)",      // ← 柔和阴影
-                            border: "1px solid rgba(255, 255, 255, 0.4)",  // ← 白色边框线条
-                            marginTop: "1rem"
+                            boxShadow: "0 4px 20px rgba(0,0,0,0.08)",
+                            border: "1px solid rgba(200, 200, 200, 0.5)",
+                            marginTop: "1rem",
+                            color: "#000", // 内容文字颜色调整为黑色
                         }}
                     >
 
