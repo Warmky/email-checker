@@ -14,7 +14,7 @@ var redisCache *cache.RedisCache
 
 func initRedis() {
 	var err error
-	redisCache, err = cache.NewRedisCache("127.0.0.1:6379", "", 0, 24*time.Hour)
+	redisCache, err = cache.NewRedisCache("127.0.0.1:6379", "", 0, 30*24*time.Hour)
 	if err != nil {
 		log.Fatalf("❌ Redis 连接失败: %v", err)
 	}
