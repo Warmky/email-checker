@@ -13,7 +13,7 @@ import LinearProgress from '@mui/material/LinearProgress';
 import "../App.css";
 import { checkInternalDiff } from "../components/checkInternalDiff";//9.11
 import TlsAnalyzerPanel from "../components/TlsAnalyzerPanel";
-import { FiPaperclip } from "react-icons/fi";
+import { FiFolder } from "react-icons/fi";
 
 function MainPage() {
     const [email, setEmail] = useState("");
@@ -78,11 +78,13 @@ function MainPage() {
         { domain: "outlook.com" },
         { domain: "gmail.com" },
         { domain: "yandex.com" },
-        { domain: "163.com" },
+        { domain: "126.com" },
         {domain:"yahoo.com"},
-        {domain:"spammotel.com"}
+        {domain:"terra.com.ar"},
+        {domain:"zohu.com"}
     ];
-    const [recommended, setRecommended] = useState([]);
+    // const [recommended, setRecommended] = useState([]);
+    const [recommended, setRecommended] = useState(defaultRecommended);
 
     // useEffect(() => {
     // fetch("/api/recommended")
@@ -2555,7 +2557,7 @@ function MainPage() {
             padding: "0 1rem",
             }}
         >
-            <h1 style={{ fontSize: "2.5rem", marginBottom: "1rem",  color: "#eaf2ff", textShadow: "0 0 8px rgba(0,0,0,0.3)" }}>
+            <h1 style={{ fontSize: "2.5rem", marginBottom: "1rem",  color: "#1f2d3d", textShadow: "0 0 4px rgba(255,255,255,0.2)" }}>
             邮件服务通信安全检测
             </h1>
 
@@ -2857,7 +2859,7 @@ function MainPage() {
 
             {/* <CSVUploadForm /> */}
 
-            <h2 style={{ marginTop: "3rem", color: "#f5faff" }}>历史查询</h2>
+            <h2 style={{ marginTop: "3rem", color: "#333" }}>历史查询</h2>
             {recentlySeen.length > 0 ? (
                 <ul>
                     {recentlySeen.map((item, index) => (
@@ -2868,7 +2870,7 @@ function MainPage() {
                     ))}
                 </ul>
             ) : (
-                <p style={{ color: "#c5d2ef" }}>暂无记录</p>
+                <p style={{ color: "#333" }}>暂无记录</p>
             )}
         </div>
     );
@@ -3208,7 +3210,7 @@ function CSVUploadForm({ compact = false }) {
                             height: "100%", 
                         }}
                     >
-                        <FiPaperclip size={20} />
+                        <FiFolder size={20} color="#4a90e2" />  {/* 📁 文件夹图标 */}
                         <input type="file" accept=".csv" onChange={handleUpload} style={{ display: "none" }} />
                     </label>
                 )}

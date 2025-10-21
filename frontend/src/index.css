@@ -12,12 +12,13 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 
-  /* === 全局背景图设置 === */
-  background-image: url('./assets/bg2.jpg');  /* 修改为你的图片文件名 */
-  background-size: cover;              /* 背景填满窗口 */
-  background-position: center center;  /* 居中显示 */
-  background-attachment: fixed;        /* 页面滚动时背景不动 */
-  background-repeat: no-repeat;        /* 不重复 */
+  /* === 改为纯色背景 === */
+  background-color: #8eb0c7;  /* ✅ 柔和浅灰蓝色背景（推荐） */
+  /* 你也可以选其他颜色，例如：
+     background-color: #ffffff;   纯白
+     background-color: #f0f2f5;   更接近现代 UI 的灰白色
+     background-color: #eef3f8;   微蓝的科技感背景
+  */
 }
 
 code {
