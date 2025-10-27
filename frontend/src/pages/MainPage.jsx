@@ -13,7 +13,7 @@ import LinearProgress from '@mui/material/LinearProgress';
 import "../App.css";
 import { checkInternalDiff } from "../components/checkInternalDiff";//9.11
 import TlsAnalyzerPanel from "../components/TlsAnalyzerPanel";
-import { FiFolder } from "react-icons/fi";
+import { AiOutlineFileText } from "react-icons/ai";
 
 function MainPage() {
     const [email, setEmail] = useState("");
@@ -3210,7 +3210,7 @@ function CSVUploadForm({ compact = false }) {
                             height: "100%", 
                         }}
                     >
-                        <FiFolder size={20} color="#4a90e2" />  {/* 📁 文件夹图标 */}
+                        <AiOutlineFileText size={22} />
                         <input type="file" accept=".csv" onChange={handleUpload} style={{ display: "none" }} />
                     </label>
                 )}
