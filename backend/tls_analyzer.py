@@ -72,16 +72,40 @@ def run_tls_scan(host: str, port: int):
                     finding = {"protocol": label, "status": "COMPLETED"}
 
                     # ✅ Cipher Suites
+                    # if hasattr(result, "accepted_cipher_suites"):
+                    #     # suites = [{
+                    #     #     "name": s.cipher_suite.name,
+                    #     #     "key_size": getattr(getattr(s.cipher_suite, "encryption_algorithm", None), "key_size", "unknown")
+                    #     # } for s in result.accepted_cipher_suites]
+                    #     suites = [{
+                    #         "name": s.cipher_suite.name,
+                    #         "key_size": getattr(getattr(s.cipher_suite, "encryption_algorithm", None), "key_size", None) or "unknown"  # None 而不是 "unknown"
+                    #     } for s in result.accepted_cipher_suites]
+                    #     finding["accepted_cipher_suites"] = suites
                     if hasattr(result, "accepted_cipher_suites"):
-                        # suites = [{
-                        #     "name": s.cipher_suite.name,
-                        #     "key_size": getattr(getattr(s.cipher_suite, "encryption_algorithm", None), "key_size", "unknown")
-                        # } for s in result.accepted_cipher_suites]
-                        suites = [{
-                            "name": s.cipher_suite.name,
-                            "key_size": getattr(getattr(s.cipher_suite, "encryption_algorithm", None), "key_size", None) or "unknown"  # None 而不是 "unknown"
-                        } for s in result.accepted_cipher_suites]
+                        suites = []
+                        for suite_accepted in result.accepted_cipher_suites:
+                            # suite_accepted 是 CipherSuiteAcceptedByServer 对象
+                            cipher_suite = suite_accepted.cipher_suite  # 这是 CipherSuite 对象
+                            
+                            suite_info = {
+                                "name": cipher_suite.name,
+                                "key_size": cipher_suite.key_size,  # 直接从 CipherSuite 获取
+                                "is_anonymous": cipher_suite.is_anonymous,
+                                "openssl_name": cipher_suite.openssl_name
+                            }
+                            
+                            # 如果有临时密钥信息，也记录下来
+                            if suite_accepted.ephemeral_key:
+                                suite_info["ephemeral_key"] = {
+                                    "type": suite_accepted.ephemeral_key.type,
+                                    "size": suite_accepted.ephemeral_key.size
+                                }
+                            
+                            suites.append(suite_info)
+                        
                         finding["accepted_cipher_suites"] = suites
+
 
                     # ✅ Heartbleed
                     elif hasattr(result, "is_vulnerable_to_heartbleed"):

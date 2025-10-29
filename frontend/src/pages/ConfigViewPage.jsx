@@ -516,7 +516,7 @@ function ConfigViewPage() {
                           setShowTlsAnalyzer(prev => !prev);
                         }}
                       >
-                        {showTlsAnalyzer ? "隐藏深度分析" : "深度分析"}
+                        {showTlsAnalyzer ? "隐藏深度分析" : "深度分析（SSLyze 6.x）"}
                       </button>
                     </div>
 
