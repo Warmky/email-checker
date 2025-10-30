@@ -45,6 +45,9 @@ function MainPage() {
     const [recommendedDomains, setRecommendedDomains] = useState([]);
     const [checkAllResult, setCheckAllResult] = useState(null); // 保存检测结果或缓存结果
     const [hasAnyResultState, setHasAnyResult] = useState(false);    // 控制结果区是否渲染
+
+    const [isRecommendedClick, setIsRecommendedClick] = useState(false); //10.30
+
     useEffect(() => {
     fetch("/api/recommended")
         .then(res => res.json())
@@ -150,12 +153,22 @@ function MainPage() {
     // };
 
     //9.23改后
-    const handleClick = (e, customEmail) => {
+    // const handleClick = (e, customEmail) => {
+    //     const targetEmail = customEmail || email.trim();
+    //     if (!targetEmail) return;
+    //     handleSearch(targetEmail); // 调你原来的检测函数
+    //     setLastSubmittedEmail(targetEmail); // 保存用户名用于展示
+    // };
+    //10.30
+    const handleClick = (e, customEmail, isRecommended = false) => {
         const targetEmail = customEmail || email.trim();
         if (!targetEmail) return;
+    
         handleSearch(targetEmail); // 调你原来的检测函数
         setLastSubmittedEmail(targetEmail); // 保存用户名用于展示
+        setIsRecommendedClick(isRecommended); // 标记来源
     };
+    
 
 
 
@@ -833,7 +846,8 @@ function MainPage() {
                 });
             } else {
                 srvDetails.push({ proto: "SRV", text: "无有效 SRV 记录" });
-                srvIssue = true;
+                // srvIssue = true; //10.29
+                srvIssue = false;
             }
 
             //let configScore = 100; //10.9
@@ -1391,11 +1405,12 @@ function MainPage() {
                                     </tr>
                                     <tr>
                                         <td style={tdStyle}><strong>用户名</strong></td>
-                                        <td style={tdStyle}>{lastSubmittedEmail}</td>
+                                        {/* <td style={tdStyle}>{lastSubmittedEmail}</td> 10.30*/}
+                                        <td style={tdStyle}>{isRecommendedClick ? "邮件地址" : lastSubmittedEmail}</td>
                                     </tr>
                                     <tr>
                                         <td style={tdStyle}><strong>密码</strong></td>
-                                        <td style={tdStyle}>你的邮箱密码</td>
+                                        <td style={tdStyle}>邮箱密码</td>
                                     </tr>
                                     </tbody>
                                 </table>
@@ -2648,7 +2663,8 @@ function MainPage() {
 
                 {/* 🚀 开始检测按钮单独放右边 */}
                 <button
-                    onClick={handleClick}
+                    //onClick={handleClick}
+                    onClick={() => handleClick(null, email.trim(), false)} // 手动输入10.30
                     style={{
                         height: "56px",
                         lineHeight: "56px",
@@ -2750,7 +2766,8 @@ function MainPage() {
                         <span
                             key={idx}
                             onClick={() => {
-                                handleClick(null, "test@" + item.domain);
+                                //handleClick(null, "test@" + item.domain);
+                                handleClick(null, "test@" + item.domain, true); // 推荐点击10.30
                                 setActiveDomain(item.domain); // 🔹记录当前点击的域名
                             }}
                             style={{

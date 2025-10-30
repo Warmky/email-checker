@@ -389,7 +389,8 @@ function ConfigViewPage() {
                     <td style={{ padding: "8px" }}>{item.type}</td>
                     <td style={{ padding: "8px" }}>{item.host}</td>
                     <td style={{ padding: "8px" }}>{item.port}</td>
-                    <td style={{ padding: "8px" }}>{renderConnectionInfo(item.plain)}</td>
+                    {/* <td style={{ padding: "8px" }}>{renderConnectionInfo(item.plain)}</td> */}
+                    <td style={{ padding: "8px" }}>{item.plain?.success ? "✅" : "❌"}</td>
                     <td style={{ padding: "8px" }}>{renderConnectionInfo(item.starttls)}</td>
                     <td style={{ padding: "8px" }}>{renderConnectionInfo(item.tls)}</td>
                     <td style={{ padding: "8px" }}>
@@ -876,8 +877,8 @@ function ConfigViewPage() {
                       <tr><td style={tdStyle}><strong>端口</strong></td><td style={tdStyle}>{item.port}</td></tr>
                       <tr><td style={tdStyle}><strong>主机名</strong></td><td style={tdStyle}>{item.host}</td></tr>
                       <tr><td style={tdStyle}><strong>SSL类型</strong></td><td style={tdStyle}>{item.ssl}</td></tr>
-                      <tr><td style={tdStyle}><strong>用户名</strong></td><td style={tdStyle}>你的邮件地址</td></tr>
-                      <tr><td style={tdStyle}><strong>密码</strong></td><td style={tdStyle}>你的邮箱密码</td></tr>
+                      <tr><td style={tdStyle}><strong>用户名</strong></td><td style={tdStyle}>邮件地址</td></tr>
+                      <tr><td style={tdStyle}><strong>密码</strong></td><td style={tdStyle}>邮箱密码</td></tr>
                     </tbody>
                   </table>
                 </div>
