@@ -1258,6 +1258,33 @@ function MainPage() {
                                             </div>
                                         );
                                     })}
+
+                                    {/* 🔹 框最下面统一注释 */}
+                                    {["autodiscover", "autoconfig", "srv"].some(m => {
+                                        const mech = results[m];
+                                        if (!mech) return false;
+                                        const allDetails = [];
+                                        if (mech.all) {
+                                            mech.all.forEach(item =>
+                                                item.score_detail?.actualconnect_details?.forEach(d => allDetails.push(d))
+                                            );
+                                        } else {
+                                            mech.score_detail?.actualconnect_details?.forEach(d => allDetails.push(d));
+                                        }
+                                        return allDetails.some(d => d.plain?.success);
+                                    }) && (
+                                        <div style={{
+                                            marginTop: "8px",
+                                            padding: "6px",
+                                            backgroundColor: "#fff3cd",
+                                            border: "1px solid #ffeeba",
+                                            borderRadius: "6px",
+                                            color: "#856404",
+                                            fontSize: "14px",
+                                        }}>
+                                            注：判断服务器是否支持明文连接需通过实际登录验证，本工具仅限于TCP/TLS连接阶段的探测，未执行任何登录尝试，仅给出风险提示。 
+                                        </div>
+                                    )}
                                 </StatusModule>
                             </div>
                         </div>
@@ -1966,6 +1993,21 @@ function MainPage() {
                                     </ul>
                                     </div>
                                 ))}
+
+                                {/* ✅ 框最下面统一注释10.30 */}
+                                {hasConnectIssue && (
+                                    <div style={{
+                                        marginTop: "8px",
+                                        padding: "6px",
+                                        backgroundColor: "#fff3cd",
+                                        border: "1px solid #ffeeba",
+                                        borderRadius: "6px",
+                                        color: "#856404",
+                                        fontSize: "14px",
+                                    }}>
+                                        注：判断服务器是否支持明文连接需通过实际登录验证，本工具仅限于TCP/TLS连接阶段的探测，未执行任何登录尝试，仅给出风险提示。 
+                                    </div>
+                                )}
                                 </StatusModule>
                             );
                             })()}
@@ -2544,6 +2586,21 @@ function MainPage() {
                                                     </ul>
                                                 </div>
                                             ))}
+
+                                            {/* ✅ 明文可连接注释，放在框框最下面 */}
+                                            {result?.score_detail?.actualconnect_details?.some(d => d.plain?.success) && (
+                                                <div style={{
+                                                    marginTop: "8px",
+                                                    padding: "6px",
+                                                    backgroundColor: "#fff3cd",
+                                                    border: "1px solid #ffeeba",
+                                                    borderRadius: "6px",
+                                                    color: "#856404",
+                                                    fontSize: "14px",
+                                                }}>
+                                                    注：判断服务器是否支持明文连接需通过实际登录验证，本工具仅限于TCP/TLS连接阶段的探测，未执行任何登录尝试，仅给出风险提示。
+                                                </div>
+                                            )}
                                         </StatusModule>
                                     </div>
                                 );
