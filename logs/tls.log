@@ -1,54 +1,24 @@
  * Serving Flask app 'tls_analyzer'
  * Debug mode: on
-2025-10-31 13:20:19,580 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+2025-11-04 16:02:15,217 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
  * Running on http://127.0.0.1:5002
-2025-10-31 13:20:19,580 [INFO] [33mPress CTRL+C to quit[0m
-2025-10-31 13:20:19,581 [INFO]  * Restarting with stat
-2025-10-31 13:20:19,999 [WARNING]  * Debugger is active!
-2025-10-31 13:20:20,000 [INFO]  * Debugger PIN: 149-742-450
-2025-10-31 18:32:29,935 [INFO] === Starting TLS scan for smtp.yandex.ru.:587 ===
+2025-11-04 16:02:15,217 [INFO] [33mPress CTRL+C to quit[0m
+2025-11-04 16:02:15,218 [INFO]  * Restarting with stat
+2025-11-04 16:02:15,656 [WARNING]  * Debugger is active!
+2025-11-04 16:02:15,656 [INFO]  * Debugger PIN: 149-742-450
+2025-11-04 16:02:36,331 [INFO] === Starting TLS scan for outlook.office365.com:993 ===
 /home/wzq/.local/lib/python3.12/site-packages/sslyze/plugins/certificate_info/trust_stores/trust_store.py:55: CryptographyDeprecationWarning: Parsed a negative serial number, which is disallowed by RFC 5280. Loading this certificate will cause an exception in the next release of cryptography.
   self._x509_store = Store(load_pem_x509_certificates(self.path.read_bytes()))
-2025-10-31 18:34:16,905 [INFO] Scan status: ServerScanStatusEnum.COMPLETED
-2025-10-31 18:34:16,905 [INFO] Connectivity: ServerTlsProbingResult(highest_tls_version_supported=<TlsVersionEnum.TLS_1_3: 6>, cipher_suite_supported='TLS_AES_256_GCM_SHA384', client_auth_requirement=<ClientAuthRequirementEnum.DISABLED: 'DISABLED'>, supports_ecdh_key_exchange=True)
-2025-10-31 18:34:16,907 [INFO] === Scan for smtp.yandex.ru.:587 completed ===
-2025-10-31 18:34:16,908 [INFO] 127.0.0.1 - - [31/Oct/2025 18:34:16] "POST /deep-analyze HTTP/1.0" 200 -
-2025-11-02 11:51:35,275 [INFO] === Starting TLS scan for imap.yandex.com:143 ===
-2025-11-02 11:51:40,764 [INFO] Scan status: ServerScanStatusEnum.ERROR_NO_CONNECTIVITY
-2025-11-02 11:51:40,764 [INFO] Connectivity: None
-2025-11-02 11:51:40,767 [INFO] === Scan for imap.yandex.com:143 completed ===
-2025-11-02 11:51:40,767 [INFO] 127.0.0.1 - - [02/Nov/2025 11:51:40] "POST /deep-analyze HTTP/1.0" 200 -
-2025-11-02 11:52:28,640 [INFO] === Starting TLS scan for imap.yandex.com:143 ===
-2025-11-02 11:52:34,259 [INFO] Scan status: ServerScanStatusEnum.ERROR_NO_CONNECTIVITY
-2025-11-02 11:52:34,259 [INFO] Connectivity: None
-2025-11-02 11:52:34,262 [INFO] === Scan for imap.yandex.com:143 completed ===
-2025-11-02 11:52:34,262 [INFO] 127.0.0.1 - - [02/Nov/2025 11:52:34] "POST /deep-analyze HTTP/1.0" 200 -
-2025-11-02 11:53:02,858 [INFO] === Starting TLS scan for imap.yandex.com:143 ===
-2025-11-02 11:53:08,343 [INFO] Scan status: ServerScanStatusEnum.ERROR_NO_CONNECTIVITY
-2025-11-02 11:53:08,343 [INFO] Connectivity: None
-2025-11-02 11:53:08,345 [INFO] === Scan for imap.yandex.com:143 completed ===
-2025-11-02 11:53:08,345 [INFO] 127.0.0.1 - - [02/Nov/2025 11:53:08] "POST /deep-analyze HTTP/1.0" 200 -
-2025-11-02 11:53:11,657 [INFO] === Starting TLS scan for imap.yandex.com:143 ===
-2025-11-02 11:53:17,138 [INFO] Scan status: ServerScanStatusEnum.ERROR_NO_CONNECTIVITY
-2025-11-02 11:53:17,138 [INFO] Connectivity: None
-2025-11-02 11:53:17,140 [INFO] === Scan for imap.yandex.com:143 completed ===
-2025-11-02 11:53:17,140 [INFO] 127.0.0.1 - - [02/Nov/2025 11:53:17] "POST /deep-analyze HTTP/1.0" 200 -
-2025-11-03 11:54:41,160 [INFO] === Starting TLS scan for outlook.office365.com:993 ===
-2025-11-03 11:54:47,158 [INFO] Scan status: ServerScanStatusEnum.COMPLETED
-2025-11-03 11:54:47,158 [INFO] Connectivity: ServerTlsProbingResult(highest_tls_version_supported=<TlsVersionEnum.TLS_1_2: 5>, cipher_suite_supported='ECDHE-RSA-AES256-GCM-SHA384', client_auth_requirement=<ClientAuthRequirementEnum.DISABLED: 'DISABLED'>, supports_ecdh_key_exchange=True)
+2025-11-04 16:02:42,768 [INFO] Scan status: ServerScanStatusEnum.COMPLETED
+2025-11-04 16:02:42,768 [INFO] Connectivity: ServerTlsProbingResult(highest_tls_version_supported=<TlsVersionEnum.TLS_1_2: 5>, cipher_suite_supported='ECDHE-RSA-AES256-GCM-SHA384', client_auth_requirement=<ClientAuthRequirementEnum.DISABLED: 'DISABLED'>, supports_ecdh_key_exchange=True)
 /home/wzq/email-checker/backend/tls_analyzer.py:154: CryptographyDeprecationWarning: Properties that return a naïve datetime object have been deprecated. Please switch to not_valid_before_utc.
   "not_before": cert.not_valid_before.isoformat(),
 /home/wzq/email-checker/backend/tls_analyzer.py:155: CryptographyDeprecationWarning: Properties that return a naïve datetime object have been deprecated. Please switch to not_valid_after_utc.
   "not_after": cert.not_valid_after.isoformat(),
-2025-11-03 11:54:47,161 [INFO] === Scan for outlook.office365.com:993 completed ===
-2025-11-03 11:54:47,162 [INFO] 127.0.0.1 - - [03/Nov/2025 11:54:47] "POST /deep-analyze HTTP/1.0" 200 -
-2025-11-03 15:46:48,607 [INFO] === Starting TLS scan for outlook.office365.com:993 ===
-2025-11-03 15:46:54,399 [INFO] Scan status: ServerScanStatusEnum.COMPLETED
-2025-11-03 15:46:54,399 [INFO] Connectivity: ServerTlsProbingResult(highest_tls_version_supported=<TlsVersionEnum.TLS_1_2: 5>, cipher_suite_supported='ECDHE-RSA-AES256-GCM-SHA384', client_auth_requirement=<ClientAuthRequirementEnum.DISABLED: 'DISABLED'>, supports_ecdh_key_exchange=True)
-2025-11-03 15:46:54,402 [INFO] === Scan for outlook.office365.com:993 completed ===
-2025-11-03 15:46:54,402 [INFO] 127.0.0.1 - - [03/Nov/2025 15:46:54] "POST /deep-analyze HTTP/1.0" 200 -
-2025-11-03 15:49:43,109 [INFO] === Starting TLS scan for outlook.office365.com:993 ===
-2025-11-03 15:49:48,901 [INFO] Scan status: ServerScanStatusEnum.COMPLETED
-2025-11-03 15:49:48,901 [INFO] Connectivity: ServerTlsProbingResult(highest_tls_version_supported=<TlsVersionEnum.TLS_1_2: 5>, cipher_suite_supported='ECDHE-RSA-AES256-GCM-SHA384', client_auth_requirement=<ClientAuthRequirementEnum.DISABLED: 'DISABLED'>, supports_ecdh_key_exchange=True)
-2025-11-03 15:49:48,904 [INFO] === Scan for outlook.office365.com:993 completed ===
-2025-11-03 15:49:48,905 [INFO] 127.0.0.1 - - [03/Nov/2025 15:49:48] "POST /deep-analyze HTTP/1.0" 200 -
+2025-11-04 16:02:42,772 [INFO] === Scan for outlook.office365.com:993 completed ===
+2025-11-04 16:02:42,773 [INFO] 127.0.0.1 - - [04/Nov/2025 16:02:42] "POST /deep-analyze HTTP/1.0" 200 -
+2025-11-04 16:06:28,817 [INFO] === Starting TLS scan for outlook.office365.com:993 ===
+2025-11-04 16:06:35,014 [INFO] Scan status: ServerScanStatusEnum.COMPLETED
+2025-11-04 16:06:35,014 [INFO] Connectivity: ServerTlsProbingResult(highest_tls_version_supported=<TlsVersionEnum.TLS_1_2: 5>, cipher_suite_supported='ECDHE-RSA-AES256-GCM-SHA384', client_auth_requirement=<ClientAuthRequirementEnum.DISABLED: 'DISABLED'>, supports_ecdh_key_exchange=True)
+2025-11-04 16:06:35,017 [INFO] === Scan for outlook.office365.com:993 completed ===
+2025-11-04 16:06:35,018 [INFO] 127.0.0.1 - - [04/Nov/2025 16:06:35] "POST /deep-analyze HTTP/1.0" 200 -

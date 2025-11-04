@@ -427,8 +427,8 @@ export default function TlsAnalyzerPanel({ host, port }) {
 
         return (
             <>
-                <p><strong>目标：</strong>{analysis.host}:{analysis.port}</p>
-                <p><strong>已检测到支持版本：</strong>{supported || "未检测到"}</p>
+                <p style={{ color: "#000" }}><strong>目标：</strong>{analysis.host}:{analysis.port}</p>
+                <p style={{ color: "#000" }}><strong>已检测到支持版本：</strong>{supported || "未检测到"}</p>
 
                 {analysis.findings.map((f, idx) => {
                     let content = null;
@@ -502,7 +502,7 @@ export default function TlsAnalyzerPanel({ host, port }) {
                     }
 
                     return (
-                        <div key={idx} style={{ marginTop: 0.75, padding: 0.75, background: "#bcdcec", border: "1px solid #444", borderRadius: 6 }}>
+                        <div key={idx} style={{ marginTop: 0.75, padding: 0.75, background: "#bcdcec", border: "1px solid #444", borderRadius: 6, color: "#000" }}>
                             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline" }}>
                                 <h4 style={{ margin: 0 }}>{f.protocol}</h4>
                                 <span style={{ fontSize: 12, color: f.status === "COMPLETED" ? "#0ba450ff" : f.status === "ERROR" ? "tomato" : "#ccc" }}>
@@ -510,7 +510,7 @@ export default function TlsAnalyzerPanel({ host, port }) {
                                 </span>
                             </div>
                             <div style={{ marginTop: 6 }}>
-                                {content || <div style={{ color: "#ccc" }}>无可用信息</div>}
+                                {content || <div style={{ color: "#666" }}>无可用信息</div>}
                                 {f.error_reason && <div style={{ color: "tomato" }}>{f.error_reason}</div>}
                             </div>
                         </div>
@@ -523,7 +523,7 @@ export default function TlsAnalyzerPanel({ host, port }) {
     return (
         <div style={{ marginTop: "1rem", padding: "1rem", backgroundColor: "#b9d7e8", color: "#fff", borderRadius: 8 }}>
             {/* 🔹 新增提示文字 9.17*/}
-            <div style={{ marginBottom: "6px", fontSize: "0.85rem", color: "#fff" }}>
+            <div style={{ marginBottom: "6px", fontSize: "0.85rem", color: "#000" }}>
                 点击下方按钮，对该邮件服务器进行全面的安全分析
             </div>
             <div style={{ display: "flex", gap: 8 }}>

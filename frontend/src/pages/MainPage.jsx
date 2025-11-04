@@ -1168,6 +1168,71 @@ function MainPage() {
 
                     </div>
 
+                    {/* ===== 配置文件词法解析规范性 ===== */}
+                    <div style={{
+                        borderTop: "2px solid #333",
+                        paddingTop: "10px",
+                        marginBottom: "20px"
+                    }}>
+                        <div style={{ display: "flex", alignItems: "center", marginBottom: "10px" }}>
+                            <span style={{ fontSize: "32px", marginRight: "10px" }}>📑</span>
+                            <h3 style={{ margin: 0, color: "#333" }}>配置文件词法解析规范性</h3>
+                        </div>
+
+                        <div style={{ display: "flex", alignItems: "flex-start", marginBottom: "20px", width: "100%" }}>
+                            {/* {gradeBox(lexScore)} */}
+                            {lexScore > 0 ? gradeBox(lexScore) : <div style={{ marginRight: "20px" }}>⚪ 无检测结果</div>}
+
+                            <div style={{ flex: 1, minWidth: 0 }}>
+                                <StatusModule
+                                    label="配置文件词法解析规范性"
+                                    hasIssue={(() => {
+                                        return ["autodiscover", "autoconfig"].some(m => {
+                                            const mech = results[m];
+                                            if (!mech) return false;
+                                            const allPorts = [];
+                                            if (mech.all) {
+                                                mech.all.forEach(item =>
+                                                    item.score_detail?.ports_usage?.forEach(p => allPorts.push(p))
+                                                );
+                                            } else {
+                                                mech.score_detail?.ports_usage?.forEach(p => allPorts.push(p));
+                                            }
+                                            return allPorts.some(p => p.status !== "standard");
+                                        });
+                                    })()}
+                                >
+                                    <ul style={{ margin: 0, paddingLeft: "18px", color: "#333" }}>
+                                        {["autodiscover", "autoconfig"].map(m => {
+                                            const mech = results[m];
+                                            if (!mech) return null;
+
+                                            const allPorts = [];
+                                            if (mech.all) {
+                                                mech.all.forEach(item =>
+                                                    item.score_detail?.ports_usage?.forEach(p => allPorts.push(p))
+                                                );
+                                            } else {
+                                                mech.score_detail?.ports_usage?.forEach(p => allPorts.push(p));
+                                            }
+
+                                            if (allPorts.length === 0) {
+                                                return <li key={m}>{m} ⚪ 无检测结果</li>;
+                                            }
+
+                                            const hasIssue = allPorts.some(p => p.status !== "standard");
+                                            return (
+                                                <li key={m}>
+                                                    {m} {hasIssue ? "❌ 存在不符合规范的配置" : "✅ 全部符合规范"}
+                                                </li>
+                                            );
+                                        })}
+                                    </ul>
+                                </StatusModule>
+                            </div>
+                        </div>
+                    </div>
+
                     {/* ===== 实际连接安全性 ===== */}
                     <div style={{
                         borderTop: "2px solid #333",
@@ -1300,70 +1365,7 @@ function MainPage() {
                         </div>
                     </div>
 
-                    {/* ===== 配置文件词法解析规范性 ===== */}
-                    <div style={{
-                        borderTop: "2px solid #333",
-                        paddingTop: "10px",
-                        marginBottom: "20px"
-                    }}>
-                        <div style={{ display: "flex", alignItems: "center", marginBottom: "10px" }}>
-                            <span style={{ fontSize: "32px", marginRight: "10px" }}>📑</span>
-                            <h3 style={{ margin: 0, color: "#333" }}>配置文件词法解析规范性</h3>
-                        </div>
 
-                        <div style={{ display: "flex", alignItems: "flex-start", marginBottom: "20px", width: "100%" }}>
-                            {/* {gradeBox(lexScore)} */}
-                            {lexScore > 0 ? gradeBox(lexScore) : <div style={{ marginRight: "20px" }}>⚪ 无检测结果</div>}
-
-                            <div style={{ flex: 1, minWidth: 0 }}>
-                                <StatusModule
-                                    label="配置文件词法解析规范性"
-                                    hasIssue={(() => {
-                                        return ["autodiscover", "autoconfig"].some(m => {
-                                            const mech = results[m];
-                                            if (!mech) return false;
-                                            const allPorts = [];
-                                            if (mech.all) {
-                                                mech.all.forEach(item =>
-                                                    item.score_detail?.ports_usage?.forEach(p => allPorts.push(p))
-                                                );
-                                            } else {
-                                                mech.score_detail?.ports_usage?.forEach(p => allPorts.push(p));
-                                            }
-                                            return allPorts.some(p => p.status !== "standard");
-                                        });
-                                    })()}
-                                >
-                                    <ul style={{ margin: 0, paddingLeft: "18px", color: "#333" }}>
-                                        {["autodiscover", "autoconfig"].map(m => {
-                                            const mech = results[m];
-                                            if (!mech) return null;
-
-                                            const allPorts = [];
-                                            if (mech.all) {
-                                                mech.all.forEach(item =>
-                                                    item.score_detail?.ports_usage?.forEach(p => allPorts.push(p))
-                                                );
-                                            } else {
-                                                mech.score_detail?.ports_usage?.forEach(p => allPorts.push(p));
-                                            }
-
-                                            if (allPorts.length === 0) {
-                                                return <li key={m}>{m} ⚪ 无检测结果</li>;
-                                            }
-
-                                            const hasIssue = allPorts.some(p => p.status !== "standard");
-                                            return (
-                                                <li key={m}>
-                                                    {m} {hasIssue ? "❌ 存在不符合规范的配置" : "✅ 全部符合规范"}
-                                                </li>
-                                            );
-                                        })}
-                                    </ul>
-                                </StatusModule>
-                            </div>
-                        </div>
-                    </div>
                 </div>
             );
         }
