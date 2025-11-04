@@ -48,6 +48,16 @@ function MainPage() {
 
     const [isRecommendedClick, setIsRecommendedClick] = useState(false); //10.30
 
+    // 响应式判断10.30
+    const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+    useEffect(() => {
+        const handleResize = () => setWindowWidth(window.innerWidth);
+        window.addEventListener("resize", handleResize);
+        return () => window.removeEventListener("resize", handleResize);
+    }, []);
+    const isMobile = windowWidth < 600;
+    const isTablet = windowWidth >= 600 && windowWidth < 900;
+
     useEffect(() => {
     fetch("/api/recommended")
         .then(res => res.json())
@@ -2626,21 +2636,31 @@ function MainPage() {
             padding: "0 1rem",
             }}
         >
-            <h1 style={{ fontSize: "2.5rem", marginBottom: "1rem",  color: "#1f2d3d", textShadow: "0 0 4px rgba(255,255,255,0.2)" }}>
+            <h1 style={{fontSize: isMobile ? "1.8rem" : "2.5rem", marginBottom: "1rem",  color: "#1f2d3d", textShadow: "0 0 4px rgba(255,255,255,0.2)", textAlign: "center",}}>
             邮件服务通信安全检测
             </h1>
 
             <div
+                // style={{
+                //     maxWidth: "900px",
+                //     width: "100%",
+                //     display: "flex",
+                //     justifyContent: "center",
+                //     margin: "0 auto",
+                // }}
                 style={{
                     maxWidth: "900px",
-                    width: "100%",
+                    width: "95%",
                     display: "flex",
+                    flexDirection: isMobile ? "column" : "row", // 手机竖排，桌面横排
                     justifyContent: "center",
+                    alignItems: "center",
+                    gap: "0.5rem", // 横向或纵向间距
                     margin: "0 auto",
                 }}
             >
                 {/* 📮 输入框 + CSV图标 一体容器 */}
-                <div style={{ position: "relative", display: "flex", alignItems: "center" }}>
+                <div style={{ position: "relative", display: "flex", alignItems: "center", width: isMobile ? "100%" : "auto", marginBottom: isMobile ? "0.5rem" : "0"}}>
                     <input
                         type="text"
                         value={email}
@@ -2648,7 +2668,7 @@ function MainPage() {
                         placeholder="输入邮件地址：如 user@example.com"
                         style={{
                             height: "56px",
-                            width: "400px",
+                            width: isMobile ? "100%" : "400px", // 手机端宽度 100%
                             fontSize: "1.2rem",
                             borderRadius: "8px",
                             border: "1px solid #ccc",
@@ -2722,10 +2742,24 @@ function MainPage() {
                 <button
                     //onClick={handleClick}
                     onClick={() => handleClick(null, email.trim(), false)} // 手动输入10.30
+                    // style={{
+                    //     height: "56px",
+                    //     lineHeight: "56px",
+                    //     marginLeft: "1rem",
+                    //     fontSize: "1.2rem",
+                    //     borderRadius: "8px",
+                    //     backgroundColor: "#3c71cd",
+                    //     color: "white",
+                    //     border: "none",
+                    //     cursor: "pointer",
+                    //     fontWeight: "bold",
+                    //     transition: "background 0.3s",
+                    //     padding: "0 1.5rem",
+                    // }}
                     style={{
                         height: "56px",
                         lineHeight: "56px",
-                        marginLeft: "1rem",
+                        width: isMobile ? "100%" : "auto", // 手机端按钮宽度撑满
                         fontSize: "1.2rem",
                         borderRadius: "8px",
                         backgroundColor: "#3c71cd",
@@ -2803,7 +2837,7 @@ function MainPage() {
                         marginBottom: "1rem",
                         color: "#333",                     // 标题改为深色
                         fontWeight: "600",
-                        fontSize: "1.2rem",
+                        fontSize: isMobile ? "1rem" : "1.2rem", // 手机字体稍小
                         letterSpacing: "0.5px",
                         textShadow: "0 0 2px rgba(0,0,0,0.1)", // 轻微阴影增强立体感
                     }}
@@ -3211,6 +3245,23 @@ function CSVUploadForm({ compact = false }) {
     const handleUpload = async (e) => {
         const file = e.target.files[0];
         if (!file) return;
+
+        // ===== 新增：10.31前端限制 =====
+        const MAX_SIZE = 30 * 1024; // 30KB
+        const MAX_LINES = 1000;
+
+        if (file.size > MAX_SIZE) {
+            alert("文件过大，最大允许 30KB！");
+            return;
+        }
+
+        // 读取文件内容，检查行数
+        const text = await file.text();
+        const lines = text.split(/\r?\n/).filter(l => l.trim() !== "");
+        if (lines.length > MAX_LINES) {
+            alert(`文件中包含 ${lines.length} 条记录，超过最大限制（1000 条）`);
+            return;
+        }
 
         setIsUploading(true);
         setDownloadUrl(null);
